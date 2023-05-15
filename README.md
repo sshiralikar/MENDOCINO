@@ -1,2 +1,0 @@
-# MENDOCINO
-Mendocino County
