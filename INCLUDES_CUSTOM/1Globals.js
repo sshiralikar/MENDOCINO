@@ -1,5 +1,5 @@
 var ENVIRON = "SUPP";
-var EMAILREPLIES = "noreply@mendocinocounty.org";
+var EMAILREPLIES = "no-reply@mendocinocounty.org";
 var SENDEMAILS = true;
 var ACAURL = "https://aca-nonprod.accela.com/MENDOCINO-NONPROD1/";
 showMessage = false;
