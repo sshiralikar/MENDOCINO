@@ -345,6 +345,7 @@ function mainProcess()
                                 && (getTaskDueDateX(fTask.getTaskDescription()+"") == tenDayDateStr
                                     || getTaskDueDateX(fTask.getTaskDescription()+"") == tenDayDateStrX) && fTask.getActiveFlag().equals("Y"))
                             {
+                                logDebugBatch("New Appeal with date : "+ tenDayDateStrX+" -> "+capIDString);
                                 var pCapId = getParent(capId);
                                 if(pCapId)
                                 {
@@ -369,7 +370,7 @@ function mainProcess()
                                     capId = pCapId;
                                     taskCloseAllExcept("Denied - Appeal","Closing via script");
                                     capId = tmp;
-                                    updateAppStatus("Revocation","Updating via Script");
+                                    updateAppStatus("Revocation","Updating via Script",pCapId);
                                     setLicExpirationDate(pCapId,"",todayDateX);
                                     editAppSpecific("New Expiration Date",todayDateX, pCapId);
                                     editAppSpecific("New Expiration Date",todayDateX, capId);
