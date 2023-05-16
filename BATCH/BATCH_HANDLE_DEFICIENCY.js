@@ -335,6 +335,23 @@ function mainProcess()
                                 aa.workflow.adjustTask(capId, "Plans Coordination", "Y", "N", null, null);
                             }
 
+                            var tenDayDate = new Date();
+                            tenDayDate.setDate(tenDayDate.getDate() + 10);
+                            var tenDayDateStr = (tenDayDate.getMonth() + 1) + "/" + tenDayDate.getDate() + "/" + tenDayDate.getFullYear();
+                            var tenDayDateStrX = ('0' + (tenDayDate.getMonth()+1)).slice(-2) + '/'
+                                + ('0' + tenDayDate.getDate()).slice(-2) + '/'
+                                + tenDayDate.getFullYear();
+                            if (fTask.getTaskDescription() && fTask.getTaskDescription().equals("Appeal")
+                                && (getTaskDueDateX(fTask.getTaskDescription()+"") == tenDayDateStr
+                                    || getTaskDueDateX(fTask.getTaskDescription()+"") == tenDayDateStrX) && fTask.getActiveFlag().equals("Y"))
+                            {
+                                var pCapId = getParent(capId);
+                                if(pCapId)
+                                {
+                                    updateAppStatus("Revocation Pending","Updating via Script", pCapId);
+                                }
+                                updateAppStatus("Appeal Pending","Updating via Script", capId);
+                            }
                             if (fTask.getTaskDescription() && fTask.getTaskDescription().equals("Appeal")
                                 && (getTaskDueDateX(fTask.getTaskDescription()+"") == todayDate
                                     || getTaskDueDateX(fTask.getTaskDescription()+"") == todayDateX) && fTask.getActiveFlag().equals("Y"))
@@ -352,7 +369,26 @@ function mainProcess()
                                     capId = pCapId;
                                     taskCloseAllExcept("Denied - Appeal","Closing via script");
                                     capId = tmp;
-                                    updateAppStatus("Denied - Appeal","Updating via Script");
+                                    updateAppStatus("Revocation","Updating via Script");
+                                    setLicExpirationDate(pCapId,"",todayDateX);
+                                    editAppSpecific("New Expiration Date",todayDateX, pCapId);
+                                    editAppSpecific("New Expiration Date",todayDateX, capId);
+                                    var capDetailObjResult = aa.cap.getCapDetail(pCapId); // Detail
+                                    if (capDetailObjResult.getSuccess()) {
+                                        var capDetail = capDetailObjResult.getOutput();
+                                        var balanceDue = capDetail.getBalance();
+                                        if (balanceDue > 0) {
+                                            addStdConditionX("Balance", "Denied with Balance Due", pCapId);
+                                        }
+                                    }
+                                }
+                                var capDetailObjResult = aa.cap.getCapDetail(capId); // Detail
+                                if (capDetailObjResult.getSuccess()) {
+                                    var capDetail = capDetailObjResult.getOutput();
+                                    var balanceDue = capDetail.getBalance();
+                                    if (balanceDue > 0) {
+                                        addStdConditionX("Balance", "Denied with Balance Due", capId);
+                                    }
                                 }
                             }
                         }
