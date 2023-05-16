@@ -112,14 +112,11 @@ else {
 |
 /------------------------------------------------------------------------------------------------------*/
 var message = "";
-//var startDate = new Date();
-//var startTime = startDate.getTime(); // Start timer
-//var todayDate = (startDate.getMonth() + 1) + "/" + startDate.getDate() + "/" + startDate.getFullYear();
-//var fromDate = aa.date.parseDate("1/1/1980");
-//var toDate = aa.date.parseDate((new Date().getMonth() + 1) + "/" + new Date().getDate() + "/" + new Date().getFullYear());
 var startDate = new Date();
-var thisASIDate = jsDateToASIDate(startDate);
-startTime = startDate.getTime(); // Start timer
+var startTime = startDate.getTime(); // Start timer
+var todayDate = (startDate.getMonth() + 1) + "/" + startDate.getDate() + "/" + startDate.getFullYear();
+var fromDate = aa.date.parseDate("1/1/1980");
+var toDate = aa.date.parseDate((new Date().getMonth() + 1) + "/" + new Date().getDate() + "/" + new Date().getFullYear());
 /*----------------------------------------------------------------------------------------------------/
 |
 | End: BATCH PARAMETERS//
@@ -179,85 +176,82 @@ if (debug.indexOf("**ERROR") > 0) {
 }
 function mainProcess() {
     try {
-        logMessage("PERMIT EXPIRATION.....");
-        var emptyCm1 = aa.cap.getCapModel().getOutput();
-        var emptyCt1 = emptyCm1.getCapType();
-        emptyCt1.setGroup("Cannabis");
-        emptyCt1.setType("Cultivation");
-        emptyCt1.setSubType("Permit");
-        emptyCt1.setCategory("NA");
-        emptyCm1.setCapType(emptyCt1);
-        sysDate = aa.date.getCurrentDate();
+        logMessage("EXPIRED PERMIT....");
+        var numberOfDays = 0;
+        var hm = new Array();
+        var dateCalc = dateAdd(todayDate, numberOfDays);
+        var addZero = leadZero(dateCalc);
+        //dateCalc = ('0' + dateCalc.getDate()).slice(-2) + '/'
+        //+ ('0' + (dateCalc.getMonth()+1)).slice(-2) + '/'
+        //+ dateCalc.getFullYear();
+        logMessage("Now getting records with Expiration date of " + addZero);
+        //dateCalc = aa.date.parseDate(dateCalc);
+        //var recordListResult = aa.cap.getCapIDsByAppSpecificInfoDateRange("PERMIT DETAILS", "Expiration Date", dateCalc, dateCalc);
+        var recordListResult = aa.cap.getCapIDsByAppSpecificInfoField("Expiration Date", String(addZero));
+        if (!recordListResult.getSuccess())
+            logMessage("**ERROR: Failed to get capId List : " + recordListResult.getErrorMessage());
+        else {
+            var recArray = recordListResult.getOutput();
+            logMessage("Looping through " + recArray.length + " records");
+            for (var j in recArray) {
+                capId = aa.cap.getCapID(recArray[j].getID1(), recArray[j].getID2(), recArray[j].getID3()).getOutput();
+                capIDString = capId.getCustomID();
 
-        //Accessing all the records of the given type
-        var vCapListResult = aa.cap.getCapIDListByCapModel(emptyCm1);
-        if (vCapListResult.getSuccess()) {
-            vCapList = vCapListResult.getOutput();
-            aa.print(vCapList);
-        } else {
-            aa.print("ERROR", "ERROR: Getting Records, reason is: " + vCapListResult.getErrorType() + ":" + vCapListResult.getErrorMessage());
-        }
+                cap = aa.cap.getCap(capId).getOutput();
 
-        for (thisCap in vCapList) {
-            var capId;
-            capId = aa.cap.getCapID(vCapList[thisCap].getCapID().getID1(), vCapList[thisCap].getCapID().getID2(), vCapList[thisCap].getCapID().getID3()).getOutput();
-
-            cap = aa.cap.getCap(capId).getOutput();
-            var recASIDate = getAppSpecific("Expiration Date", capId);
-            break;
-            var appTypeResult = cap.getCapType();
-            var appTypeString = appTypeResult.toString();
-            var appTypeArray = appTypeString.split("/");
-            capIDString = capId.getCustomID();
-            cap = aa.cap.getCap(capId).getOutput();
-            var recASIDate = getAppSpecific("Expiration Date");
-            var capDetail = aa.cap.getCapDetail(capId);
-            capDetail = capDetail.getOutput();
-            var balance = capDetail.getBalance();
-            if(balance == 0)
-            {
-                logMessage(capIDString);
-                inspCount = getInspectionCount();
-                logMessage("inspection count " + inspCount);
-                if(thisASIDate == recASIDate && inspCount > 0)
+                targetAppType = cap.getCapType();     //create CapTypeModel object
+                targetAppTypeString = targetAppType.toString();
+                if(targetAppTypeString.split("/")[2] == "Permit")
                 {
-                    inspCancelAll();
-                    resultWorkflowTask("Permit Status", "Expired", "Updated by batch " + ".", "Updated by batch ")
-                    deactivateTask("Permit Status");
-                    updateAppStatus("Expired", "Updated by batch ");
-                }
-
-                var contactResult = aa.people.getCapContactByCapID(capId);
-                if (contactResult.getSuccess()) {
-                    var capContacts = contactResult.getOutput();
-                    for (var i in capContacts) {
-                        if(capContacts[i].getPeople().getContactType() != null);
-                        {
-                            var conName = getContactName(capContacts[i]);
-                            var applicantEmail = capContacts[i].getPeople().getEmail()+"";
-                            var params = aa.util.newHashtable();
-                            addParameter(params, "$$altID$$", capId.getCustomID()+"");
-                            addParameter(params, "$$FullNameBusName$$", conName);addParameter(params, "$$capAlias$$", aa.cap.getCap(capId).getOutput().getCapType().getAlias()+"");
-                            addParameter(params, "$$expirDate$$", getAppSpecific("New Expiration Date",capId));
-                            addParameter(params, "$$deptHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptHours"));
-                            addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptName"));
-                            addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptPhone"));
-                            addParameter(params, "$$deptEmail$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptEmail"));
-                            addParameter(params, "$$deptFormalName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptFormalName"));
-                            addParameter(params, "$$capName$$", cap.getSpecialText()+"");
-                            var acaUrl = String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0];
-                            addParameter(params, "$$acaRecordUrl$$", acaUrl);
-                            if(hm[applicantEmail+""] != 1) {
-                                sendEmail("no-reply@mendocinocounty.org", applicantEmail, "", "GLOBAL_EXPIRATION", params, null, capId);
-                                hm[applicantEmail+""] = 1;
+                    logMessage(capIDString);
+                    var thisCapModel = cap.getCapModel();
+                    var thisTypeResult = cap.getCapType();
+                    var appStatus = getAppStatus(capId);
+                    var capDetail = aa.cap.getCapDetail(capId);
+                    capDetail = capDetail.getOutput();
+                    var balance = capDetail.getBalance();
+                    var inspCount = getInspectionCount();
+                    if(balance == 0 && inspCount > 0){
+                        inspCancelAll();
+                        resultWorkflowTask("Permit Status", "Expired", "Updated by batch " + ".", "Updated by batch ")
+                        deactivateTask("Permit Status");
+                        updateAppStatus("Expired", "Updated by batch ", capId);
+                    }
+                    var test = true;
+                    var contactResult = aa.people.getCapContactByCapID(capId);
+                    if (contactResult.getSuccess()) {
+                        var capContacts = contactResult.getOutput();
+                        var capIDScriptModel = aa.cap.createCapIDScriptModel(capId.getID1(), capId.getID2(), capId.getID3());
+                        for (var i in capContacts) {
+                            if(capContacts[i].getPeople().getContactType() != 'test');
+                            {
+                                var conName = getContactName(capContacts[i]);
+                                var applicantEmail = capContacts[i].getPeople().getEmail()+"";
+                                var params = aa.util.newHashtable();
+                                addParameter(params, "$$altID$$", capId.getCustomID()+"");
+                                addParameter(params, "$$FullNameBusName$$", conName);addParameter(params, "$$capAlias$$", aa.cap.getCap(capId).getOutput().getCapType().getAlias()+"");
+                                addParameter(params, "$$expirDate$$", getAppSpecific("New Expiration Date",capId));
+                                addParameter(params, "$$deptHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptHours"));
+                                addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptName"));
+                                addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptPhone"));
+                                addParameter(params, "$$deptEmail$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptEmail"));
+                                addParameter(params, "$$deptFormalName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptFormalName"));
+                                addParameter(params, "$$capName$$", cap.getSpecialText()+"");
+                                var acaUrl = String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0];
+                                addParameter(params, "$$acaRecordUrl$$", acaUrl);
+                                if(applicantEmail != null){
+                                    sendEmail("no-reply@mendocinocounty.org", applicantEmail, "", "GLOBAL_EXPIRATION", params, null, capId);
+                                    //hm[applicantEmail+""] = 1;
+                                    //sendNotificationResult = aa.document.sendEmailAndSaveAsDocument("no-reply@mendocinocounty.org", //applicantEmail, "", "GLOBAL EXPIRATION", params, capIDScriptModel, null);
+                                }
                             }
                         }
                     }
                 }
+
             }
 
         }
-
     }
     catch (err) {
         logMessage("**ERROR** runtime error " + err.message + " at " + err.lineNumber + " stack: " + err.stack);
@@ -271,6 +265,19 @@ function mainProcess() {
 /*------------------------------------------------------------------------------------------------------/
 | <===========Internal Functions and Classes (Used by this script)
 /------------------------------------------------------------------------------------------------------*/
+function leadZero(mypart)
+{
+    datePart = mypart.toString();
+    if (datePart.length > 1)
+    {
+        longer = "0" + datePart;
+        return longer;
+    }
+    else
+    {
+        return datePart;
+    }
+}
 
 function getAppStatus() {
     var itemCap = capId;
