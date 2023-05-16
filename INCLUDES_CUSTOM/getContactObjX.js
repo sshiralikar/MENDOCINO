@@ -23,5 +23,5 @@ function getContactObjX(itemCap,typeToLoad)
     }
 
     return false;
-
+   //AAA
 }
