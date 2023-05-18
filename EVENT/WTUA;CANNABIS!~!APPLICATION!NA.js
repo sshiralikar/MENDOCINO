@@ -41,6 +41,8 @@ if(wfTask == "Supervisor Review" && wfStatus == "Issued")
         {
             var rParams = aa.util.newHashMap();
             rParams.put("RecordID", licCapId.getCustomID()+"");
+            rParams.put("IssueDT", sysDateMMDDYYYY);
+            rParams.put("ExpireDT", newDate);
             logDebug("Report parameter RecordID set to: "+ licCapId.getCustomID()+"");
             var report = aa.reportManager.getReportInfoModelByName("Cannabis Permit Report");
             report = report.getOutput();
