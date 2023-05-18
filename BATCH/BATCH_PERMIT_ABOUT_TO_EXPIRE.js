@@ -179,6 +179,7 @@ function mainProcess() {
         logMessage("PERMITS ABOUT TO EXPIRE....90 Day Reminder");
         var numberOfDays = 90;
         var hm = new Array();
+        var template = "GLOBAL_ABOUT TO EXPIRE";
         var dateCalc = dateAdd(todayDate, numberOfDays);
         /*dateCalc = ('0' + dateCalc.getDate()).slice(-2) + '/'
              + ('0' + (dateCalc.getMonth()+1)).slice(-2) + '/'
@@ -209,6 +210,7 @@ function mainProcess() {
                     var perfFlag = getAppSpecific("Performance Standard Violation",capId);
                     if(perfFlag == "CHECKED" && appStatus != "Modification Under Review")
                     {
+                        template = "GLOBAL_MODIFICATION_REQUIRED";
 /*                        var pCapId = getParent(capId);
                         if(pCapId)
                         {*/
@@ -242,7 +244,7 @@ function mainProcess() {
                                 var acaUrl = String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0];
                                 addParameter(params, "$$acaRecordUrl$$", acaUrl);
                                 if(hm[applicantEmail+""] != 1) {
-                                    sendEmail("no-reply@mendocinocounty.org", applicantEmail, "", "GLOBAL_ABOUT TO EXPIRE", params, null, capId);
+                                    sendEmail("no-reply@mendocinocounty.org", applicantEmail, "", template, params, null, capId);
                                     hm[applicantEmail+""] = 1;
                                 }
                             }
@@ -256,6 +258,7 @@ function mainProcess() {
         dateCalc = ('0' + (dateCalc.getMonth()+1)).slice(-2) + '/'
             + ('0' + dateCalc.getDate()).slice(-2) + '/'
             + dateCalc.getFullYear();
+        var template = "GLOBAL_ABOUT TO EXPIRE";
         logMessage("Now getting records with Expiration date of " + dateCalc);
         //dateCalc = aa.date.parseDate(dateCalc);
         //var recordListResult = aa.cap.getCapIDsByAppSpecificInfoDateRange("PERMIT DETAILS", "New Expiration Date", dateCalc, dateCalc);
@@ -282,6 +285,7 @@ function mainProcess() {
                     var perfFlag = getAppSpecific("Performance Standard Violation",capId);
                     if(perfFlag == "CHECKED" && appStatus != "Modification Under Review")
                     {
+                        template = "GLOBAL_MODIFICATION_REQUIRED";
                         //var pCapId = getParent(capId);
                         //if(pCapId)
                         //{
@@ -315,7 +319,7 @@ function mainProcess() {
                                 var acaUrl = String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0];
                                 addParameter(params, "$$acaRecordUrl$$", acaUrl);
                                 if(hm[applicantEmail+""] != 1) {
-                                    sendEmail("no-reply@mendocinocounty.org", applicantEmail, "", "GLOBAL_ABOUT TO EXPIRE", params, null, capId);
+                                    sendEmail("no-reply@mendocinocounty.org", applicantEmail, "", template, params, null, capId);
                                     hm[applicantEmail+""] = 1;
                                 }
                             }
