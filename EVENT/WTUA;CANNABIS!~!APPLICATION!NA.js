@@ -116,7 +116,7 @@ if(wfStatus == "Deficiency")
 //CAMEND-303
 if(wfTask == "Supervisor Review" && wfStatus == "Denied")
 {
-    var date = getCapFileDate(capId);
+    /*var date = getCapFileDate(capId);
     if(isDateInRangeToOct(date))
     {
         var VRFiles = null;
@@ -175,7 +175,7 @@ if(wfTask == "Supervisor Review" && wfStatus == "Denied")
         }
     }
     else
-    {
+    {*/
         var VRFiles = null;
         var rParams = aa.util.newHashMap();
         rParams.put("RecordID", capId.getCustomID()+"");
@@ -227,7 +227,7 @@ if(wfTask == "Supervisor Review" && wfStatus == "Denied")
                 }
             }
         }
-    }
+    //}
 }
 
 if(wfStatus == "Appeal Denied")
