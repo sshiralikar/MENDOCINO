@@ -209,12 +209,12 @@ function mainProcess() {
                     var perfFlag = getAppSpecific("Performance Standard Violation",capId);
                     if(perfFlag == "CHECKED" && appStatus != "Modification Under Review")
                     {
-                        var pCapId = getParent(capId);
+/*                        var pCapId = getParent(capId);
                         if(pCapId)
-                        {
-                            updateAppStatus("Modification Required","",pCapId);
+                        {*/
+                            updateAppStatus("Modification Required","",capId);
                             setLicExpirationDate(capId,"","","About to Expire");
-                        }
+                        //}
                     }
                     else if(appStatus != "Modification Under Review")
                     {
