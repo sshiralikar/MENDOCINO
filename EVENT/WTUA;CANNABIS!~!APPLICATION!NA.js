@@ -7,7 +7,7 @@ if(wfStatus == "Void" || wfStatus == "Withdrawn")
 //CAMEND-305
 
 //CAMEND-194, 223
-if(wfTask == "Supervisor Review" && wfStatus == "Issued")
+if(wfTask == "Supervisor Review" &amp;&amp; wfStatus == "Issued")
 {
     var hm = new Array();
     var licCapId = createRecord("Cannabis",appTypeArray[1],"Permit",appTypeArray[3],capName);
@@ -37,7 +37,7 @@ if(wfTask == "Supervisor Review" && wfStatus == "Issued")
     if (capDetailObjResult.getSuccess()) {
         capDetail = capDetailObjResult.getOutput();
         var balanceDue = capDetail.getBalance();
-        if(balanceDue <= 0)
+        if(balanceDue &lt;= 0)
         {
             var rParams = aa.util.newHashMap();
             rParams.put("RecordID", licCapId.getCustomID()+"");
@@ -114,7 +114,7 @@ if(wfStatus == "Deficiency")
 
 }
 //CAMEND-303
-if(wfTask == "Supervisor Review" && wfStatus == "Denied")
+if(wfTask == "Supervisor Review" &amp;&amp; wfStatus == "Denied")
 {
     var VRFiles = null;
     var rParams = aa.util.newHashMap();
@@ -201,7 +201,7 @@ if(wfStatus == "Appeal Denied")
     }
 }
 
-if(wfTask == "Issuance" && wfStatus == "Issued")
+if(wfTask == "Issuance" &amp;&amp; wfStatus == "Issued")
 {
     var licCapId = getParent();
     var hm = new Array();
@@ -237,8 +237,10 @@ if(wfTask == "Issuance" && wfStatus == "Issued")
 }
 
 //CAMEND-392
-if(wfTask == "Supervisor Review" && wfStatus == "Deficiency")
-{
+if(wfTask == "Supervisor Review" &amp;&amp; wfStatus == "Deficiency")
+
+    var date = getCapFileDate(capId);
+if(isDateInRangeToOct(date) || isDateInRangeToFeb(date) || isDateInRangeCurr(date)) {
     var hm = new Array();
     var conName = "";
     var rParams = aa.util.newHashMap();
