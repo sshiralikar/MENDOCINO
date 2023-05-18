@@ -29,3 +29,6 @@ if(!publicUser && (appTypeArray[1]=="Amendment" || appTypeArray[2]=="Application
         }
     }
 }
+//Populate Geographic Information
+include("POPULATE_GEOGRAPHIC_INFORMATION");
+//Populate Geographic Information

@@ -28,3 +28,6 @@ if(appTypeArray[1]=="Amendment" || appTypeArray[2]=="Application" || appTypeArra
         }
     }
 }
+//Populate Geographic Information
+include("POPULATE_GEOGRAPHIC_INFORMATION");
+//Populate Geographic Information
