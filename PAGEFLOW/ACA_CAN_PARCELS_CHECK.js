@@ -101,8 +101,12 @@ loadAppSpecific4ACA(AInfo); // Add AppSpecific Info
 //loadASITables();
 // page flow custom code begin
 try {
-    var permitType = AInfo["Permit Type"];
-
+    if(parseInt(AInfo["Parcel Acreage"]) < 10)
+    {
+        cancel = true;
+        showMessage = true;
+        comment("We cannot accept your application at this time.  Please contact us at cannabisprogram@mendocinocounty.org");
+    }
 } catch (err) {
 
     logDebug(err);

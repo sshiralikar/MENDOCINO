@@ -1,8 +1,8 @@
 /*------------------------------------------------------------------------------------------------------/
-| Program : ACA_CAN_ADDITIONAL_PARCELS_CHECK.js
-| Event   : ACA Page Flow before
+| Program : ACA_HIDE_PROPAGATION_ONLOAD.js
+| Event   : ACA Page Flow attachments before event
 |
-| Usage   : Master Script by Accela.  See accompanying documentation and release notes.
+| Usage   : Master Script by Shashank.  See accompanying documentation and release notes.
 |
 | Client  : N/A
 | Action# : N/A
@@ -54,9 +54,9 @@ if (SA) {
 
 eval(getScriptText("INCLUDES_CUSTOM", null, useCustomScriptFile));
 
+
 function getScriptText(vScriptName, servProvCode, useProductScripts) {
-    if (!servProvCode)
-        servProvCode = aa.getServiceProviderCode();
+    if (!servProvCode) servProvCode = aa.getServiceProviderCode();
     vScriptName = vScriptName.toUpperCase();
     var emseBiz = aa.proxyInvoker.newInstance("com.accela.aa.emse.emse.EMSEBusiness").getOutput();
     try {
@@ -70,6 +70,7 @@ function getScriptText(vScriptName, servProvCode, useProductScripts) {
         return "";
     }
 }
+
 
 var cap = aa.env.getValue("CapModel");
 var capId = cap.getCapID();
@@ -88,33 +89,74 @@ var appTypeString = appTypeResult.toString(); // Convert application type to str
 var appTypeArray = appTypeString.split("/"); // Array of application type string
 var currentUserGroup;
 var currentUserGroupObj = aa.userright.getUserRight(appTypeArray[0], currentUserID).getOutput()
-if (currentUserGroupObj)
-    currentUserGroup = currentUserGroupObj.getGroupName();
+if (currentUserGroupObj) currentUserGroup = currentUserGroupObj.getGroupName();
 var capName = cap.getSpecialText();
 var capStatus = cap.getCapStatus();
 var sysDate = aa.date.getCurrentDate();
 var sysDateMMDDYYYY = dateFormatted(sysDate.getMonth(), sysDate.getDayOfMonth(), sysDate.getYear(), "");
-var AInfo = new Array(); // Create array for tokenized variables
-loadAppSpecific4ACA(AInfo); // Add AppSpecific Info
-//loadTaskSpecific(AInfo);            // Add task specific info
-//loadParcelAttributes(AInfo);            // Add parcel attributes
-//loadASITables();
-// page flow custom code begin
-try {
-    var operationsCalendar = getASITablesRowsFromSession4ACA("ADDITIONAL PARCELS");
-    if(!operationsCalendar)
-    {
-        cancel = true;
-        showMessage = true;
-        comment("Please add at least one row.");
-    }
+var parcelArea = 0;
 
-} catch (err) {
-
-    logDebug(err);
-
+var estValue = 0;
+var calcValue = 0;
+var feeFactor // Init Valuations
+var valobj = aa.finance.getContractorSuppliedValuation(capId, null).getOutput(); // Calculated valuation
+if (valobj.length) {
+    estValue = valobj[0].getEstimatedValue();
+    calcValue = valobj[0].getCalculatedValue();
+    feeFactor = valobj[0].getbValuatn().getFeeFactorFlag();
 }
 
+var balanceDue = 0;
+var houseCount = 0;
+feesInvoicedTotal = 0; // Init detail Data
+var capDetail = "";
+var capDetailObjResult = aa.cap.getCapDetail(capId); // Detail
+if (capDetailObjResult.getSuccess()) {
+    capDetail = capDetailObjResult.getOutput();
+    var houseCount = capDetail.getHouseCount();
+    var feesInvoicedTotal = capDetail.getTotalFee();
+    var balanceDue = capDetail.getBalance();
+}
+
+var AInfo = new Array(); // Create array for tokenized variables
+loadAppSpecific4ACA(AInfo); // Add AppSpecific Info
+//loadTaskSpecific(AInfo);                      // Add task specific info
+//loadParcelAttributes(AInfo);                      // Add parcel attributes
+loadASITables4ACA();
+
+logDebug("<B>EMSE Script Results for " + capIDString + "</B>");
+logDebug("capId = " + capId.getClass());
+logDebug("cap = " + cap.getClass());
+logDebug("currentUserID = " + currentUserID);
+logDebug("currentUserGroup = " + currentUserGroup);
+logDebug("systemUserObj = " + systemUserObj.getClass());
+logDebug("appTypeString = " + appTypeString);
+logDebug("capName = " + capName);
+logDebug("capStatus = " + capStatus);
+logDebug("sysDate = " + sysDate.getClass());
+logDebug("sysDateMMDDYYYY = " + sysDateMMDDYYYY);
+logDebug("parcelArea = " + parcelArea);
+logDebug("estValue = " + estValue);
+logDebug("calcValue = " + calcValue);
+logDebug("feeFactor = " + feeFactor);
+
+logDebug("houseCount = " + houseCount);
+logDebug("feesInvoicedTotal = " + feesInvoicedTotal);
+logDebug("balanceDue = " + balanceDue);
+
+// page flow custom code begin
+
+try {
+    var cap = aa.env.getValue("CapModel");
+    var capId = cap.getCapID();
+
+    if(AInfo["Partial Parcel Area"] != "Yes" && AInfo["More than one parcel"] != "Yes")
+    {
+        aa.env.setValue("ReturnData", "{'PageFlow':{'HidePage':'Y'}}");
+    }
+} catch (err) {
+    logDebug(err)
+}
 
 // page flow custom code end
 
@@ -136,59 +178,4 @@ if (debug.indexOf("**ERROR") > 0) {
         if (showDebug)
             aa.env.setValue("ErrorMessage", debug);
     }
-}
-
-
-
-function getASITablesRowsFromSession4ACA(tableName) {
-    var gm = null;
-    if (String(cap.getClass()).indexOf("CapScriptModel") != -1) {
-        gm = cap.getCapModel().getAppSpecificTableGroupModel();
-    } else {
-        gm = cap.getAppSpecificTableGroupModel();
-    }
-    if (gm == null) {
-        return false;
-    }
-    var ta = gm.getTablesMap();
-    var tai = ta.values().iterator();
-    while (tai.hasNext()) {
-        var tsm = tai.next();
-        if (tsm.rowIndex.isEmpty())
-            continue;
-
-        var asitRow = new Array;
-        var asitTables = new Array;
-        var tn = tsm.getTableName();
-        if (tn != tableName) {
-            continue;
-        }
-
-        var tsmfldi = tsm.getTableField().iterator();
-        var tsmcoli = tsm.getColumns().iterator();
-        while (tsmfldi.hasNext()) {
-
-            var tcol = tsmcoli.next();
-            var tval = tsmfldi.next();
-
-            asitRow[tcol.getColumnName()] = tval;
-
-            if (!tsmcoli.hasNext()) {
-                tsmcoli = tsm.getColumns().iterator();
-                asitTables.push(asitRow);
-                asitRow = new Array;
-            }
-        }
-        return asitTables;
-    }
-    return false;
-}
-
-function matches(eVal, argList) {
-    for (var i = 1; i < arguments.length; i++) {
-        if (arguments[i] == eVal) {
-            return true;
-        }
-    }
-    return false;
 }
