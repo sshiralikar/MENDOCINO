@@ -115,6 +115,24 @@ try {
                 showMessage = true;
                 comment(lookup("ZONING STOP CRITERIA","MESSAGE"));
             }
+            else if(lookup("ZONING STOP CRITERIA",permitType+"||"+String(zoningValues[0]).toUpperCase()) == "STOP")
+            {
+                cancel = true;
+                showMessage = true;
+                comment(lookup("ZONING STOP CRITERIA","MESSAGE"));
+            }
+            else if(lookup("ZONING STOP CRITERIA","Cultivation||"+String(zoningValues[0]).toUpperCase()) == "STOP")
+            {
+                cancel = true;
+                showMessage = true;
+                comment(lookup("ZONING STOP CRITERIA","MESSAGE"));
+            }
+            else if(lookup("ZONING STOP CRITERIA","Cultivation||"+String(zoningValues[0]).toUpperCase()+"||"+String(zoningValues[1]).toUpperCase()) == "STOP")
+            {
+                cancel = true;
+                showMessage = true;
+                comment(lookup("ZONING STOP CRITERIA","MESSAGE"));
+            }
         }
         if(parseInt(AInfo["Total SF"]) <= 0)
         {
@@ -130,7 +148,7 @@ try {
         }
     }
     else if (appMatch("Cannabis/Nursery/*/*", capId)) {
-        var permitType = AInfo["Nursery Permit Type"];
+        var permitType = "Nursery";
         logDebug("permitType: "+ permitType);
         var zoningValues = getZoningValuesFromGIS();
         logDebug("zoningValues: "+ zoningValues);
@@ -224,7 +242,7 @@ function getZoningValuesFromGIS()
             }
         }
     }
-    if(baseZone!="" && minPar!="")
+    if(baseZone!="" || minPar!="")
     {
         return [baseZone, minPar];
     }
