@@ -411,8 +411,8 @@ function getRequiredDocumentsForCanCult() {
     {
         for(var i in strTable)
         {
-            if(wtrTable[i]["Type of Structure"] != "Water Hauler Service Provider"
-                || wtrTable[i]["Type of Structure"] != "Community Provider")
+            if(wtrTable[i]["Water Source Type"] != "Water Hauler Service Provider"
+                || wtrTable[i]["Water Source Type"] != "Community Provider")
                 waterAnalysisFlag = true;
         }
     }
