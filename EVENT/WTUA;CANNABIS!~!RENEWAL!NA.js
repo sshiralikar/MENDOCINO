@@ -394,7 +394,7 @@ if(wfStatus == "Deficiency")
 //CAMEND-303
 if(wfTask == "Supervisor Review" && wfStatus == "Denied")
 {
-    var VRFiles = null;
+    var VRFiles = new Array();
     var rParams = aa.util.newHashMap();
     rParams.put("RecordID", capId.getCustomID()+"");
     logDebug("Report parameter RecordID set to: "+ capId.getCustomID()+"");
