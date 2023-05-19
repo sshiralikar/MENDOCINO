@@ -107,7 +107,7 @@ try {
         var newTable = new Array();
 
         var vRow = new Array();
-        vRow["Month"] = new asiTableValObj("Month","January", "Y");
+        vRow["Month"] = new asiTableValObj("Month","January", "N");
         vRow["Activity"] = new asiTableValObj("Activity", "", "N");
         vRow["Approximate Date"] = new asiTableValObj("Approximate Date", "", "N");
         newTable.push(vRow);
