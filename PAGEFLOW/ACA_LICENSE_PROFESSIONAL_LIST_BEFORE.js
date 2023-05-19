@@ -101,7 +101,7 @@ loadAppSpecific4ACA(AInfo); // Add AppSpecific Info
 //loadASITables();
 // page flow custom code begin
 try {
-    if (appMatch("Cannabis/Cultivation/Application/*", capId)) {
+    if (appMatch("Cannabis/Cultivation/*/*", capId)) {
         var stateLicenses = AInfo["How many State Licenses"];
         var checkLP = checkLPRules();
         if (!checkLP) {
@@ -116,7 +116,7 @@ try {
 
         }
     }
-    else if (appMatch("Cannabis/Nursery/Application/NA", capId)) {
+    else if (appMatch("Cannabis/Nursery/*/*", capId)) {
         var checkLP = checkLPRules();
         if (!checkLP || (checkLP && checkLP.size() > 1)) {
             showMessage = true;

@@ -101,27 +101,60 @@ loadAppSpecific4ACA(AInfo); // Add AppSpecific Info
 //loadASITables();
 // page flow custom code begin
 try {
-    if (appMatch("Cannabis/Cultivation/Application/*", capId)) {
-        var stateLicenses = AInfo["How many State Licenses"];
-        var checkLP = checkLP();
-        if (!checkLP) {
-            showMessage = true;
-            comment('There should be a total of <b>'+stateLicenses+'</b> license(s), you have entered <b>0</b>.');
-            cancel = true;
-        }
-        if (checkLP && checkLP.size() != parseInt(stateLicenses)) {
-            showMessage = true;
-            comment('There should be a total of <b>'+stateLicenses+'</b> license(s), you have entered <b>'+checkLP.size()+'</b>.');
-            cancel = true;
-
-        }
-        else if (appMatch("Cannabis/Nursery/Application/NA", capId)) {
-            if (!checkLP || (checkLP && checkLP.size() > 1)) {
-                showMessage = true;
-                comment('Please enter one row for a nursery license.');
+    if (appMatch("Cannabis/Cultivation/*/*", capId)) {
+        var permitType = AInfo["Permit Type"];
+        logDebug("permitType: "+ permitType);
+        var zoningValues = getZoningValuesFromGIS();
+        logDebug("zoningValues: "+ zoningValues);
+        if(zoningValues)
+        {
+            logDebug("Looking for: "+ permitType+"||"+String(zoningValues[0]).toUpperCase()+"||"+String(zoningValues[1]).toUpperCase());
+            if(lookup("ZONING STOP CRITERIA",permitType+"||"+String(zoningValues[0]).toUpperCase()+"||"+String(zoningValues[1]).toUpperCase()) == "STOP")
+            {
                 cancel = true;
-
+                showMessage = true;
+                comment(lookup("ZONING STOP CRITERIA","MESSAGE"));
             }
+        }
+        if(parseInt(AInfo["Total SF"]) <= 0)
+        {
+            cancel = true;
+            showMessage = true;
+            comment("Total Square Footage cannot be 0.");
+        }
+        else if(parseInt(AInfo["Total SF"]) > 10000)
+        {
+            cancel = true;
+            showMessage = true;
+            comment("You exceed the maximum allowance of 10000 sq. ft.");
+        }
+    }
+    else if (appMatch("Cannabis/Nursery/*/*", capId)) {
+        var permitType = AInfo["Nursery Permit Type"];
+        logDebug("permitType: "+ permitType);
+        var zoningValues = getZoningValuesFromGIS();
+        logDebug("zoningValues: "+ zoningValues);
+        if(zoningValues)
+        {
+            logDebug("Looking for: "+ permitType+"||"+String(zoningValues[0]).toUpperCase()+"||"+String(zoningValues[1]).toUpperCase());
+            if(lookup("ZONING STOP CRITERIA",permitType+"||"+String(zoningValues[0]).toUpperCase()+"||"+String(zoningValues[1]).toUpperCase()) == "STOP")
+            {
+                cancel = true;
+                showMessage = true;
+                comment(lookup("ZONING STOP CRITERIA","MESSAGE"));
+            }
+        }
+        if(parseInt(AInfo["Total Nursery SF"]) <= 0)
+        {
+            cancel = true;
+            showMessage = true;
+            comment("Total Square Footage cannot be 0.");
+        }
+        else if(parseInt(AInfo["Total Nursery SF"]) > 12000)
+        {
+            cancel = true;
+            showMessage = true;
+            comment("You exceed the maximum allowance of 12000 sq. ft.");
         }
     }
 } catch (err) {
@@ -152,55 +185,64 @@ if (debug.indexOf("**ERROR") > 0) {
             aa.env.setValue("ErrorMessage", debug);
     }
 }
-
-function checkLP() {
-    var licArr = cap.getLicenseProfessionalList();
-    if (licArr == null || licArr.size() == 0) {
-        return false;
-    } else return licArr;
-}
-
-
-function getASITablesRowsFromSession4ACA(tableName) {
-    var gm = null;
-    if (String(cap.getClass()).indexOf("CapScriptModel") != -1) {
-        gm = cap.getCapModel().getAppSpecificTableGroupModel();
-    } else {
-        gm = cap.getAppSpecificTableGroupModel();
-    }
-    if (gm == null) {
-        return false;
-    }
-    var ta = gm.getTablesMap();
-    var tai = ta.values().iterator();
-    while (tai.hasNext()) {
-        var tsm = tai.next();
-        if (tsm.rowIndex.isEmpty())
-            continue;
-
-        var asitRow = new Array;
-        var asitTables = new Array;
-        var tn = tsm.getTableName();
-        if (tn != tableName) {
-            continue;
-        }
-
-        var tsmfldi = tsm.getTableField().iterator();
-        var tsmcoli = tsm.getColumns().iterator();
-        while (tsmfldi.hasNext()) {
-
-            var tcol = tsmcoli.next();
-            var tval = tsmfldi.next();
-
-            asitRow[tcol.getColumnName()] = tval;
-
-            if (!tsmcoli.hasNext()) {
-                tsmcoli = tsm.getColumns().iterator();
-                asitTables.push(asitRow);
-                asitRow = new Array;
+function getZoningValuesFromGIS()
+{
+    var baseZone = "";
+    var minPar = "";
+    currentUserID = "ADMIN";
+    var newTable = new Array();
+    var today = new Date();
+    var newDate = today.getMonth()+1+"/"+today.getDate()+"/"+today.getFullYear();
+    var capParcelObj = cap.getParcelModel();
+    if(capParcelObj)
+    {
+        var parcelNum = capParcelObj.getParcelNumber();
+        var bizDomScriptResult = aa.bizDomain.getBizDomain("GEOGRAPHIC INFORMATION");
+        if (bizDomScriptResult.getSuccess()) {
+            bizDomScriptArray = bizDomScriptResult.getOutput().toArray()
+            for (var i in bizDomScriptArray) {
+                var outFields = String(bizDomScriptArray[i].getDescription()).split("||")[1] + "";
+                var url = String(bizDomScriptArray[i].getDescription()).split("||")[0] + "";
+                var layer = bizDomScriptArray[i].getBizdomainValue() + "";
+                if(layer == "Parcels")
+                {
+                    var finalUrl = url+"query?where=APNFULL="+ parcelNum+"&outFields="+outFields+"&f=pjson";
+                    aa.print("finalUrl: "+ finalUrl);
+                    var JSONObj = getServiceData(finalUrl);
+                    if(typeof (JSONObj.features)!== 'undefined') {
+                        var attributes = JSONObj.features[0].attributes;
+                        for (var i in attributes) {
+                            if (attributes[i] && attributes[i] != "" && attributes[i] != " " && attributes[i] != 0) {
+                                if(i == "BASEZONE")
+                                    baseZone = attributes[i];
+                                if(i == "MIN_PAR")
+                                    minPar = attributes[i];
+                            }
+                        }
+                    }
+                }
             }
         }
-        return asitTables;
     }
-    return false;
+    if(baseZone!="" && minPar!="")
+    {
+        return [baseZone, minPar];
+    }
+    return null;
+}function getServiceData(url) {
+    try {
+        var resObj = null;
+        var result = aa.httpClient.get(url);
+        if (result.getSuccess()) {
+            var response = result.getOutput();
+            //logDebug("  getServiceData returned data");
+            //aa.print("getServiceData:returned data: " + response);
+            var resObj = JSON.parse(response);
+        } else {
+            aa.print("getServiceData:no data returned");
+        }
+        return resObj;
+    } catch (err) {
+        aa.print("Exception getting attribute values " + err)
+    }
 }
