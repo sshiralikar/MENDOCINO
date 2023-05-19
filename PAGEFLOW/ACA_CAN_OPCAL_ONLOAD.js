@@ -107,7 +107,7 @@ try {
         var newTable = new Array();
 
         var vRow = new Array();
-        vRow["Month"] = new asiTableValObj("Month","January", "N");
+        vRow["Month"] = new asiTableValObj("Month","January", "Y");
         vRow["Activity"] = new asiTableValObj("Activity", "", "N");
         vRow["Approximate Date"] = new asiTableValObj("Approximate Date", "", "N");
         newTable.push(vRow);
@@ -179,7 +179,7 @@ try {
         newTable.push(vRow);
 
         var vToASITGroup = cap.getAppSpecificTableGroupModel();
-        addASITable4ACAPageFlow_local(vToASITGroup, "OPERATIONS CALENDAR", newTable);
+        addASITable4ACAPageFlow(vToASITGroup, "OPERATIONS CALENDAR", newTable);
     }
 } catch (err) {
 
@@ -264,7 +264,7 @@ function addASITable4ACAPageFlow_local(destinationTableGroupModel, tableName, ta
                 fldToAdd.setFieldGroup(tableName.replace(/ /g, "\+"));
                 fldToAdd.setReadOnly(true);
                 fld.add(fldToAdd);
-                fld_readonly.add("Y");
+                fld_readonly.add("N");
 
             } else // we are passed a string
             {
@@ -275,7 +275,7 @@ function addASITable4ACAPageFlow_local(destinationTableGroupModel, tableName, ta
                 fldToAdd.setFieldGroup(tableName.replace(/ /g, "\+"));
                 fldToAdd.setReadOnly(true);
                 fld.add(fldToAdd);
-                fld_readonly.add("Y");
+                fld_readonly.add("N");
 
             }
         }
