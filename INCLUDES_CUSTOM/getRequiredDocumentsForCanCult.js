@@ -398,5 +398,29 @@ function getRequiredDocumentsForCanCult() {
 
 
 
+    var waterAvailability = {
+        condition: "Water Availability Analysis",
+        document: "Water Availability Analysis",
+        workflow: wfStopPermanentOnly
+    };
+    var strTable = loadASITable("WATER SOURCE");
+    if (typeof(WATERSOURCE) == "object")
+        wtrTable = WATERSOURCE;
+    var waterAnalysisFlag = false;
+    if(wtrTable && wtrTable.length > 0)
+    {
+        for(var i in strTable)
+        {
+            if(wtrTable[i]["Type of Structure"] != "Water Hauler Service Provider"
+                || wtrTable[i]["Type of Structure"] != "Community Provider")
+                waterAnalysisFlag = true;
+        }
+    }
+    var zv = getZoningDistrictFromGISTable();
+    if(zv && zv.toUpperCase() == "AG")
+        waterAnalysisFlag = true;
+    if(waterAnalysisFlag)
+        requirementArray.push(waterAvailability);
+
     return requirementArray;
 }
