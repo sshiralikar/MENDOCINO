@@ -35,11 +35,11 @@ try
                         if( attributes[i] &&  attributes[i]!="" &&  attributes[i]!= " " &&  attributes[i]!=0)
                         {
                             var vRow = new Array();
-                            vRow["APN Number"] = new asiTableValObj("APN Number", parcelNum+"", "N");
-                            vRow["Attribute Name"] = new asiTableValObj("Attribute Name", i+"", "N");
-                            vRow["Attribute Value"] = new asiTableValObj("Attribute Value", attributes[i]+"", "N");
-                            vRow["Last Refreshed On"] = new asiTableValObj("Last Refreshed On", newDate, "N");
-                            vRow["Source"] = new asiTableValObj("Source", layer, "N");
+                            vRow["APN Number"] = new asiTableValObj("APN Number", parcelNum+"", "Y");
+                            vRow["Attribute Name"] = new asiTableValObj("Attribute Name", i+"", "Y");
+                            vRow["Attribute Value"] = new asiTableValObj("Attribute Value", attributes[i]+"", "Y");
+                            vRow["Last Refreshed On"] = new asiTableValObj("Last Refreshed On", newDate, "Y");
+                            vRow["Source"] = new asiTableValObj("Source", layer, "Y");
                             newTable.push(vRow);
                         }
                     }
