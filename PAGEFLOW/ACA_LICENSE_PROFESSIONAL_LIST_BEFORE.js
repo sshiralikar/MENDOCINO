@@ -103,8 +103,12 @@ loadAppSpecific4ACA(AInfo); // Add AppSpecific Info
 
 try {
     if (appMatch("Cannabis/Cultivation/Application/*", capId)) {
+        cancel = true;
+        showMessage = true;
+
         var stateLicenses = AInfo["How many State Licenses"];
         var checkLP = checkLP();
+        logDebug("SHASHANK DEBUG: "+ checkLP);
         if (!checkLP || checkLP.size() != parseInt(stateLicenses)) {
             showMessage = true;
             comment('There should be a total of <b>'+stateLicenses+'</b> license(s), you have entered <b>'+checkLP.size()+'</b>.');
