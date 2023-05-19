@@ -409,7 +409,7 @@ function getRequiredDocumentsForCanCult() {
     var waterAnalysisFlag = false;
     if(wtrTable && wtrTable.length > 0)
     {
-        for(var i in strTable)
+        for(var i in wtrTable )
         {
             if(wtrTable[i]["Water Source Type"] != "Water Hauler Service Provider"
                 || wtrTable[i]["Water Source Type"] != "Community Provider")
