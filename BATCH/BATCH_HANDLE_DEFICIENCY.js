@@ -227,7 +227,8 @@ function mainProcess()
                                 + sevenDayDate.getFullYear();
 
 
-                            if (fTask.getDisposition() && fTask.getDisposition().toUpperCase().equals("DEFICIENCY")
+                            if (fTask.getDisposition() && fTask.getTaskDescription()+"" != "Cannabis Review"
+                                && fTask.getDisposition().toUpperCase().equals("DEFICIENCY")
                                 && (getTaskDueDateX(fTask.getTaskDescription()+"") == sevenDayDateStr
                                     || getTaskDueDateX(fTask.getTaskDescription()+"") == sevenDayDateStrX
                                     || getTaskDueDateX(fTask.getTaskDescription()+"") == threeDayDateStr
