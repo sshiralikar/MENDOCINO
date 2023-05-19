@@ -1,5 +1,5 @@
 /*------------------------------------------------------------------------------------------------------/
-| Program : ACA_LICENSE_PROFESSIONAL_LIST_BEFORE.js
+| Program : ACA_CAN_PERMIT_TYPE_BEFORE.js
 | Event   : ACA Page Flow before
 |
 | Usage   : Master Script by Accela.  See accompanying documentation and release notes.
@@ -103,7 +103,7 @@ loadAppSpecific4ACA(AInfo); // Add AppSpecific Info
 try {
     if (appMatch("Cannabis/Cultivation/Application/*", capId)) {
         var stateLicenses = AInfo["How many State Licenses"];
-        var checkLP = checkLPRules();
+        var checkLP = checkLP();
         if (!checkLP) {
             showMessage = true;
             comment('There should be a total of <b>'+stateLicenses+'</b> license(s), you have entered <b>0</b>.');
@@ -115,13 +115,13 @@ try {
             cancel = true;
 
         }
-    }
-    else if (appMatch("Cannabis/Nursery/Application/NA", capId)) {
-        var checkLP = checkLPRules();
-        if (!checkLP || (checkLP && checkLP.size() > 1)) {
-            showMessage = true;
-            comment('Please enter one row for a nursery license.');
-            cancel = true;
+        else if (appMatch("Cannabis/Nursery/Application/NA", capId)) {
+            if (!checkLP || (checkLP && checkLP.size() > 1)) {
+                showMessage = true;
+                comment('Please enter one row for a nursery license.');
+                cancel = true;
+
+            }
         }
     }
 } catch (err) {
@@ -153,7 +153,7 @@ if (debug.indexOf("**ERROR") > 0) {
     }
 }
 
-function checkLPRules() {
+function checkLP() {
     var licArr = cap.getLicenseProfessionalList();
     if (licArr == null || licArr.size() == 0) {
         return false;
