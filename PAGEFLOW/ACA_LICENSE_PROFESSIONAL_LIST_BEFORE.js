@@ -100,23 +100,23 @@ loadAppSpecific4ACA(AInfo); // Add AppSpecific Info
 //loadParcelAttributes(AInfo);            // Add parcel attributes
 //loadASITables();
 // page flow custom code begin
-
 try {
     if (appMatch("Cannabis/Cultivation/Application/*", capId)) {
-        cancel = true;
-        showMessage = true;
-
         var stateLicenses = AInfo["How many State Licenses"];
         var checkLP = checkLP();
-        logDebug("SHASHANK DEBUG: "+ checkLP);
-        if (!checkLP || checkLP.size() != parseInt(stateLicenses)) {
+        if (!checkLP) {
+            showMessage = true;
+            comment('There should be a total of <b>'+stateLicenses+'</b> license(s), you have entered <b>0</b>.');
+            cancel = true;
+        }
+        if (checkLP && checkLP.size() != parseInt(stateLicenses)) {
             showMessage = true;
             comment('There should be a total of <b>'+stateLicenses+'</b> license(s), you have entered <b>'+checkLP.size()+'</b>.');
             cancel = true;
 
         }
         else if (appMatch("Cannabis/Nursery/Application/NA", capId)) {
-            if (!checkLP || checkLP.size() > 1) {
+            if (!checkLP || (checkLP && checkLP.size() > 1)) {
                 showMessage = true;
                 comment('Please enter one row for a nursery license.');
                 cancel = true;
