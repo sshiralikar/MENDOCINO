@@ -403,7 +403,7 @@ function getRequiredDocumentsForCanCult() {
         document: "Water Availability Analysis",
         workflow: wfStopPermanentOnly
     };
-    var strTable = loadASITable("WATER SOURCE");
+    var wtrTable = loadASITable("WATER SOURCE");
     if (typeof(WATERSOURCE) == "object")
         wtrTable = WATERSOURCE;
     var waterAnalysisFlag = false;
