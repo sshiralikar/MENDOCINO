@@ -149,13 +149,9 @@ try {
     var operationsCounter;
     operationsCounter = operationsCalendar.length;
     for (var i in operationsCalendar) {
-        rows++;
-        /*if (operationsCalendar[i]["Activity"] == "") {
-            showMessage = true;
-            comment("No Activity");
-            cancel = true;
-        }*/
-
+        if (operationsCalendar[i]["Activity"] != "" && operationsCalendar[i]["Activity"] != null) {
+            rows++;
+        }
     }
     if (rows != 12 || operationsCounter == 0 || !operationsCalendar) {
         showMessage = true;

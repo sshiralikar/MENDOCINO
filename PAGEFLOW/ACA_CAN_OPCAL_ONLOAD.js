@@ -101,84 +101,86 @@ loadAppSpecific4ACA(AInfo); // Add AppSpecific Info
 //loadASITables();
 // page flow custom code begin
 try {
-    var newTable = new Array();
+    var operationsCalendar = getASITablesRowsFromSession4ACA("OPERATIONS CALENDAR");
+    if(!operationsCalendar)
+    {
+        var newTable = new Array();
 
-    var vRow = new Array();
-    vRow["Month"] = new asiTableValObj("Month","January", "Y");
-    vRow["Activity"] = new asiTableValObj("Activity", "", "N");
-    vRow["Approximate Date"] = new asiTableValObj("Approximate Date", "", "N");
-    newTable.push(vRow);
+        var vRow = new Array();
+        vRow["Month"] = new asiTableValObj("Month","January", "Y");
+        vRow["Activity"] = new asiTableValObj("Activity", "", "N");
+        vRow["Approximate Date"] = new asiTableValObj("Approximate Date", "", "N");
+        newTable.push(vRow);
 
-    var vRow = new Array();
-    vRow["Month"] = new asiTableValObj("Month","February", "Y");
-    vRow["Activity"] = new asiTableValObj("Activity", "", "N");
-    vRow["Approximate Date"] = new asiTableValObj("Approximate Date", "", "N");
-    newTable.push(vRow);
+        var vRow = new Array();
+        vRow["Month"] = new asiTableValObj("Month","February", "Y");
+        vRow["Activity"] = new asiTableValObj("Activity", "", "N");
+        vRow["Approximate Date"] = new asiTableValObj("Approximate Date", "", "N");
+        newTable.push(vRow);
 
-    var vRow = new Array();
-    vRow["Month"] = new asiTableValObj("Month","March", "Y");
-    vRow["Activity"] = new asiTableValObj("Activity", "", "N");
-    vRow["Approximate Date"] = new asiTableValObj("Approximate Date", "", "N");
-    newTable.push(vRow);
+        var vRow = new Array();
+        vRow["Month"] = new asiTableValObj("Month","March", "Y");
+        vRow["Activity"] = new asiTableValObj("Activity", "", "N");
+        vRow["Approximate Date"] = new asiTableValObj("Approximate Date", "", "N");
+        newTable.push(vRow);
 
-    var vRow = new Array();
-    vRow["Month"] = new asiTableValObj("Month","April", "Y");
-    vRow["Activity"] = new asiTableValObj("Activity", "", "N");
-    vRow["Approximate Date"] = new asiTableValObj("Approximate Date", "", "N");
-    newTable.push(vRow);
+        var vRow = new Array();
+        vRow["Month"] = new asiTableValObj("Month","April", "Y");
+        vRow["Activity"] = new asiTableValObj("Activity", "", "N");
+        vRow["Approximate Date"] = new asiTableValObj("Approximate Date", "", "N");
+        newTable.push(vRow);
 
-    var vRow = new Array();
-    vRow["Month"] = new asiTableValObj("Month","May", "Y");
-    vRow["Activity"] = new asiTableValObj("Activity", "", "N");
-    vRow["Approximate Date"] = new asiTableValObj("Approximate Date", "", "N");
-    newTable.push(vRow);
+        var vRow = new Array();
+        vRow["Month"] = new asiTableValObj("Month","May", "Y");
+        vRow["Activity"] = new asiTableValObj("Activity", "", "N");
+        vRow["Approximate Date"] = new asiTableValObj("Approximate Date", "", "N");
+        newTable.push(vRow);
 
-    var vRow = new Array();
-    vRow["Month"] = new asiTableValObj("Month","June", "Y");
-    vRow["Activity"] = new asiTableValObj("Activity", "", "N");
-    vRow["Approximate Date"] = new asiTableValObj("Approximate Date", "", "N");
-    newTable.push(vRow);
+        var vRow = new Array();
+        vRow["Month"] = new asiTableValObj("Month","June", "Y");
+        vRow["Activity"] = new asiTableValObj("Activity", "", "N");
+        vRow["Approximate Date"] = new asiTableValObj("Approximate Date", "", "N");
+        newTable.push(vRow);
 
-    var vRow = new Array();
-    vRow["Month"] = new asiTableValObj("Month","July", "Y");
-    vRow["Activity"] = new asiTableValObj("Activity", "", "N");
-    vRow["Approximate Date"] = new asiTableValObj("Approximate Date", "", "N");
-    newTable.push(vRow);
+        var vRow = new Array();
+        vRow["Month"] = new asiTableValObj("Month","July", "Y");
+        vRow["Activity"] = new asiTableValObj("Activity", "", "N");
+        vRow["Approximate Date"] = new asiTableValObj("Approximate Date", "", "N");
+        newTable.push(vRow);
 
-    var vRow = new Array();
-    vRow["Month"] = new asiTableValObj("Month","August", "Y");
-    vRow["Activity"] = new asiTableValObj("Activity", "", "N");
-    vRow["Approximate Date"] = new asiTableValObj("Approximate Date", "", "N");
-    newTable.push(vRow);
+        var vRow = new Array();
+        vRow["Month"] = new asiTableValObj("Month","August", "Y");
+        vRow["Activity"] = new asiTableValObj("Activity", "", "N");
+        vRow["Approximate Date"] = new asiTableValObj("Approximate Date", "", "N");
+        newTable.push(vRow);
 
-    var vRow = new Array();
-    vRow["Month"] = new asiTableValObj("Month","September", "Y");
-    vRow["Activity"] = new asiTableValObj("Activity", "", "N");
-    vRow["Approximate Date"] = new asiTableValObj("Approximate Date", "", "N");
-    newTable.push(vRow);
+        var vRow = new Array();
+        vRow["Month"] = new asiTableValObj("Month","September", "Y");
+        vRow["Activity"] = new asiTableValObj("Activity", "", "N");
+        vRow["Approximate Date"] = new asiTableValObj("Approximate Date", "", "N");
+        newTable.push(vRow);
 
-    var vRow = new Array();
-    vRow["Month"] = new asiTableValObj("Month","October", "Y");
-    vRow["Activity"] = new asiTableValObj("Activity", "", "N");
-    vRow["Approximate Date"] = new asiTableValObj("Approximate Date", "", "N");
-    newTable.push(vRow);
+        var vRow = new Array();
+        vRow["Month"] = new asiTableValObj("Month","October", "Y");
+        vRow["Activity"] = new asiTableValObj("Activity", "", "N");
+        vRow["Approximate Date"] = new asiTableValObj("Approximate Date", "", "N");
+        newTable.push(vRow);
 
-    var vRow = new Array();
-    vRow["Month"] = new asiTableValObj("Month","November", "Y");
-    vRow["Activity"] = new asiTableValObj("Activity", "", "N");
-    vRow["Approximate Date"] = new asiTableValObj("Approximate Date", "", "N");
-    newTable.push(vRow);
+        var vRow = new Array();
+        vRow["Month"] = new asiTableValObj("Month","November", "Y");
+        vRow["Activity"] = new asiTableValObj("Activity", "", "N");
+        vRow["Approximate Date"] = new asiTableValObj("Approximate Date", "", "N");
+        newTable.push(vRow);
 
-    var vRow = new Array();
-    vRow["Month"] = new asiTableValObj("Month","December", "Y");
-    vRow["Activity"] = new asiTableValObj("Activity", "", "N");
-    vRow["Approximate Date"] = new asiTableValObj("Approximate Date", "", "N");
-    newTable.push(vRow);
+        var vRow = new Array();
+        vRow["Month"] = new asiTableValObj("Month","December", "Y");
+        vRow["Activity"] = new asiTableValObj("Activity", "", "N");
+        vRow["Approximate Date"] = new asiTableValObj("Approximate Date", "", "N");
+        newTable.push(vRow);
 
-    var vToASITGroup = cap.getAppSpecificTableGroupModel();
-    addASITable4ACAPageFlow_local(vToASITGroup, "OPERATIONS CALENDAR", newTable);
-
-
+        var vToASITGroup = cap.getAppSpecificTableGroupModel();
+        addASITable4ACAPageFlow_local(vToASITGroup, "OPERATIONS CALENDAR", newTable);
+    }
 } catch (err) {
 
     logDebug(err);
@@ -295,4 +297,57 @@ function addASITable4ACAPageFlow_local(destinationTableGroupModel, tableName, ta
 
     tssm = tsm;
     return destinationTableGroupModel;
+}
+
+function getASITablesRowsFromSession4ACA(tableName) {
+    var gm = null;
+    if (String(cap.getClass()).indexOf("CapScriptModel") != -1) {
+        gm = cap.getCapModel().getAppSpecificTableGroupModel();
+    } else {
+        gm = cap.getAppSpecificTableGroupModel();
+    }
+    if (gm == null) {
+        return false;
+    }
+    var ta = gm.getTablesMap();
+    var tai = ta.values().iterator();
+    while (tai.hasNext()) {
+        var tsm = tai.next();
+        if (tsm.rowIndex.isEmpty())
+            continue;
+
+        var asitRow = new Array;
+        var asitTables = new Array;
+        var tn = tsm.getTableName();
+        if (tn != tableName) {
+            continue;
+        }
+
+        var tsmfldi = tsm.getTableField().iterator();
+        var tsmcoli = tsm.getColumns().iterator();
+        while (tsmfldi.hasNext()) {
+
+            var tcol = tsmcoli.next();
+            var tval = tsmfldi.next();
+
+            asitRow[tcol.getColumnName()] = tval;
+
+            if (!tsmcoli.hasNext()) {
+                tsmcoli = tsm.getColumns().iterator();
+                asitTables.push(asitRow);
+                asitRow = new Array;
+            }
+        }
+        return asitTables;
+    }
+    return false;
+}
+
+function matches(eVal, argList) {
+    for (var i = 1; i < arguments.length; i++) {
+        if (arguments[i] == eVal) {
+            return true;
+        }
+    }
+    return false;
 }
