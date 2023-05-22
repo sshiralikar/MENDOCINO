@@ -1,9 +1,9 @@
 var rParams = aa.util.newHashMap();
 currentUserID = "ADMIN";
-var licCapId = aa.cap.getCapID(aa.env.getValue("RecordID")+"").getOutput();
-rParams.put("RecordID", aa.env.getValue("RecordID")+"");
-rParams.put("IssueDT", aa.env.getValue("IssueDT")+"");
-rParams.put("ExpireDT", aa.env.getValue("ExpireDT")+"");
+var licCapId = aa.cap.getCapID(aa.env.getValue("RecordID")).getOutput();
+rParams.put("RecordID", aa.env.getValue("RecordID"));
+rParams.put("IssueDT", aa.env.getValue("IssueDT"));
+rParams.put("ExpireDT", aa.env.getValue("ExpireDT"));
 
 var report = aa.reportManager.getReportInfoModelByName("Cannabis Permit Report");
 report = report.getOutput();
