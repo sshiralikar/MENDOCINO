@@ -22,7 +22,7 @@ if (contactResult.getSuccess()) {
             report.setCapId(capId.getID1() + "-" + capId.getID2() + "-" + capId.getID3());
             report.setReportParameters(rParams);
             report.getEDMSEntityIdModel().setAltId(capId.getCustomID());
-            var permit = aa.reportManager.hasPermission("Cannabis Permit Report",reportUser);
+            var permit = aa.reportManager.hasPermission("Cannabis Inspection Report",reportUser);
 
             if (permit.getOutput().booleanValue()) {
                 var reportResult = aa.reportManager.getReportResult(report);

@@ -39,32 +39,11 @@ if(wfTask == "Supervisor Review" && wfStatus == "Issued")
         var balanceDue = capDetail.getBalance();
         if(balanceDue <= 0)
         {
-            var rParams = aa.util.newHashMap();
-            rParams.put("RecordID", licCapId.getCustomID()+"");
-            rParams.put("IssueDT", sysDateMMDDYYYY);
-            rParams.put("ExpireDT", newDate);
-            logDebug("Report parameter RecordID set to: "+ licCapId.getCustomID()+"");
-            var report = aa.reportManager.getReportInfoModelByName("Cannabis Permit Report");
-            report = report.getOutput();
-            report.setModule("Cannabis");
-            report.setCapId(licCapId.getID1() + "-" + licCapId.getID2() + "-" + licCapId.getID3());
-            report.setReportParameters(rParams);
-            report.getEDMSEntityIdModel().setAltId(licCapId.getCustomID());
-
-
-            var permit = aa.reportManager.hasPermission("Cannabis Permit Report",currentUserID);
-
-            if (permit.getOutput().booleanValue()) {
-                logDebug("User has Permission to run the report....");
-                var reportResult = aa.reportManager.getReportResult(report);
-                if(reportResult) {
-                    reportOutput = reportResult.getOutput();
-                    var reportFile=aa.reportManager.storeReportToDisk(reportOutput);
-                    logDebug("Report Run Successfull:"+ reportFile.getSuccess());
-                    reportFile=reportFile.getOutput();
-                }
-            }
-
+            var envParameters = aa.util.newHashMap();
+            envParameters.put("RecordID", licCapId.getCustomID()+"");
+            envParameters.put("IssueDT", sysDateMMDDYYYY);
+            envParameters.put("ExpireDT", newDate);
+            aa.runAsyncScript("RUN_ASYNC_PERMIT_REPORT", envParameters);
 
             var conName = "";
             var contactResult = aa.people.getCapContactByCapID(capId);
