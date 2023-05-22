@@ -117,10 +117,23 @@ try {
         }
     }
     else if (appMatch("Cannabis/Nursery/*/*", capId)) {
-        var checkLP = checkLPRules();
-        if (!checkLP || (checkLP && checkLP.size() > 1)) {
+        var lpsAdded = 0;
+        var stateLicenses = AInfo["How many State Licenses"];
+        var lpList = cap.getLicenseProfessionalList();
+        if (lpList != null) {
+            for (var i = 0; i < lpList.size(); i++) {
+                if(lpList.get(i).getLicenseType() == "Cultivation - Nursery")
+                    lpsAdded ++;
+            }
+        }
+        if (lpsAdded == 0) {
             showMessage = true;
-            comment('Please enter one row for a nursery license.');
+            comment('There should be a total of <b>'+stateLicenses+'</b> license(s) of type <b>"Cultivation - Nursery"</b>, you have entered <b>0</b>.');
+            cancel = true;
+        }
+        if (checkLP && checkLP.size() != parseInt(stateLicenses)) {
+            showMessage = true;
+            comment('There should be a total of <b>'+stateLicenses+'</b> license(s) of type <b>"Cultivation - Nursery"</b>, you have entered <b>'+lpsAdded+'</b>.');
             cancel = true;
         }
     }
