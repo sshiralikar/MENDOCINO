@@ -131,7 +131,7 @@ try {
             comment('There should be a total of <b>'+stateLicenses+'</b> license(s) of type <b>"Cultivation - Nursery"</b>, you have entered <b>0</b>.');
             cancel = true;
         }
-        if (lpsAdded != parseInt(stateLicenses)) {
+        else if (lpsAdded != parseInt(stateLicenses)) {
             showMessage = true;
             comment('There should be a total of <b>'+stateLicenses+'</b> license(s) of type <b>"Cultivation - Nursery"</b>, you have entered <b>'+lpsAdded+'</b>.');
             cancel = true;
