@@ -158,7 +158,7 @@ if(wfTask == "Supervisor Review" && wfStatus == "Denied")
     }
     else
     {*/
-        var VRFiles = null;
+        var VRFiles = [];
         var rParams = aa.util.newHashMap();
         rParams.put("RecordID", capId.getCustomID()+"");
         logDebug("Report parameter RecordID set to: "+ capId.getCustomID()+"");

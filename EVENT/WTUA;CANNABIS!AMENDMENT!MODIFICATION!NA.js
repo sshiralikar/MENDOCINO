@@ -158,6 +158,7 @@ if(wfStatus == "Modification Required") {
 if(wfTask == "Supervisor Review" && wfStatus == "Denied")
 {
     var licCapId = getParent();
+    VRFiles = [];
     var rParams = aa.util.newHashMap();
     rParams.put("RecordID", capId.getCustomID()+"");
     logDebug("Report parameter RecordID set to: "+ capId.getCustomID()+"");
