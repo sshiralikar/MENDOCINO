@@ -4,7 +4,11 @@ function getZoningDistrictFromGISTable()
     currentUserID = "ADMIN";
     if(cap == null)
         cap = aa.cap.getCap(capId).getOutput().getCapModel();
-    var capParcelObj = cap.getParcelModel();
+    var capParcelObj = null;
+    if(cap.getClass() == "com.accela.aa.emse.dom.CapScriptModel")
+        capParcelObj = cap.getCapModel().getParcelModel();
+    else
+        capParcelObj = cap.getParcelModel();
     if(capParcelObj && capParcelObj.getParcelNumber())
     {
         var parcelNum = capParcelObj.getParcelNumber();
