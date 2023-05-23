@@ -282,9 +282,10 @@ if(wfTask == "Issuance" && wfStatus == "Issued")
 //CAMEND-392
 if(wfTask == "Supervisor Review" && wfStatus == "Deficiency")
 {
-    var date = getCapFileDate(capId);
-    if(isDateInRangeToOct(date) || isDateInRangeToFeb(date) || isDateInRangeCurr(date))
-    {
+    //var date = getCapFileDate(capId);
+    //if(isDateInRangeToOct(date) || isDateInRangeToFeb(date) || isDateInRangeCurr(date))
+    //{
+        var rFiles = [];
         var hm = new Array();
         var conName = "";
         var rParams = aa.util.newHashMap();
@@ -308,6 +309,7 @@ if(wfTask == "Supervisor Review" && wfStatus == "Deficiency")
                 var reportFile=aa.reportManager.storeReportToDisk(reportOutput);
                 logDebug("Report Run Successfull:"+ reportFile.getSuccess());
                 reportFile=reportFile.getOutput();
+                rFiles.push(reportFile);
             }
         }
         var contactResult = aa.people.getCapContactByCapID(capId);
@@ -333,13 +335,13 @@ if(wfTask == "Supervisor Review" && wfStatus == "Deficiency")
                     addParameter(params, "$$ACAURL$$", String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0]);
                     if(hm[capContacts[i].getPeople().getEmail() + ""] != 1) {
 
-                        sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail() + "", "", "CAN_DEFICIENCY", params, null, capId);
+                        sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail() + "", "", "CAN_DEFICIENCY", params, rFiles, capId);
                         hm[capContacts[i].getPeople().getEmail() + ""] = 1;
                     }
                 }
             }
         }
-    }
+    //}
 }
 
 

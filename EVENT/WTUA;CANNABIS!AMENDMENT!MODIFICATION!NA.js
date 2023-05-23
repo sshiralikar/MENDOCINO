@@ -48,6 +48,14 @@ if(wfTask == "Supervisor Review" && wfStatus == "Issued")
         var balanceDue = capDetail.getBalance();
         if(balanceDue <= 0)
         {
+            var today = new Date();
+            today.setFullYear(today.getFullYear() + 1);
+            var newDate = today.getMonth()+1+"/"+today.getDate()+"/"+today.getFullYear();
+            var envParameters = aa.util.newHashMap();
+            envParameters.put("RecordID", licCapId.getCustomID()+"");
+            envParameters.put("IssueDT", sysDateMMDDYYYY);
+            envParameters.put("ExpireDT", newDate);
+            aa.runAsyncScript("RUN_ASYNC_PERMIT_REPORT", envParameters);
             var conName = "";
             var contactResult = aa.people.getCapContactByCapID(licCapId);
             if (contactResult.getSuccess()) {
@@ -58,7 +66,7 @@ if(wfTask == "Supervisor Review" && wfStatus == "Issued")
                         conName = getContactName(capContacts[i]);
 
 
-                        var rParams = aa.util.newHashMap();
+                       /* var rParams = aa.util.newHashMap();
                         rParams.put("RecordID", licCapId.getCustomID()+"");
 
                         var report = aa.reportManager.getReportInfoModelByName("Cannabis Permit Report");
@@ -77,7 +85,7 @@ if(wfTask == "Supervisor Review" && wfStatus == "Issued")
                                 var reportFile=aa.reportManager.storeReportToDisk(reportOutput);
                                 reportFile=reportFile.getOutput();
                             }
-                        }
+                        }*/
 
                         var params = aa.util.newHashtable();
                         addParameter(params, "$$altID$$", capId.getCustomID()+"");
@@ -292,8 +300,9 @@ if(wfStatus == "Deficiency")
 //CAMEND-392
 if(wfTask == "Supervisor Review" && wfStatus == "Deficiency")
 
-    var date = getCapFileDate(capId);
-if(isDateInRangeToOct(date) || isDateInRangeToFeb(date) || isDateInRangeCurr(date)) {
+    //var date = getCapFileDate(capId);
+    //if(isDateInRangeToOct(date) || isDateInRangeToFeb(date) || isDateInRangeCurr(date)) {
+    var rFiles = [];
     var hm = new Array();
     var conName = "";
     var rParams = aa.util.newHashMap();
@@ -317,6 +326,7 @@ if(isDateInRangeToOct(date) || isDateInRangeToFeb(date) || isDateInRangeCurr(dat
             var reportFile=aa.reportManager.storeReportToDisk(reportOutput);
             logDebug("Report Run Successfull:"+ reportFile.getSuccess());
             reportFile=reportFile.getOutput();
+            rFiles.push(reportFile);
         }
     }
     var contactResult = aa.people.getCapContactByCapID(capId);
@@ -342,12 +352,12 @@ if(isDateInRangeToOct(date) || isDateInRangeToFeb(date) || isDateInRangeCurr(dat
                 addParameter(params, "$$ACAURL$$", String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0]);
                 if(hm[capContacts[i].getPeople().getEmail() + ""] != 1) {
 
-                    sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail() + "", "", "CAN_DEFICIENCY", params, null, capId);
+                    sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail() + "", "", "CAN_DEFICIENCY", params, rFiles, capId);
                     hm[capContacts[i].getPeople().getEmail() + ""] = 1;
                 }
             }
         }
-    }
+    //}
 }
 
 

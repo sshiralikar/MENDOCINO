@@ -1,4 +1,4 @@
-if(wfStatus == "Deficiency")
+if(wfTask!="Supervisor Review" && wfStatus == "Deficiency")
 {
     var hm = new Array();
     var conName = "";
