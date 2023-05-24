@@ -19,7 +19,13 @@ if(wfTask == "Supervisor Review" && wfStatus == "Issued")
     //copyDocuments(capId, licCapId);
     try
     {
-        setRecordAltID(licCapId);
+        var newAltId = String(capId.getCustomID()).split("-APP")[0];
+        var updateResult = aa.cap.updateCapAltID(licCapId, newAltId);
+        if(!updateResult.getSuccess()){
+            aa.print("Error updating Alt Id: " + newAltId + ":: " +updateResult.getErrorMessage());
+        }else{
+            aa.print("Compliance Method record ID updated to : " + newAltId);
+        }
         updateShortNotes("PH3",licCapId);
     }
     catch (err)
