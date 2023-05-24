@@ -55,6 +55,8 @@ if(wfTask == "Supervisor Review" && wfStatus == "Issued")
         if(balanceDue <= 0)
         {
             var envParameters = aa.util.newHashMap();
+            logDebug("licCapId1: "+ licCapId.getCustomID()+"");
+            logDebug("licCapId2: "+ aa.cap.getCapID(licCapId.ID1,licCapId.ID2,licCapId.ID3).getOutput().getCustomID()+"");
             envParameters.put("RecordID", licCapId.getCustomID()+"");
             envParameters.put("IssueDT", sysDateMMDDYYYY);
             envParameters.put("ExpireDT", newDate);
