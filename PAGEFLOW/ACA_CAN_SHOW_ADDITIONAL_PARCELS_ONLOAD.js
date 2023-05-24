@@ -150,7 +150,7 @@ try {
     var cap = aa.env.getValue("CapModel");
     var capId = cap.getCapID();
 
-    if(AInfo["Partial Parcel Area"] != "Yes" && AInfo["More than one parcel"] != "Yes")
+    if(AInfo["More than one parcel"] != "Yes")
     {
         aa.env.setValue("ReturnData", "{'PageFlow':{'HidePage':'Y'}}");
     }
