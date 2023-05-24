@@ -17,7 +17,16 @@ if(wfTask == "Supervisor Review" && wfStatus == "Issued")
     copyLicensedProf(capId, licCapId);
     copyConditions(capId, licCapId);
     //copyDocuments(capId, licCapId);
-
+    try
+    {
+        setRecordAltID(licCapId);
+        editAppName("PH3",licCapId);
+    }
+    catch (err)
+    {
+        aa.print("Error on changing sequence ASA: "+ err);
+        aa.sendMail("no-reply@mendocinocounty.gov", "sshiralikar@trustvip.com", "", "Error on changing sequence CTRCA", err);
+    }
     var c = new Date();
     c.setFullYear(c.getFullYear() + 1);
     var newDate = c.getMonth()+1+"/"+c.getDate()+"/"+c.getFullYear();

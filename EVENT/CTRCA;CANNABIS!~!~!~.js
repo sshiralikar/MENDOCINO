@@ -28,6 +28,16 @@ if(appTypeArray[1]=="Amendment" || appTypeArray[2]=="Application" || appTypeArra
         }
     }
 }
+try
+{
+    setRecordAltID(capId);
+    editAppName("PH3");
+}
+catch (err)
+{
+    aa.print("Error on changing sequence ASA: "+ err);
+    aa.sendMail("no-reply@mendocinocounty.gov", "sshiralikar@trustvip.com", "", "Error on changing sequence CTRCA", err);
+}
 //Populate Geographic Information
 include("POPULATE_GEOGRAPHIC_INFORMATION");
 //Populate Geographic Information
