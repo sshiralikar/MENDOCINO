@@ -101,7 +101,7 @@ loadAppSpecific4ACA(AInfo); // Add AppSpecific Info
 //loadASITables();
 // page flow custom code begin
 try {
-    if(parseInt(AInfo["Parcel Acreage"]) < 10)
+    if(parseInt(AInfo["Parcel Acreage"]) < 2)
     {
         cancel = true;
         showMessage = true;
