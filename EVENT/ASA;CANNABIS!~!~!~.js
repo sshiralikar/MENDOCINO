@@ -34,7 +34,7 @@ try
     if(!publicUser)
     {
         setRecordAltID(capId);
-        editAppName("PH3");
+        updateShortNotes("PH3");
     }
 }
 catch (err)

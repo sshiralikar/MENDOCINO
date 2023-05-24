@@ -31,7 +31,7 @@ if(appTypeArray[1]=="Amendment" || appTypeArray[2]=="Application" || appTypeArra
 try
 {
     setRecordAltID(capId);
-    editAppName("PH3");
+    updateShortNotes("PH3");
 }
 catch (err)
 {

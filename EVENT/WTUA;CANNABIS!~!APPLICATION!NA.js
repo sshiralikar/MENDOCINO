@@ -20,7 +20,7 @@ if(wfTask == "Supervisor Review" && wfStatus == "Issued")
     try
     {
         setRecordAltID(licCapId);
-        editAppName("PH3",licCapId);
+        updateShortNotes("PH3",licCapId);
     }
     catch (err)
     {
