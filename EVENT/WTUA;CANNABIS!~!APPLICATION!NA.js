@@ -47,6 +47,7 @@ if(wfTask == "Supervisor Review" && wfStatus == "Issued")
     editAppSpecific("Issued Date", sysDateMMDDYYYY,licCapId);
 
     updateAppStatus("Active","Updating via Script",licCapId);
+    updateAppStatus("Issued","Updating via Script",capId);
 
     var capDetailObjResult = aa.cap.getCapDetail(capId); // Detail
     if (capDetailObjResult.getSuccess()) {
