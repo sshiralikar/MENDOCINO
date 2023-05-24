@@ -183,6 +183,16 @@ try {
             messageList += "Please add a row with 'Type of Structure': 'Septic/Leach' in the following table: " + "Structure/Site Plan ID" + br;
         }
     }
+    if(AInfo["Structure Change"] == "Yes")
+    {
+        var structureCounter;
+        if (typeof(STRUCTURESITEPLANIDLIST) == "object") {
+            structureCounter = STRUCTURESITEPLANIDLIST.length;
+        }
+        if (structureCounter < 1) {
+            messageList += "You must enter at least one row in the following table: " + "Structure/Site Plan ID" + br;
+        }
+    }
 
     if (messageList != "") {
         cancel = true;
