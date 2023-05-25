@@ -101,30 +101,35 @@ loadAppSpecific4ACA(AInfo); // Add AppSpecific Info
 //loadASITables();
 // page flow custom code begin
 try {
-    var parentCapId = getParent(capId);
-    var newTable = new Array();
-    var empList = loadASITable("EMPLOYEE LIST",parentCapId);
-    if(empList && empList.length > 0)
+    var operationsCalendar = getASITablesRowsFromSession4ACA("EMPLOYEE LIST");
+    if(!operationsCalendar)
     {
-        for(var i in empList)
+        var parentCapId = getParent(capId);
+        var newTable = new Array();
+        var empList = loadASITable("EMPLOYEE LIST",parentCapId);
+        if(empList && empList.length > 0)
         {
-            var vRow = new Array();
-            vRow["Employee Name"] = new asiTableValObj("Employee Name",empList[i]["Employee Name"], "Y");
-            vRow["Government ID"] = new asiTableValObj("Government ID",empList[i]["Government ID"], "Y");
-            vRow["Date of Birth"] = new asiTableValObj("Date of Birth",empList[i]["Date of Birth"], "Y");
-            vRow["Employee Start Date"] = new asiTableValObj("Employee Start Date",empList[i]["Employee Start Date"], "Y");
-            vRow["Employee End Date"] = new asiTableValObj("Employee End Date",empList[i]["Employee End Date"], "Y");
-            vRow["Employment"] = new asiTableValObj("Employment",empList[i]["Employment"], "Y");
+            for(var i in empList)
+            {
+                var vRow = new Array();
+                vRow["Employee Name"] = new asiTableValObj("Employee Name",empList[i]["Employee Name"].fieldValue, "Y");
+                vRow["Government ID"] = new asiTableValObj("Government ID",empList[i]["Government ID"].fieldValue, "Y");
+                vRow["Date of Birth"] = new asiTableValObj("Date of Birth",empList[i]["Date of Birth"].fieldValue, "Y");
+                vRow["Employee Start Date"] = new asiTableValObj("Employee Start Date",empList[i]["Employee Start Date"].fieldValue, "Y");
+                vRow["Employee End Date"] = new asiTableValObj("Employee End Date",empList[i]["Employee End Date"].fieldValue, "Y");
+                vRow["Employment"] = new asiTableValObj("Employment",empList[i]["Employment"].fieldValue, "Y");
 
-            vRow["Action"] = new asiTableValObj("Action","Keep", "N");
-            newTable.push(vRow);
-        }
-        if(newTable.length > 0)
-        {
-            var vToASITGroup = cap.getAppSpecificTableGroupModel();
-            addASITable4ACAPageFlow(vToASITGroup, "EMPLOYEE LIST", newTable);
+                vRow["Action"] = new asiTableValObj("Action","Keep", "N");
+                newTable.push(vRow);
+            }
+            if(newTable.length > 0)
+            {
+                var vToASITGroup = cap.getAppSpecificTableGroupModel();
+                addASITable4ACAPageFlow(vToASITGroup, "EMPLOYEE LIST", newTable);
+            }
         }
     }
+
 } catch (err) {
 
     logDebug(err);
