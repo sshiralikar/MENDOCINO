@@ -78,6 +78,25 @@ try {
             showMessage = true;
             comment("EMPLOYEE LIST must have at least one row to continue.");
         }
+        else
+        {
+            var flag = false;
+            if(useExistingASIT && useExistingASIT.length > 0)
+            {
+                for(var i in useExistingASIT)
+                {
+                    if(useExistingASIT[i]["Action"] == "Add" || useExistingASIT[i]["Action"] == "Remove")
+                        flag = true;
+                }
+            }
+            if(!flag)
+            {
+                cancel = true;
+                showMessage = true;
+                comment("EMPLOYEE LIST must have at least Add/Remove action to continue.");
+            }
+        }
+
     }
 } catch (error) {
     logDebug(error.message);
