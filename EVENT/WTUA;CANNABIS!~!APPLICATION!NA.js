@@ -55,11 +55,39 @@ if(wfTask == "Supervisor Review" && wfStatus == "Issued")
         var balanceDue = capDetail.getBalance();
         if(balanceDue <= 0)
         {
+            licCapId = aa.cap.getCapID(licCapId.ID1,licCapId.ID2,licCapId.ID3).getOutput();
             var envParameters = aa.util.newHashMap();
-            envParameters.put("RecordID", aa.cap.getCapID(licCapId.ID1,licCapId.ID2,licCapId.ID3).getOutput().getCustomID()+"");
+            envParameters.put("RecordID", licCapId.getCustomID()+"");
             envParameters.put("IssueDT", sysDateMMDDYYYY);
             envParameters.put("ExpireDT", newDate);
             aa.runAsyncScript("RUN_ASYNC_PERMIT_REPORT", envParameters);
+
+            var VRFiles = [];
+            var rParams = aa.util.newHashMap();
+
+            rParams.put("RecordID",licCapId.getCustomID()+"");
+            logDebug("Report parameter RecordID set to: "+ licCapId.getCustomID()+"");
+            var report = aa.reportManager.getReportInfoModelByName("Cannabis Approval Letter");
+            report = report.getOutput();
+            report.setModule("Cannabis");
+            report.setCapId(licCapId.getID1() + "-" + licCapId.getID2() + "-" + licCapId.getID3());
+            report.setReportParameters(rParams);
+            report.getEDMSEntityIdModel().setAltId(licCapId.getCustomID());
+
+
+            var permit = aa.reportManager.hasPermission("Cannabis Approval Letter",currentUserID);
+
+            if (permit.getOutput().booleanValue()) {
+                logDebug("User has Permission to run the report....");
+                var reportResult = aa.reportManager.getReportResult(report);
+                if(reportResult) {
+                    reportOutput = reportResult.getOutput();
+                    var reportFile=aa.reportManager.storeReportToDisk(reportOutput);
+                    logDebug("Report Run Successfull:"+ reportFile.getSuccess());
+                    reportFile=reportFile.getOutput();
+                    VRFiles.push(reportFile);
+                }
+            }
 
             var conName = "";
             var contactResult = aa.people.getCapContactByCapID(capId);
@@ -90,7 +118,7 @@ if(wfTask == "Supervisor Review" && wfStatus == "Issued")
                         addParameter(params, "$$ACAUrl$$", String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0]);
                         addParameter(params, "$$ACAURL$$", String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0]);
                         if(hm[capContacts[i].getPeople().getEmail() + ""] != 1) {
-                            sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail() + "", "", "CAN_ISSUANCE", params, null, capId);
+                            sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail() + "", "", "CAN_ISSUANCE", params, VRFiles, capId);
                             hm[capContacts[i].getPeople().getEmail() + ""] = 1;
                         }
                     }
