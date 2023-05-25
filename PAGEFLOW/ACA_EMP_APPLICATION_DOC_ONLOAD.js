@@ -179,13 +179,16 @@ try {
         comment("<div class='docList'><span class='fontbold font14px ACA_Title_Color'>The following documents are required based on the information you have provided: </span><ol>");
         for(var i in emplTable)
         {
-            var docType = "Government Issued ID - ["+emplTable[i]["Employee Name"]+"]"
-            message += "<li><span>" + docType + "</span></li>";
-            aa.capCondition.addCapCondition(capId,conditionType,docType,docType,sysDate,null,sysDate,null,null,"Notice",systemUserObj,systemUserObj,"Applied","ADMIN","A","Y");
+            if(emplTable[i]["Action"] == "Add")
+            {
+                var docType = "Government Issued ID - ["+emplTable[i]["Employee Name"]+"]"
+                message += "<li><span>" + docType + "</span></li>";
+                aa.capCondition.addCapCondition(capId,conditionType,docType,docType,sysDate,null,sysDate,null,null,"Notice",systemUserObj,systemUserObj,"Applied","ADMIN","A","Y");
 
-            var docType = "Mendocino County Live Scan - ["+emplTable[i]["Employee Name"]+"]"
-            message += "<li><span>" + docType + "</span></li>";
-            aa.capCondition.addCapCondition(capId,conditionType,docType,docType,sysDate,null,sysDate,null,null,"Notice",systemUserObj,systemUserObj,"Applied","ADMIN","A","Y");
+                var docType = "Mendocino County Live Scan - ["+emplTable[i]["Employee Name"]+"]"
+                message += "<li><span>" + docType + "</span></li>";
+                aa.capCondition.addCapCondition(capId,conditionType,docType,docType,sysDate,null,sysDate,null,null,"Notice",systemUserObj,systemUserObj,"Applied","ADMIN","A","Y");
+            }
         }
     }
 
