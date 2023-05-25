@@ -6,10 +6,11 @@ try
     currentUserID = "ADMIN";
     var sysDate = aa.date.getCurrentDate();
     var sysDateMMDDYYYY = dateFormatted(sysDate.getMonth(),sysDate.getDayOfMonth(),sysDate.getYear(),"");
-    var capName = cap.getSpecialText();
+
     var licCapId = aa.cap.getCapID(aa.env.getValue("RecordID")).getOutput();
     var capId = aa.cap.getCapID(aa.env.getValue("capId")).getOutput();
     var cap = aa.cap.getCap(capId).getOutput();
+    var capName = cap.getSpecialText();
     rParams.put("RecordID", aa.env.getValue("RecordID"));
 
 
