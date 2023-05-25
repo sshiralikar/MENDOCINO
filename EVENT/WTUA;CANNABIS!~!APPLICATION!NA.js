@@ -62,7 +62,12 @@ if(wfTask == "Supervisor Review" && wfStatus == "Issued")
             envParameters.put("ExpireDT", newDate);
             aa.runAsyncScript("RUN_ASYNC_PERMIT_REPORT", envParameters);
 
-            var VRFiles = [];
+            var envParameters = aa.util.newHashMap();
+            envParameters.put("RecordID", licCapId.getCustomID()+"");
+            envParameters.put("capId", capId.getCustomID()+"");
+            aa.runAsyncScript("RUN_ASYNC_SEND_ISSUANCE_EMAIL", envParameters);
+
+            /*var VRFiles = [];
             var rParams = aa.util.newHashMap();
 
             rParams.put("RecordID",licCapId.getCustomID()+"");
@@ -123,7 +128,7 @@ if(wfTask == "Supervisor Review" && wfStatus == "Issued")
                         }
                     }
                 }
-            }
+            }*/
         }
     }
 }
