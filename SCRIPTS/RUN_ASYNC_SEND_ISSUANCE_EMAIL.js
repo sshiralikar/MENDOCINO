@@ -33,7 +33,7 @@ try
     if (contactResult.getSuccess()) {
         var capContacts = contactResult.getOutput();
         for (var i in capContacts) {
-            if(matches(capContacts[i].getPeople().getContactType(),"Applicant","Authorized Agent"))
+            if(capContacts[i].getPeople().getContactType() == "Applicant" || capContacts[i].getPeople().getContactType() == "Authorized Agent")
             {
                 conName = getContactName(capContacts[i]);
 
