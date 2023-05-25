@@ -60,8 +60,8 @@ try
             var docType = "Government Issued ID - ["+emplTable[i]["Employee Name"]+"]"
             aa.capCondition.addCapCondition(capId,conditionType,docType,docType,sysDate,null,sysDate,null,null,"Notice",systemUserObj,systemUserObj,"Applied","ADMIN","A","Y");
 
-            var docType = "Mendocino County Live Scan - ["+emplTable[i]["Employee Name"]+"]"
-            aa.capCondition.addCapCondition(capId,conditionType,docType,docType,sysDate,null,sysDate,null,null,"Notice",systemUserObj,systemUserObj,"Applied","ADMIN","A","Y");
+           /* var docType = "Mendocino County Live Scan - ["+emplTable[i]["Employee Name"]+"]"
+            aa.capCondition.addCapCondition(capId,conditionType,docType,docType,sysDate,null,sysDate,null,null,"Notice",systemUserObj,systemUserObj,"Applied","ADMIN","A","Y");*/
         }
     }
     //Applicant
@@ -72,9 +72,9 @@ try
         message += "<li><span>" + docType + "</span></li>";
         aa.capCondition.addCapCondition(capId,conditionType,docType,docType,sysDate,null,sysDate,null,null,"Notice",systemUserObj,systemUserObj,"Applied","ADMIN","A","Y");
 
-        var docType = "Mendocino County Live Scan - ["+name+"]"
+        /*var docType = "Mendocino County Live Scan - ["+name+"]"
         message += "<li><span>" + docType + "</span></li>";
-        aa.capCondition.addCapCondition(capId,conditionType,docType,docType,sysDate,null,sysDate,null,null,"Notice",systemUserObj,systemUserObj,"Applied","ADMIN","A","Y");
+        aa.capCondition.addCapCondition(capId,conditionType,docType,docType,sysDate,null,sysDate,null,null,"Notice",systemUserObj,systemUserObj,"Applied","ADMIN","A","Y");*/
     }
 
     //Applicant
