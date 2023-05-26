@@ -164,8 +164,8 @@ function copy() {
         //copyLicenseProfessionalX(parentCapId, targetCapId);
         copyAppSpecificTable(parentCapId, targetCapId);
         //copyAppSpecificInfo(parentCapId, targetCapId);
-        copyASIFields(parentCapId,targetCapId);
-
+        //copyASIFields(parentCapId,targetCapId);
+        copyASIFromParent4ACA(cap, parentCapId, null);
         //copyLicenseProfessional(parentCapId, targetCapId);
         copyAddress(parentCapId, targetCapId);
         copyParcel(parentCapId, targetCapId);
@@ -1059,4 +1059,161 @@ function getCapDetailByID(capId) {
     }
     // Return capDetailScriptModel
     return capDetailScriptModel;
+}
+function copyASIFromParent4ACA(currentRecordCapModel, parentCapId, typesArray) {
+    var asiGroups = currentRecordCapModel.getAppSpecificInfoGroups();
+    var asiArray = new Array();
+    loadAppSpecific4ACA(asiArray, parentCapId);
+    setFieldValue(asiArray, asiGroups, typesArray);
+}
+
+function copyAsitFromParent4ACA(currentRecordCapModel, parentCapId, typesArray) {
+    var currentRecordAsitGroups = capModel.getAppSpecificTableGroupModel();
+
+    if (currentRecordAsitGroups == null || currentRecordAsitGroups.getTablesMap() == null) {
+        return;
+    }
+
+    var ta = currentRecordAsitGroups.getTablesMap().values();
+    var tai = ta.iterator();
+    while (tai.hasNext()) {
+        var tsm = tai.next();
+        var tableName = "" + tsm.getTableName().toString();
+        if (typesArray != null && !arrayContainsValue(typesArray, tableName)) {
+            continue;
+        }
+        var asitArray = loadASITable(tableName, parentCapId);
+        currentRecordAsitGroups = addASITable4ACAPageFlowCamp(currentRecordAsitGroups, tableName, asitArray, capModel.getCapID());
+    }
+}
+function arrayContainsValue(ary, value) {
+    if (ary != null) {
+
+        //if not array, convert to array
+        if (!Array.isArray(ary)) {
+            ary = [ ary ];
+        }
+
+        for (t in ary) {
+            if (ary[t] == value) {
+                return true;
+            }
+        }//for all types
+    }
+    return false;
+}
+function setFieldValue(asiValuesArray, asiGroups, typesArray) {
+    if (asiGroups == null) {
+        return false;
+    }
+    var iteGroups = asiGroups.iterator();
+    while (iteGroups.hasNext()) {
+        var group = iteGroups.next();
+        if (typesArray != null && !arrayContainsValue(typesArray, group.getGroupName())) {
+            continue;
+        }
+        var fields = group.getFields();
+        if (fields != null) {
+            var iteFields = fields.iterator();
+            while (iteFields.hasNext()) {
+                var field = iteFields.next();
+                field.setChecklistComment(asiValuesArray[field.getCheckboxDesc()]);
+            }
+        }
+    } //for all groups
+    return true;
+}
+
+function addASITable4ACAPageFlowCamp(destinationTableGroupModel, tableName, tableValueArray) {
+    var itemCap = capId
+    if (arguments.length > 3)
+        itemCap = arguments[3];
+
+    if (destinationTableGroupModel == null || destinationTableGroupModel.getTablesMap() == null) {
+        return;
+    }
+
+    var ta = destinationTableGroupModel.getTablesMap().values();
+    var tai = ta.iterator();
+
+    var found = false;
+    while (tai.hasNext()) {
+        var tsm = tai.next();
+        if (tsm.getTableName().equals(tableName)) {
+            if (tsm.getTableFields() != null && tsm.getTableFields().size() > 0) {
+                return destinationTableGroupModel;
+            }
+            found = true;
+            break;
+        }
+    }
+
+    if (!found) {
+        logDebug("cannot update asit for ACA, no matching table name");
+        return false;
+    }
+
+    var i = -1;
+    if (tsm.getTableFields() != null) {
+        i = 0 - tsm.getTableFields().size()
+    }
+
+    for (thisrow in tableValueArray) {
+        var fld = aa.util.newArrayList();
+        var fld_readonly = aa.util.newArrayList();
+        var col = tsm.getColumns()
+        var coli = col.iterator();
+        while (coli.hasNext()) {
+            var colname = coli.next();
+            if (!tableValueArray[thisrow][colname.getColumnName()]) {
+                logDebug("addToASITable: null or undefined value supplied for column " + colname.getColumnName() + ", setting to empty string");
+                tableValueArray[thisrow][colname.getColumnName()] = "";
+            }
+
+            if (typeof (tableValueArray[thisrow][colname.getColumnName()].fieldValue) != "undefined") {
+                var args = new Array(tableValueArray[thisrow][colname.getColumnName()].fieldValue ? tableValueArray[thisrow][colname.getColumnName()].fieldValue : "", colname);
+                var fldToAdd = aa.proxyInvoker.newInstance("com.accela.aa.aamain.appspectable.AppSpecificTableField", args).getOutput();
+                fldToAdd.setRowIndex(i);
+                fldToAdd.setFieldLabel(colname.getColumnName());
+                fldToAdd.setFieldGroup(tableName.replace(/ /g, "\+"));
+                fldToAdd.setReadOnly(tableValueArray[thisrow][colname.getColumnName()].readOnly.equals("Y"));
+                fld.add(fldToAdd);
+                fld_readonly.add(tableValueArray[thisrow][colname.getColumnName()].readOnly);
+
+            } else {
+                var args = new Array(tableValueArray[thisrow][colname.getColumnName()] ? tableValueArray[thisrow][colname.getColumnName()] : "", colname);
+                var fldToAdd = aa.proxyInvoker.newInstance("com.accela.aa.aamain.appspectable.AppSpecificTableField", args).getOutput();
+                fldToAdd.setRowIndex(i);
+                fldToAdd.setFieldLabel(colname.getColumnName());
+                fldToAdd.setFieldGroup(tableName.replace(/ /g, "\+"));
+                fldToAdd.setReadOnly(false);
+                fld.add(fldToAdd);
+                fld_readonly.add("N");
+            }
+        }
+        i--;
+        if (tsm.getTableFields() == null) {
+            tsm.setTableFields(fld);
+        } else {
+            tsm.getTableFields().addAll(fld);
+        }
+        if (tsm.getReadonlyField() == null) {
+            tsm.setReadonlyField(fld_readonly);
+        } else {
+            tsm.getReadonlyField().addAll(fld_readonly);
+        }
+    }
+
+    tssm = tsm;
+    return destinationTableGroupModel;
+}
+function getParentCapId4ACA(myCapId) {
+    var getCapResult = aa.cap.getProjectParents(myCapId, 1);
+    if (getCapResult.getSuccess()) {
+        var parentArray = getCapResult.getOutput();
+        if (parentArray.length) {
+            return parentArray[0].getCapModel().getCapID();
+        }
+    }
+    return null;
 }
