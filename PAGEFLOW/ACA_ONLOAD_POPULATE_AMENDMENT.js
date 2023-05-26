@@ -180,13 +180,14 @@ function copy() {
         var amendCapModel = aa.cap.getCapViewBySingle4ACA(targetCapId);
         amendCapModel.getCapType().setSpecInfoCode(capModel.getCapType().getSpecInfoCode());
         copyLPFromParent4ACA(amendCapModel, parentCapId);
+        editAppSpecific4ACAX("Nursery Permit Type", "4-S (seed nursery)", amendCapModel);
         aa.env.setValue("CapModel", amendCapModel);
         //aa.env.setValue("CapModel", capModel);
         /*var parentCap = aa.cap.getCapViewBySingle4ACA(parentCapId);
         copyAppSpecific4ACA(parentCap);*/
         aa.env.setValue("CAP_MODEL_INITED", "TRUE");
 
-        editAppSpecific4ACA("Nursery Permit Type", "4-S (seed nursery)");
+
         /*cancel = true;
         showMessage = true;
         showDebug = true;*/
@@ -212,6 +213,48 @@ if (debug.indexOf("**ERROR") > 0) {
         if (showDebug) aa.env.setValue("ErrorMessage", debug);
     }
 }
+function editAppSpecific4ACAX(itemName, itemValue, xcap) {
+
+
+
+    var i = xcap.getAppSpecificInfoGroups().iterator();
+
+
+
+    while (i.hasNext()) {
+
+        var group = i.next();
+
+        var fields = group.getFields();
+
+        if (fields != null) {
+
+            var iteFields = fields.iterator();
+
+            while (iteFields.hasNext()) {
+
+                var field = iteFields.next();
+
+                if ((useAppSpecificGroupName && itemName.equals(field.getCheckboxType() + "." +
+
+
+
+                    field.getCheckboxDesc())) || itemName.equals(field.getCheckboxDesc())) {
+
+                    field.setChecklistComment(itemValue);
+
+                }
+
+            }
+
+        }
+
+    }
+
+}
+
+
+
 function getAppName() {
     var itemCap = capId;
     if (arguments.length == 1) itemCap = arguments[0]; // use cap ID specified in args
