@@ -300,13 +300,15 @@ if(wfStatus == "Deficiency")
     // }
 
 }
-
+logDebug("wfStatus: "+ wfStatus);
+logDebug("wfTask: "+ wfTask);
 //CAMEND-392
 if(!flag && wfTask == "Supervisor Review" && wfStatus == "Deficiency")
 
     //var date = getCapFileDate(capId);
     //if(isDateInRangeToOct(date) || isDateInRangeToFeb(date) || isDateInRangeCurr(date)) {
     var rFiles1 = new Array();
+    logDebug("Deficiency: "+ rFiles1);
     var hm = new Array();
     var conName = "";
     var rParams = aa.util.newHashMap();
