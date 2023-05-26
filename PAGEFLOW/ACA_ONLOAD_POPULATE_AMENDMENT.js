@@ -164,7 +164,7 @@ function copy() {
         //copyLicenseProfessionalX(parentCapId, targetCapId);
         copyAppSpecificTable(parentCapId, targetCapId);
         //copyAppSpecificInfo(parentCapId, targetCapId);
-        copyASIFields(capId,licCapId);
+        copyASIFields(parentCapId,targetCapId);
         //copyLicenseProfessional(parentCapId, targetCapId);
         copyAddress(parentCapId, targetCapId);
         copyParcel(parentCapId, targetCapId);
