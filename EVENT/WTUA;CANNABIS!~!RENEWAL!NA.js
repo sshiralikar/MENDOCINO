@@ -304,7 +304,7 @@ if(wfTask == "Supervisor Review" && wfStatus == "Deficiency")
 
     //var date = getCapFileDate(capId);
     //if(isDateInRangeToOct(date) || isDateInRangeToFeb(date) || isDateInRangeCurr(date)) {
-    var rFiles = [];
+    var rFiles = new Array();
     var hm = new Array();
     var conName = "";
     var rParams = aa.util.newHashMap();
@@ -316,7 +316,7 @@ if(wfTask == "Supervisor Review" && wfStatus == "Deficiency")
     report.setCapId(capId.getID1() + "-" + capId.getID2() + "-" + capId.getID3());
     report.setReportParameters(rParams);
     report.getEDMSEntityIdModel().setAltId(capId.getCustomID());
-
+    logDebug("Deficiency: "+ rFiles);
 
     var permit = aa.reportManager.hasPermission("Cannabis Deficiency Denial Pending Letter",currentUserID);
 
