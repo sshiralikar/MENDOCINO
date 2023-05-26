@@ -304,7 +304,7 @@ if(wfTask == "Supervisor Review" && wfStatus == "Deficiency")
 
     //var date = getCapFileDate(capId);
     //if(isDateInRangeToOct(date) || isDateInRangeToFeb(date) || isDateInRangeCurr(date)) {
-    var rFiles = new Array();
+    var rFiles1 = new Array();
     var hm = new Array();
     var conName = "";
     var rParams = aa.util.newHashMap();
@@ -316,7 +316,7 @@ if(wfTask == "Supervisor Review" && wfStatus == "Deficiency")
     report.setCapId(capId.getID1() + "-" + capId.getID2() + "-" + capId.getID3());
     report.setReportParameters(rParams);
     report.getEDMSEntityIdModel().setAltId(capId.getCustomID());
-    logDebug("Deficiency: "+ rFiles);
+    logDebug("Deficiency: "+ rFiles1);
 
     var permit = aa.reportManager.hasPermission("Cannabis Deficiency Denial Pending Letter",currentUserID);
 
@@ -328,7 +328,7 @@ if(wfTask == "Supervisor Review" && wfStatus == "Deficiency")
             var reportFile=aa.reportManager.storeReportToDisk(reportOutput);
             logDebug("Report Run Successfull:"+ reportFile.getSuccess());
             reportFile=reportFile.getOutput();
-            rFiles.push(reportFile);
+            rFiles1.push(reportFile);
         }
     }
     var contactResult = aa.people.getCapContactByCapID(capId);
@@ -354,7 +354,7 @@ if(wfTask == "Supervisor Review" && wfStatus == "Deficiency")
                 addParameter(params, "$$ACAURL$$", String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0]);
                 if(hm[capContacts[i].getPeople().getEmail() + ""] != 1) {
 
-                    sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail() + "", "", "CAN_DEFICIENCY", params, rFiles, capId);
+                    sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail() + "", "", "CAN_DEFICIENCY", params, rFiles1, capId);
                     hm[capContacts[i].getPeople().getEmail() + ""] = 1;
                 }
             }
