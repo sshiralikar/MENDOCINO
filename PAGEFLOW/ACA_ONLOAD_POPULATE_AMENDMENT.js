@@ -163,7 +163,7 @@ function copy() {
         logDebug("targetCapId: " + targetCapId);
         //copyLicenseProfessionalX(parentCapId, targetCapId);
         copyAppSpecificTable(parentCapId, targetCapId);
-        copyAppSpecificInfo(parentCapId, targetCapId);
+        //copyAppSpecificInfo(parentCapId, targetCapId);
         //copyASIFields(parentCapId,targetCapId);
         //copyASIFromParent4ACA(cap, parentCapId, null);
         //copyLicenseProfessional(parentCapId, targetCapId);
@@ -180,11 +180,12 @@ function copy() {
         var amendCapModel = aa.cap.getCapViewBySingle4ACA(targetCapId);
         amendCapModel.getCapType().setSpecInfoCode(capModel.getCapType().getSpecInfoCode());
         copyLPFromParent4ACA(amendCapModel, parentCapId);
-        editAppSpecific4ACAX("Nursery Permit Type", "4-S (seed nursery)", amendCapModel);
+        //editAppSpecific4ACAX("Nursery Permit Type", "4-S (seed nursery)", amendCapModel);
+        var parentCap = aa.cap.getCapViewBySingle4ACA(parentCapId);
+        copyAppSpecific4ACA(parentCap, amendCapModel);
         aa.env.setValue("CapModel", amendCapModel);
         //aa.env.setValue("CapModel", capModel);
-        /*var parentCap = aa.cap.getCapViewBySingle4ACA(parentCapId);
-        copyAppSpecific4ACA(parentCap);*/
+
         aa.env.setValue("CAP_MODEL_INITED", "TRUE");
 
 
@@ -268,7 +269,7 @@ function getAppName() {
 
     return capModel.getSpecialText()
 }
-function copyAppSpecific4ACA(capFrom) { // copy all App Specific info into new Cap
+function copyAppSpecific4ACA(capFrom, capTo) { // copy all App Specific info into new Cap
     var i= capFrom.getAppSpecificInfoGroups().iterator();
     var ignoreSubgroup = "";
     if (arguments[1])
@@ -286,9 +287,9 @@ function copyAppSpecific4ACA(capFrom) { // copy all App Specific info into new C
                 if (ignoreSubgroup.equals(field.getCheckboxType()))
                     continue;
                 if (useAppSpecificGroupName)
-                    editAppSpecific4ACA(field.getCheckboxType() + "." + field.getCheckboxDesc(),field.getChecklistComment());
+                    editAppSpecific4ACAX(field.getCheckboxType() + "." + field.getCheckboxDesc(),field.getChecklistComment(), capTo);
                 else
-                    editAppSpecific4ACA(field.getCheckboxDesc(),field.getChecklistComment());
+                    editAppSpecific4ACAX(field.getCheckboxDesc(),field.getChecklistComment(), capTo);
             }
         }
     }
