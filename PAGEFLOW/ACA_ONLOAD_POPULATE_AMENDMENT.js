@@ -185,6 +185,8 @@ function copy() {
         /*var parentCap = aa.cap.getCapViewBySingle4ACA(parentCapId);
         copyAppSpecific4ACA(parentCap);*/
         aa.env.setValue("CAP_MODEL_INITED", "TRUE");
+
+        editAppSpecific4ACA("Nursery Permit Type", "4-S (seed nursery)");
         /*cancel = true;
         showMessage = true;
         showDebug = true;*/
