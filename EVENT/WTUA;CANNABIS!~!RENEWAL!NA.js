@@ -1,3 +1,4 @@
+var flag = false;
 //CAMEND-305
 if(wfStatus == "Void" || wfStatus == "Withdrawn")
 {
@@ -9,6 +10,7 @@ if(wfStatus == "Void" || wfStatus == "Withdrawn")
 //CAMEND-194, 223
 if(wfTask == "Supervisor Review" && wfStatus == "Issued")
 {
+    flag = true;
     var hm = new Array();
     var licCapId = getParent();
     var expDate = AInfo["New Expiration Date"];
@@ -300,7 +302,7 @@ if(wfStatus == "Deficiency")
 }
 
 //CAMEND-392
-if(wfTask == "Supervisor Review" && wfStatus == "Deficiency")
+if(!flag && wfTask == "Supervisor Review" && wfStatus == "Deficiency")
 
     //var date = getCapFileDate(capId);
     //if(isDateInRangeToOct(date) || isDateInRangeToFeb(date) || isDateInRangeCurr(date)) {
