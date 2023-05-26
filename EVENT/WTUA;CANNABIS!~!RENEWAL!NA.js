@@ -298,11 +298,10 @@ if(wfStatus == "Deficiency")
     // }
 
 }
-logDebug("wfStatus: "+ (wfStatus == "Deficiency"));
-logDebug("wfTask: "+ (wfTask == "Supervisor Review"));
+
 //CAMEND-392
 if(wfTask == "Supervisor Review" && wfStatus == "Deficiency")
-
+{
     //var date = getCapFileDate(capId);
     //if(isDateInRangeToOct(date) || isDateInRangeToFeb(date) || isDateInRangeCurr(date)) {
     var rFiles1 = new Array();
@@ -321,7 +320,6 @@ if(wfTask == "Supervisor Review" && wfStatus == "Deficiency")
     logDebug("Deficiency: "+ rFiles1);
 
     var permit = aa.reportManager.hasPermission("Cannabis Deficiency Denial Pending Letter",currentUserID);
-
     if (permit.getOutput().booleanValue()) {
         logDebug("User has Permission to run the report....");
         var reportResult = aa.reportManager.getReportResult(report);
@@ -361,8 +359,13 @@ if(wfTask == "Supervisor Review" && wfStatus == "Deficiency")
                 }
             }
         }
-    //}
+        //}
+    }
 }
+
+
+
+
 
 
 
