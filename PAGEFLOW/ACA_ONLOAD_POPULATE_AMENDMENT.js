@@ -164,7 +164,8 @@ function copy() {
         //copyLicenseProfessionalX(parentCapId, targetCapId);
         copyAppSpecificTable(parentCapId, targetCapId);
         //copyAppSpecificInfo(parentCapId, targetCapId);
-        copyASIFields(parentCapId,targetCapId);
+        //copyASIFields(parentCapId,targetCapId);
+
         //copyLicenseProfessional(parentCapId, targetCapId);
         copyAddress(parentCapId, targetCapId);
         copyParcel(parentCapId, targetCapId);
@@ -181,6 +182,8 @@ function copy() {
         copyLPFromParent4ACA(amendCapModel, parentCapId);
         aa.env.setValue("CapModel", amendCapModel);
         //aa.env.setValue("CapModel", capModel);
+        var parentCap = aa.cap.getCapViewBySingle4ACA(parentCapId);
+        copyAppSpecific4ACA(parentCap);
         aa.env.setValue("CAP_MODEL_INITED", "TRUE");
         /*cancel = true;
         showMessage = true;
@@ -219,6 +222,31 @@ function getAppName() {
     capModel = capResult.getOutput().getCapModel()
 
     return capModel.getSpecialText()
+}
+function copyAppSpecific4ACA(capFrom) { // copy all App Specific info into new Cap
+    var i= capFrom.getAppSpecificInfoGroups().iterator();
+    var ignoreSubgroup = "";
+    if (arguments[1])
+        ignoreSubgroup = arguments[1];
+    while (i.hasNext())
+    {
+        var group = i.next();
+        var fields = group.getFields();
+        if (fields != null)
+        {
+            var iteFields = fields.iterator();
+            while (iteFields.hasNext())
+            {
+                var field = iteFields.next();
+                if (ignoreSubgroup.equals(field.getCheckboxType()))
+                    continue;
+                if (useAppSpecificGroupName)
+                    editAppSpecific4ACA(field.getCheckboxType() + "." + field.getCheckboxDesc(),field.getChecklistComment());
+                else
+                    editAppSpecific4ACA(field.getCheckboxDesc(),field.getChecklistComment());
+            }
+        }
+    }
 }
 function copyLicenseProfessionalX(srcCapId, targetCapId) {
     aa.print("In copyLicenseProfessional");
