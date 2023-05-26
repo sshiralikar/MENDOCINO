@@ -164,7 +164,7 @@ function copy() {
         //copyLicenseProfessionalX(parentCapId, targetCapId);
         copyAppSpecificTable(parentCapId, targetCapId);
         //copyAppSpecificInfo(parentCapId, targetCapId);
-        //copyASIFields(parentCapId,targetCapId);
+        copyASIFields(parentCapId,targetCapId);
 
         //copyLicenseProfessional(parentCapId, targetCapId);
         copyAddress(parentCapId, targetCapId);
@@ -182,8 +182,8 @@ function copy() {
         copyLPFromParent4ACA(amendCapModel, parentCapId);
         aa.env.setValue("CapModel", amendCapModel);
         //aa.env.setValue("CapModel", capModel);
-        var parentCap = aa.cap.getCapViewBySingle4ACA(parentCapId);
-        copyAppSpecific4ACA(parentCap);
+        /*var parentCap = aa.cap.getCapViewBySingle4ACA(parentCapId);
+        copyAppSpecific4ACA(parentCap);*/
         aa.env.setValue("CAP_MODEL_INITED", "TRUE");
         /*cancel = true;
         showMessage = true;
