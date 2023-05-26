@@ -300,7 +300,7 @@ if(wfStatus == "Deficiency")
 
 //CAMEND-392
 if(wfTask == "Supervisor Review" && wfStatus == "Deficiency")
-
+{
     //var date = getCapFileDate(capId);
     //if(isDateInRangeToOct(date) || isDateInRangeToFeb(date) || isDateInRangeCurr(date)) {
     var rFiles = [];
@@ -358,7 +358,9 @@ if(wfTask == "Supervisor Review" && wfStatus == "Deficiency")
                 }
             }
         }
-    //}
+        //}
+    }
 }
+
 
 
