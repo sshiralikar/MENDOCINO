@@ -163,9 +163,9 @@ function copy() {
         logDebug("targetCapId: " + targetCapId);
         //copyLicenseProfessionalX(parentCapId, targetCapId);
         copyAppSpecificTable(parentCapId, targetCapId);
-        //copyAppSpecificInfo(parentCapId, targetCapId);
+        copyAppSpecificInfo(parentCapId, targetCapId);
         //copyASIFields(parentCapId,targetCapId);
-        copyASIFromParent4ACA(cap, parentCapId, null);
+        //copyASIFromParent4ACA(cap, parentCapId, null);
         //copyLicenseProfessional(parentCapId, targetCapId);
         copyAddress(parentCapId, targetCapId);
         copyParcel(parentCapId, targetCapId);
