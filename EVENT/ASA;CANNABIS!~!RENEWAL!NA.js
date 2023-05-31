@@ -50,3 +50,5 @@ if(!publicUser)
         updateAppStatus("Modification Required","Updating via Script",parentCapId);
     }
 }
+if(!feeExists("CANREN01","INVOICED","NEW") && AInfo["Equity Eligibility"] != "Yes" && AInfo["Exempt"] != "Yes")
+    addFee("CANREN01", "CAN_REN", "FINAL", "1", "Y");
