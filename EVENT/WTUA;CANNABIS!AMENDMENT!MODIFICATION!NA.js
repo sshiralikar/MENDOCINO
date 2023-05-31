@@ -16,7 +16,7 @@ if(wfTask == "Supervisor Review" && wfStatus == "Issued")
     var expDateObj = new Date(expDate);
     logDebug("expDate: "+ expDate);
     logDebug("expDateObj: "+ expDateObj);
-    copyASIFields(capId,licCapId);
+    copyAppSpecificInfo(capId,licCapId);
     copyASITablesWithRemove(capId, licCapId);
     copyLicensedProf(capId, licCapId);
     //copyParcels(capId, licCapId);
