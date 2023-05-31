@@ -21,8 +21,8 @@ if(wfTask == "Supervisor Review" && wfStatus == "Issued")
     //copyAddresses(capId, licCapId);
     //copyOwner(capId, licCapId);
     var newDate1 = today.getMonth()+1+"/"+today.getDate()+"/"+today.getFullYear();
-    editAppSpecific("Submitted Modification Date", newDate1, licCapId);
-    editAppSpecific("Submitted Modification Date", newDate1, capId);
+    editAppSpecific("Submitted Modfication Date", newDate1, licCapId);
+    editAppSpecific("Submitted Modfication Date", newDate1, capId);
     if(today > expDateObj)
     {
         today.setFullYear(today.getFullYear() + 1);
