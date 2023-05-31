@@ -14,6 +14,8 @@ if(wfTask == "Supervisor Review" && wfStatus == "Issued")
     var expDate = AInfo["New Expiration Date"];
     var today = new Date();
     var expDateObj = new Date(expDate);
+    logDebug("expDate: "+ expDate);
+    logDebug("expDateObj: "+ expDateObj);
     copyASIFields(capId,licCapId);
     copyASITablesWithRemove(capId, licCapId);
     copyLicensedProf(capId, licCapId);
