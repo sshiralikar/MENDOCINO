@@ -7,6 +7,9 @@ if(wfStatus == "Approved")
         var balanceDue = capDetail.getBalance();
         if(balanceDue <= 0)
         {
+            var today = new Date();
+            var newDate = today.getMonth()+1+"/"+today.getDate()+"/"+today.getFullYear();
+            editAppSpecific("Withdrawal Date", newDate, pCapId);
             //taskCloseAllExcept("Approved","Closing via script");
             var temp = capId;
             capId = pCapId;

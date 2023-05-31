@@ -14,7 +14,14 @@ if(wfTask == "Supervisor Review" && wfStatus == "Issued")
     var expDate = AInfo["New Expiration Date"];
     var today = new Date();
     var expDateObj = new Date(expDate);
-
+    copyASIFields(capId,licCapId);
+    copyASITables(capId, licCapId);
+    copyLicensedProf(capId, licCapId);
+    copyParcels(capId, licCapId);
+    copyAddresses(capId, licCapId);
+    copyOwner(capId, licCapId);
+    var newDate1 = today.getMonth()+1+"/"+today.getDate()+"/"+today.getFullYear();
+    editAppSpecific("Submitted Modification Date", newDate1, licCapId);
     if(today > expDateObj)
     {
         today.setFullYear(today.getFullYear() + 1);
