@@ -10,5 +10,6 @@ if(!publicUser)
         today.setFullYear(today.getFullYear() + 1);
         var newDate = today.getMonth()+1+"/"+today.getDate()+"/"+today.getFullYear();
         editAppSpecific("NOAS Expiration Date",newDate,parentCapId);
+        updateAppStatus("Notice of Application Stay","updated via script", parentCapId);
     }
 }
