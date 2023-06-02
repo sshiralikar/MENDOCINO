@@ -11,7 +11,7 @@ if(wfTask == "Supervisor Review" && wfStatus == "Issued")
 {
     var hm = new Array();
     var licCapId = getParent();
-    var expDate = AInfo["New Expiration Date"];
+    var expDate = getAppSpecific("New Expiration Date", licCapId);
     var today = new Date();
     var expDateObj = new Date(expDate);
 
@@ -371,6 +371,9 @@ if(wfTask == "Supervisor Review" && wfStatus == "Deficiency")
 
 //CAMEND-383
 if(wfTask == "Draft Decision" && wfStatus == "Modification Required") {
+    var licCapId = getParent();
+    if(licCapId)
+        updateAppStatus("Modification Required","",licCapId);
     var conName = "";
     var contactResult = aa.people.getCapContactByCapID(tmpID);
     if (contactResult.getSuccess()) {

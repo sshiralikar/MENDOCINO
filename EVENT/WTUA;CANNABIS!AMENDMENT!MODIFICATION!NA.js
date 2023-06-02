@@ -11,7 +11,7 @@ if(wfTask == "Supervisor Review" && wfStatus == "Issued")
 {
     var hm = new Array();
     var licCapId = getParent();
-    var expDate = AInfo["New Expiration Date"];
+    var expDate = getAppSpecific("New Expiration Date", licCapId);
     var today = new Date();
     var expDateObj = new Date(expDate);
     logDebug("expDate: "+ expDate);
