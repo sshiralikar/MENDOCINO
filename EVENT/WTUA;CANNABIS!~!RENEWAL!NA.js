@@ -20,7 +20,7 @@ if(wfTask == "Supervisor Review" && wfStatus == "Issued")
         today.setFullYear(today.getFullYear() + 1);
         var newDate = today.getMonth()+1+"/"+today.getDate()+"/"+today.getFullYear();
         editAppSpecific("New Expiration Date", newDate);
-        editAppSpecific("New Expiration Date", licCapId);
+        editAppSpecific("New Expiration Date", newDate, licCapId);
         setLicExpirationDate(licCapId,"",newDate);
     }
     else
@@ -28,7 +28,7 @@ if(wfTask == "Supervisor Review" && wfStatus == "Issued")
         expDateObj.setFullYear(today.getFullYear() + 1);
         var newDate = expDateObj.getMonth()+1+"/"+expDateObj.getDate()+"/"+expDateObj.getFullYear();
         editAppSpecific("New Expiration Date", newDate);
-        editAppSpecific("New Expiration Date", licCapId);
+        editAppSpecific("New Expiration Date", newDate, licCapId);
         setLicExpirationDate(licCapId,"",newDate);
     }
     editAppSpecific("Issued Date", sysDateMMDDYYYY);
