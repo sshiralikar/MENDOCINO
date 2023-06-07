@@ -36,7 +36,7 @@ try
         if(!parentCapId)
             parentCapId = getParent();
     }
-    if(parentCapId && (appMatch("Cannabis/*/Renewal/*") || appMatch("Cannabis/Modification/*/*")))
+    if(parentCapId && (appMatch("Cannabis/*/Renewal/*") || appMatch("Cannabis/Amendment/*/*")))
         updateShortNotes(getShortNotes(parentCapId));
     else
         updateShortNotes("PH3");
