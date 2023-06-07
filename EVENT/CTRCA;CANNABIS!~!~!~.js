@@ -31,7 +31,15 @@ if(appTypeArray[1]=="Amendment" || appTypeArray[2]=="Application" || appTypeArra
 try
 {
     setRecordAltID(capId);
-    updateShortNotes("PH3");
+    if (parentCapId == "undefined" || parentCapId == null) {
+        parentCapId = aa.env.getValue("ParentCapID");
+        if(!parentCapId)
+            parentCapId = getParent();
+    }
+    if(parentCapId && (appMatch("Cannabis/*/Renewal/*") || appMatch("Cannabis/Modification/*/*")))
+        updateShortNotes(getShortNotes(parentCapId));
+    else
+        updateShortNotes("PH3");
 }
 catch (err)
 {
