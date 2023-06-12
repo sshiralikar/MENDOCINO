@@ -18,6 +18,7 @@ try {
             {
                 var capId = aa.cap.getCapID(cResult[i].getID1(),cResult[i].getID2(),cResult[i].getID3()).getOutput();
                 editCreatedBy("PUBLICUSER"+pUserSeqNumber, capId);
+                aa.licenseScript.associateContactWithPublicUser(pUserSeqNumber, peopleSequenceNumber);
             }
         }
     }
