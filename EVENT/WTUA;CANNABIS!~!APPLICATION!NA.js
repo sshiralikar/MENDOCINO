@@ -57,13 +57,13 @@ if(wfTask == "Supervisor Review" && wfStatus == "Issued")
         {
             licCapId = aa.cap.getCapID(licCapId.ID1,licCapId.ID2,licCapId.ID3).getOutput();
             var envParameters = aa.util.newHashMap();
-            envParameters.put("RecordID", licCapId.getCustomID()+"");
+            envParameters.put("RecordID", newAltId);
             envParameters.put("IssueDT", sysDateMMDDYYYY);
             envParameters.put("ExpireDT", newDate);
             aa.runAsyncScript("RUN_ASYNC_PERMIT_REPORT", envParameters);
 
             var envParameters = aa.util.newHashMap();
-            envParameters.put("RecordID", licCapId.getCustomID()+"");
+            envParameters.put("RecordID", newAltId);
             envParameters.put("capId", capId.getCustomID()+"");
             aa.runAsyncScript("RUN_ASYNC_SEND_ISSUANCE_EMAIL", envParameters);
 
