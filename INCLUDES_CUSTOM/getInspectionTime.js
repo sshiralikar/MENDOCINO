@@ -12,7 +12,7 @@ function getInspectionTime(pCapId, pInspId) {
     var vInspMinute;
 
     if (inspObj.getScheduledDate() != null && inspObj.getScheduledDate() != "") {
-        vInspHour = inspObj.getScheduledDate().getHourOfDay();
+        vInspHour = parseInt(inspObj.getScheduledDate().getHourOfDay()) + 2;
         if (vInspHour > 12) {
             vInspHour = vInspHour - 12;
         }
@@ -24,5 +24,5 @@ function getInspectionTime(pCapId, pInspId) {
         vInspTime = vInspHour + ":" + vInspMinute + " " + vInspAMPM;
         return vInspTime
     }
-    return false
+    return false;
 }
