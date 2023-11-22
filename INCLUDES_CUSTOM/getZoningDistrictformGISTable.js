@@ -24,7 +24,7 @@ function getZoningDistrictFromGISTable()
                     var finalUrl = url+"query?where=APNFULL="+ parcelNum+"&outFields="+outFields+"&f=pjson";
                     aa.print("finalUrl: "+ finalUrl);
                     var JSONObj = getServiceData(finalUrl);
-                    if(typeof (JSONObj.features)!== 'undefined') {
+                    if(typeof (JSONObj.features)!== 'undefined' && typeof (JSONObj.features[0])!== 'undefined') {
                         var attributes = JSONObj.features[0].attributes;
                         for (var i in attributes) {
                             if (attributes[i] && attributes[i] != "" && attributes[i] != " " && attributes[i] != 0) {
@@ -57,7 +57,7 @@ function getZoningDistrictFromGISTable()
                         var finalUrl = url+"query?where=APNFULL="+ parcelNum+"&outFields="+outFields+"&f=pjson";
                         aa.print("finalUrl: "+ finalUrl);
                         var JSONObj = getServiceData(finalUrl);
-                        if(typeof (JSONObj.features)!== 'undefined') {
+                        if(typeof (JSONObj.features)!== 'undefined' && typeof (JSONObj.features[0])!== 'undefined') {
                             var attributes = JSONObj.features[0].attributes;
                             for (var i in attributes) {
                                 if (attributes[i] && attributes[i] != "" && attributes[i] != " " && attributes[i] != 0) {
