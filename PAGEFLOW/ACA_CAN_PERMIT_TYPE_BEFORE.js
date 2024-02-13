@@ -168,11 +168,11 @@ try {
             showMessage = true;
             comment("Total Square Footage cannot be 0.");
         }
-        else if(parseInt(AInfo["Total Nursery SF"]) > 12000)
+        else if(parseInt(AInfo["Total Nursery SF"]) > 22000)
         {
             cancel = true;
             showMessage = true;
-            comment("You exceed the maximum allowance of 12000 sq. ft.");
+            comment("You exceed the maximum allowance of 22000 sq. ft.");
         }
     }
 } catch (err) {
