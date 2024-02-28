@@ -352,6 +352,8 @@ function mainProcess() {
                 {
                     var thisCapModel = cap.getCapModel();
                     var thisTypeResult = cap.getCapType();
+                    updateAppStatus("About to Expire","",capId);
+                    setLicExpirationDate(capId,"",dateCalc,"About to Expire");
                     var contactResult = aa.people.getCapContactByCapID(capId);
                     if (contactResult.getSuccess()) {
                         var capContacts = contactResult.getOutput();
@@ -408,6 +410,8 @@ function mainProcess() {
                 {
                     var thisCapModel = cap.getCapModel();
                     var thisTypeResult = cap.getCapType();
+                    updateAppStatus("About to Expire","",capId);
+                    setLicExpirationDate(capId,"",dateCalc,"About to Expire");
                     var contactResult = aa.people.getCapContactByCapID(capId);
                     if (contactResult.getSuccess()) {
                         var capContacts = contactResult.getOutput();
@@ -464,6 +468,8 @@ function mainProcess() {
                 {
                     var thisCapModel = cap.getCapModel();
                     var thisTypeResult = cap.getCapType();
+                    updateAppStatus("About to Expire","",capId);
+                    setLicExpirationDate(capId,"",dateCalc,"About to Expire");
                     var contactResult = aa.people.getCapContactByCapID(capId);
                     if (contactResult.getSuccess()) {
                         var capContacts = contactResult.getOutput();
@@ -521,6 +527,8 @@ function mainProcess() {
                 {
                     var thisCapModel = cap.getCapModel();
                     var thisTypeResult = cap.getCapType();
+                    updateAppStatus("About to Expire","",capId);
+                    setLicExpirationDate(capId,"",dateCalc,"About to Expire");
                     var contactResult = aa.people.getCapContactByCapID(capId);
                     if (contactResult.getSuccess()) {
                         var capContacts = contactResult.getOutput();
