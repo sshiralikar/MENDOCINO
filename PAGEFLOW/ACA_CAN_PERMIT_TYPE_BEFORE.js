@@ -101,7 +101,7 @@ loadAppSpecific4ACA(AInfo); // Add AppSpecific Info
 //loadASITables();
 // page flow custom code begin
 try {
-    if (appMatch("Cannabis/Cultivation/*/*", capId)) {
+    if (appMatch("Cannabis/Cultivation/*/*", capId) && !appMatch("Cannabis/Cultivation/Renewal/*", capId)) {
         var permitType = AInfo["Permit Type"];
         logDebug("permitType: "+ permitType);
         var zoningValues = getZoningValuesFromGIS();
@@ -147,7 +147,7 @@ try {
             comment("You exceed the maximum allowance of 10000 sq. ft.");
         }
     }
-    else if (appMatch("Cannabis/Nursery/*/*", capId)) {
+    else if (appMatch("Cannabis/Nursery/*/*", capId) && !appMatch("Cannabis/Nursery/Renewal/*", capId)) {
         var permitType = "Nursery";
         logDebug("permitType: "+ permitType);
         var zoningValues = getZoningValuesFromGIS();
