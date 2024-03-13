@@ -14,7 +14,8 @@ if(wfTask == "Supervisor Review" && wfStatus == "Issued")
     var expDate = getAppSpecific("New Expiration Date", licCapId);
     var today = new Date();
     var expDateObj = new Date(expDate);
-
+    copyAppSpecificInfo(capId,licCapId);
+    copyASITablesWithRemove(capId, licCapId);
     if(today > expDateObj)
     {
         today.setFullYear(today.getFullYear() + 1);
