@@ -387,3 +387,104 @@ if(wfTask == "Draft Decision" && wfStatus == "Modification Required") {
         }
     }
 }
+function copyAppSpecificInfo(srcCapId, targetCapId) {
+    //1. Get Application Specific Information with source CAPID.
+    var appSpecificInfo = getAppSpecificInfo(srcCapId);
+    if (appSpecificInfo == null || appSpecificInfo.length == 0) {
+        return;
+    }
+    //2. Set target CAPID to source Specific Information.
+    for (loopk in appSpecificInfo) {
+        var sourceAppSpecificInfoModel = appSpecificInfo[loopk];
+        sourceAppSpecificInfoModel.setPermitID1(targetCapId.getID1());
+        sourceAppSpecificInfoModel.setPermitID2(targetCapId.getID2());
+        sourceAppSpecificInfoModel.setPermitID3(targetCapId.getID3());
+        //3. Edit ASI on target CAP (Copy info from source to target)
+        aa.appSpecificInfo.editAppSpecInfoValue(sourceAppSpecificInfoModel);
+    }
+}
+
+function getAppSpecificInfo(capId) {
+    capAppSpecificInfo = null;
+    var s_result = aa.appSpecificInfo.getByCapID(capId);
+    if (s_result.getSuccess()) {
+        capAppSpecificInfo = s_result.getOutput();
+        if (capAppSpecificInfo == null || capAppSpecificInfo.length == 0) {
+            aa.print("WARNING: no appSpecificInfo on this CAP:" + capId);
+            capAppSpecificInfo = null;
+        }
+    } else {
+        aa.print("ERROR: Failed to appSpecificInfo: " + s_result.getErrorMessage());
+        capAppSpecificInfo = null;
+    }
+    // Return AppSpecificInfoModel[]
+    return capAppSpecificInfo;
+}
+function copyASITablesWithRemove(pFromCapId, pToCapId) {
+    // Function dependencies on addASITable()
+    // par3 is optional 0 based string array of table to ignore
+    var itemCap = pFromCapId;
+
+    var gm = aa.appSpecificTableScript.getAppSpecificTableGroupModel(itemCap).getOutput();
+    var ta = gm.getTablesArray()
+    var tai = ta.iterator();
+    var tableArr = new Array();
+    var ignoreArr = new Array();
+    var limitCopy = false;
+    if (arguments.length > 2) {
+        ignoreArr = arguments[2];
+        limitCopy = true;
+    }
+    while (tai.hasNext()) {
+        var tsm = tai.next();
+
+        var tempObject = new Array();
+        var tempArray = new Array();
+        var tn = tsm.getTableName() + "";
+        var numrows = 0;
+
+        //Check list
+        if (limitCopy) {
+            var ignore = false;
+            for (var i = 0; i < ignoreArr.length; i++)
+                if (ignoreArr[i] == tn) {
+                    ignore = true;
+                    break;
+                }
+            if (ignore)
+                continue;
+        }
+        if (!tsm.rowIndex.isEmpty()) {
+            var tsmfldi = tsm.getTableField().iterator();
+            var tsmcoli = tsm.getColumns().iterator();
+            var readOnlyi = tsm.getAppSpecificTableModel().getReadonlyField().iterator(); // get Readonly filed
+            var numrows = 1;
+            while (tsmfldi.hasNext()) // cycle through fields
+            {
+                if (!tsmcoli.hasNext()) // cycle through columns
+                {
+                    var tsmcoli = tsm.getColumns().iterator();
+                    tempArray.push(tempObject); // end of record
+                    var tempObject = new Array(); // clear the temp obj
+                    numrows++;
+                }
+                var tcol = tsmcoli.next();
+                var tval = tsmfldi.next();
+
+                var readOnly = 'N';
+                if (readOnlyi.hasNext()) {
+                    readOnly = readOnlyi.next();
+                }
+
+                var fieldInfo = new asiTableValObj(tcol.getColumnName(), tval, readOnly);
+                tempObject[tcol.getColumnName()] = fieldInfo;
+                //tempObject[tcol.getColumnName()] = tval;
+            }
+
+            tempArray.push(tempObject); // end of record
+        }
+        removeASITable(tn, pToCapId);
+        addASITable(tn, tempArray, pToCapId);
+        logDebug("ASI Table Array : " + tn + " (" + numrows + " Rows)");
+    }
+}
