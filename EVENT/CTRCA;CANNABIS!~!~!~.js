@@ -13,7 +13,7 @@ try
 }
 catch (err)
 {
-    aa.print("Error on changing sequence ASA: "+ err);
+    aa.print("Error on changing sequence CTRCA: "+ err);
     aa.sendMail("no-reply@mendocinocounty.gov", "sshiralikar@trustvip.com", "", "Error on changing sequence CTRCA", err);
 }
 if(appTypeArray[1]=="Amendment" || appTypeArray[2]=="Application" || appTypeArray[2]=="Renewal")
