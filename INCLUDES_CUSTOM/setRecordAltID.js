@@ -15,6 +15,9 @@ function setRecordAltID(vCapID)
         if (parentCapId == null || parentCapId == false || parentCapId == "") {
             parentCapId = getParent(vCapID);
         }
+        if (parentCapId == null || parentCapId == false || parentCapId == "") {
+            parentCapId = getParentCapID4Renewal();
+        }
         parentCapId = aa.cap.getCapID(parentCapId.getID1(),parentCapId.getID2(),parentCapId.getID3()).getOutput();
         //aa.sendMail("no-reply@mendocinocounty.gov", "sshiralikar@trustvip.com", "", "parentCapId", parentCapId);
         var vPCapType = aa.cap.getCap(parentCapId).getOutput().getCapType().toString();
