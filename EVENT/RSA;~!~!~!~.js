@@ -8,13 +8,13 @@ try
 }
 catch(err)
 {
-    aa.sendMail("noreply-accela@northportfl.gov", "sshiralikar@trustvip.com", "", "Error on RSA", err);
+    aa.sendMail("noreply-accela@mendocinocounty.gov", "sshiralikar@trustvip.com", "", "Error on RSA", err);
 }
 
 function assignCapIDsByEmail(email,pUserSeqNumber)
 {
     var altIds = new Array();
-    var sql = "SELECT B1_PER_ID1, B1_PER_ID2, B1_PER_ID3 FROM B3CONTACT WHERE SERV_PROV_CODE='NORTHPORT' AND B1_EMAIL = '"+email+"'";
+    var sql = "SELECT B1_PER_ID1, B1_PER_ID2, B1_PER_ID3 FROM B3CONTACT WHERE SERV_PROV_CODE='MENDOCINO' AND B1_EMAIL = '"+email+"'";
     var res = doSQLSelect(sql);
     for(var i in res)
     {

@@ -150,7 +150,7 @@ function mainProcess()
                             //logDebugBatch(fTask.getTaskDescription()+" --> "+ getTaskDueDateX(fTask.getTaskDescription()+""));
                             //logDebugBatch("todayDate: "+ todayDate);
 
-                            if (fTask.getDisposition() && fTask.getDisposition().toUpperCase().equals("DEFICIENCY")
+                            /*if (fTask.getDisposition() && fTask.getDisposition().toUpperCase().equals("DEFICIENCY")
                                 && (getTaskDueDateX(fTask.getTaskDescription()+"") == todayDate || getTaskDueDateX(fTask.getTaskDescription()+"") == todayDateX))
                             {
                                 logDebugBatch("Eligible for a Denial: "+ capIDString);
@@ -209,7 +209,7 @@ function mainProcess()
                                         }
                                     }
                                 }
-                            }
+                            }*/
 
 
                             var threeDayDate = new Date();
