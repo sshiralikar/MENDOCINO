@@ -254,6 +254,7 @@ if(wfStatus == "Appeal Denied")
         }
     }
 }
+/*
 if(wfTask == "Issuance" && wfStatus == "Issued")
 {
     var licCapId = getParent();
@@ -288,6 +289,7 @@ if(wfTask == "Issuance" && wfStatus == "Issued")
         }
     }
 }
+*/
 
 if(wfStatus == "Deficiency")
 {

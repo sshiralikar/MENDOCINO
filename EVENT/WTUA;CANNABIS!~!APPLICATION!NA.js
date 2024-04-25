@@ -293,7 +293,7 @@ if(wfStatus == "Appeal Denied")
     }
 }
 
-if(wfTask == "Issuance" && wfStatus == "Issued")
+/*if(wfTask == "Issuance" && wfStatus == "Issued")
 {
     var licCapId = getParent();
     var hm = new Array();
@@ -326,7 +326,7 @@ if(wfTask == "Issuance" && wfStatus == "Issued")
             }
         }
     }
-}
+}*/
 
 //CAMEND-392
 if(wfTask == "Supervisor Review" && wfStatus == "Deficiency")
