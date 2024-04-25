@@ -1,3 +1,11 @@
+if(wfStatus == "Denial Pending")
+{
+    editTaskDueDate("Appeal", dateAdd(newDate, 35));
+}
+if(wfTask == "Supervisor Review" && wfStatus == "Denied")
+{
+    editTaskDueDate("Appeal", dateAdd(newDate, 10));
+}
 if(wfTask!="Supervisor Review" && wfStatus == "Deficiency")
 {
     var hm = new Array();
