@@ -198,15 +198,15 @@ function mainProcess() {
                 capIDString = capId.getCustomID();
 
                 cap = aa.cap.getCap(capId).getOutput();
-
+                var appStatus = getAppStatus(capId);
                 targetAppType = cap.getCapType();     //create CapTypeModel object
                 targetAppTypeString = targetAppType.toString();
-                if(targetAppTypeString.split("/")[2] == "Permit")
+                if(targetAppTypeString.split("/")[2] == "Permit" && appStatus!="Withdrawn" && appStatus!="Void")
                 {
                     logMessage(capIDString);
                     var thisCapModel = cap.getCapModel();
                     var thisTypeResult = cap.getCapType();
-                    var appStatus = getAppStatus(capId);
+
                     var perfFlag = getAppSpecific("Performance Standard Violation",capId);
                     if(perfFlag == "CHECKED" && appStatus != "Modification Under Review")
                     {
@@ -273,15 +273,15 @@ function mainProcess() {
                 capIDString = capId.getCustomID();
 
                 cap = aa.cap.getCap(capId).getOutput();
-
+                var appStatus = getAppStatus(capId);
                 targetAppType = cap.getCapType();     //create CapTypeModel object
                 targetAppTypeString = targetAppType.toString();
-                if(targetAppTypeString.split("/")[2] == "Permit")
+                if(targetAppTypeString.split("/")[2] == "Permit" && appStatus!="Withdrawn" && appStatus!="Void")
                 {
                     logMessage(capIDString);
                     var thisCapModel = cap.getCapModel();
                     var thisTypeResult = cap.getCapType();
-                    var appStatus = getAppStatus(capId);
+
                     var perfFlag = getAppSpecific("Performance Standard Violation",capId);
                     if(perfFlag == "CHECKED" && appStatus != "Modification Under Review")
                     {
@@ -348,7 +348,8 @@ function mainProcess() {
                 cap = aa.cap.getCap(capId).getOutput();
                 targetAppType = cap.getCapType();     //create CapTypeModel object
                 targetAppTypeString = targetAppType.toString();
-                if(targetAppTypeString.split("/")[2] == "Permit")
+                var appStatus = getAppStatus(capId);
+                if(targetAppTypeString.split("/")[2] == "Permit" && appStatus!="Withdrawn" && appStatus!="Void")
                 {
                     var thisCapModel = cap.getCapModel();
                     var thisTypeResult = cap.getCapType();
@@ -406,7 +407,8 @@ function mainProcess() {
                 cap = aa.cap.getCap(capId).getOutput();
                 targetAppType = cap.getCapType();     //create CapTypeModel object
                 targetAppTypeString = targetAppType.toString();
-                if(targetAppTypeString.split("/")[2] == "Permit")
+                var appStatus = getAppStatus(capId);
+                if(targetAppTypeString.split("/")[2] == "Permit" && appStatus!="Withdrawn" && appStatus!="Void")
                 {
                     var thisCapModel = cap.getCapModel();
                     var thisTypeResult = cap.getCapType();
@@ -464,7 +466,8 @@ function mainProcess() {
                 cap = aa.cap.getCap(capId).getOutput();
                 targetAppType = cap.getCapType();     //create CapTypeModel object
                 targetAppTypeString = targetAppType.toString();
-                if(targetAppTypeString.split("/")[2] == "Permit")
+                var appStatus = getAppStatus(capId);
+                if(targetAppTypeString.split("/")[2] == "Permit" && appStatus!="Withdrawn" && appStatus!="Void")
                 {
                     var thisCapModel = cap.getCapModel();
                     var thisTypeResult = cap.getCapType();
@@ -523,7 +526,8 @@ function mainProcess() {
                 cap = aa.cap.getCap(capId).getOutput();
                 targetAppType = cap.getCapType();     //create CapTypeModel object
                 targetAppTypeString = targetAppType.toString();
-                if(targetAppTypeString.split("/")[2] == "Permit")
+                var appStatus = getAppStatus(capId);
+                if(targetAppTypeString.split("/")[2] == "Permit" && appStatus!="Withdrawn" && appStatus!="Void")
                 {
                     var thisCapModel = cap.getCapModel();
                     var thisTypeResult = cap.getCapType();
