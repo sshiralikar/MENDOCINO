@@ -29,7 +29,7 @@ function setRecordAltID(vCapID)
             newAltId = parentCapId.getCustomID()+"";
         //aa.sendMail("no-reply@mendocinocounty.gov", "sshiralikar@trustvip.com", "", "newAltId", newAltId);
         var cIds = getChildren(vCapType,parentCapId);
-        var recCnt = 0;
+        var recCnt = -1;
         for(var x in cIds) {
             var recId = "" + cIds[x];
             if(recId.substring(2,5) != "EST") {
