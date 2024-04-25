@@ -7,7 +7,7 @@ if(wfStatus == "Void" || wfStatus == "Withdrawn")
 //CAMEND-305
 
 //CAMEND-194, 223
-if(wfTask == "Supervisor Review" && wfStatus == "Issued")
+if(wfTask == "Issuance" && wfStatus == "Issued")
 {
     var hm = new Array();
     var licCapId = getParent();
