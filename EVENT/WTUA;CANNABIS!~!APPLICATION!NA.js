@@ -5,7 +5,85 @@ if(wfStatus == "Void" || wfStatus == "Withdrawn")
     updateAppStatus(wfStatus,"Updating via Script");
 }
 //CAMEND-305
+if(wfTask == "Supervisor Review" && wfStatus == "Issued")
+{
+    var hm = new Array();
+    var myId = "";
+    var licCapId = createRecord("Cannabis",appTypeArray[1],"Permit",appTypeArray[3],capName);
+    aa.cap.createAppHierarchy(licCapId, capId);
+    copyASIFields(capId,licCapId);
+    copyASITables(capId, licCapId);
+    copyLicensedProf(capId, licCapId);
+    copyConditions(capId, licCapId);
+    //copyDocuments(capId, licCapId);
+    try
+    {
+        var newAltId = String(capId.getCustomID()).split("-APP")[0];
+        var updateResult = aa.cap.updateCapAltID(licCapId, newAltId);
+        if(!updateResult.getSuccess()){
+            aa.print("Error updating Alt Id: " + newAltId + ":: " +updateResult.getErrorMessage());
+        }else{
+            myId = newAltId;
+            aa.print("Compliance Method record ID updated to : " + newAltId);
+        }
+        updateShortNotes("PH3",licCapId);
+    }
+    catch (err)
+    {
+        aa.print("Error on changing sequence ASA: "+ err);
+        aa.sendMail("no-reply@mendocinocounty.gov", "sshiralikar@trustvip.com", "", "Error on changing sequence CTRCA", err);
+    }
+    var c = new Date();
+    c.setFullYear(c.getFullYear() + 1);
+    var newDate = c.getMonth()+1+"/"+c.getDate()+"/"+c.getFullYear();
 
+    setLicExpirationDate(licCapId,"",newDate);
+
+    editAppSpecific("Expiration Date", newDate);
+    editAppSpecific("New Expiration Date", newDate);
+    editAppSpecific("Issued Date", sysDateMMDDYYYY);
+    editAppSpecific("Expiration Date", newDate, licCapId);
+    editAppSpecific("New Expiration Date", newDate,licCapId);
+    editAppSpecific("Issued Date", sysDateMMDDYYYY,licCapId);
+
+    updateAppStatus("Active","Updating via Script",licCapId);
+    updateAppStatus("Issued","Updating via Script",capId);
+
+    var hm = new Array();
+    var conName = "";
+    var contactResult = aa.people.getCapContactByCapID(capId);
+    if (contactResult.getSuccess()) {
+        var capContacts = contactResult.getOutput();
+        for (var i in capContacts) {
+            if(matches(capContacts[i].getPeople().getContactType(),"Applicant","Authorized Agent","Property Owner"))
+            {
+                conName = getContactName(capContacts[i]);
+                var params = aa.util.newHashtable();
+                addParameter(params, "$$altID$$", capId.getCustomID()+"");
+                addParameter(params, "$$capTypeAlias$$", aa.cap.getCap(licCapId).getOutput().getCapType().getAlias()+"");
+                addParameter(params, "$$capName$$", capName);
+                addParameter(params, "$$parentAltId$$", newAltId+"");
+                addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptName"));
+                addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptPhone"));
+                addParameter(params, "$$deptAddress$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptAddress"));
+                addParameter(params, "$$deptHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptHours"));
+                addParameter(params, "$$deptEmail$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptEmail"));
+                addParameter(params, "$$deptEmail2$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptEmail2"));
+                addParameter(params, "$$financeHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","financeHours"));
+                addParameter(params, "$$deptFormalName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptFormalName"));
+                addParameter(params, "$$contactname$$", conName);
+                addParameter(params, "$$date$$", sysDateMMDDYYYY);
+                addParameter(params, "$$contactEmail$$", capContacts[i].getPeople().getEmail() + "");
+                addParameter(params, "$$ACAUrl$$", String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0]);
+                addParameter(params, "$$ACAURL$$", String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0]);
+                if(hm[capContacts[i].getPeople().getEmail() + ""] != 1) {
+                    sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail() + "", "", "CAN_ISSUANCE", params, null, capId);
+                    hm[capContacts[i].getPeople().getEmail() + ""] = 1;
+                }
+            }
+        }
+    }
+}
 //CAMEND-194, 223
 if(wfTask == "Issuance" && wfStatus == "Issued")
 {
@@ -20,7 +98,7 @@ if(wfTask == "Issuance" && wfStatus == "Issued")
             var envParameters = aa.util.newHashMap();
             envParameters.put("RecordID", newAltId);
             envParameters.put("IssueDT", sysDateMMDDYYYY);
-            envParameters.put("ExpireDT", newDate);
+            envParameters.put("ExpireDT", AInfo["New Expiration Date"]);
             aa.runAsyncScript("RUN_ASYNC_PERMIT_REPORT", envParameters);
 
             var envParameters = aa.util.newHashMap();
@@ -249,80 +327,6 @@ if(wfStatus == "Appeal Denied")
             if(hm[capContacts[i].getPeople().getEmail() + ""] != 1) {
                 sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail() + "", "", "GLOBAL_DENIED", params, null, capId);
                 hm[capContacts[i].getPeople().getEmail() + ""] = 1;
-            }
-        }
-    }
-}
-
-if(wfTask == "Supervisor Review" && wfStatus == "Issued")
-{
-    var hm = new Array();
-    var licCapId = createRecord("Cannabis",appTypeArray[1],"Permit",appTypeArray[3],capName);
-    aa.cap.createAppHierarchy(licCapId, capId);
-    copyASIFields(capId,licCapId);
-    copyASITables(capId, licCapId);
-    copyLicensedProf(capId, licCapId);
-    copyConditions(capId, licCapId);
-    //copyDocuments(capId, licCapId);
-    try
-    {
-        var newAltId = String(capId.getCustomID()).split("-APP")[0];
-        var updateResult = aa.cap.updateCapAltID(licCapId, newAltId);
-        if(!updateResult.getSuccess()){
-            aa.print("Error updating Alt Id: " + newAltId + ":: " +updateResult.getErrorMessage());
-        }else{
-            aa.print("Compliance Method record ID updated to : " + newAltId);
-        }
-        updateShortNotes("PH3",licCapId);
-    }
-    catch (err)
-    {
-        aa.print("Error on changing sequence ASA: "+ err);
-        aa.sendMail("no-reply@mendocinocounty.gov", "sshiralikar@trustvip.com", "", "Error on changing sequence CTRCA", err);
-    }
-    var c = new Date();
-    c.setFullYear(c.getFullYear() + 1);
-    var newDate = c.getMonth()+1+"/"+c.getDate()+"/"+c.getFullYear();
-
-    setLicExpirationDate(licCapId,"",newDate);
-
-    editAppSpecific("Expiration Date", newDate);
-    editAppSpecific("New Expiration Date", newDate);
-    editAppSpecific("Issued Date", sysDateMMDDYYYY);
-    editAppSpecific("Expiration Date", newDate, licCapId);
-    editAppSpecific("New Expiration Date", newDate,licCapId);
-    editAppSpecific("Issued Date", sysDateMMDDYYYY,licCapId);
-
-    updateAppStatus("Active","Updating via Script",licCapId);
-    updateAppStatus("Issued","Updating via Script",capId);
-
-    var hm = new Array();
-    var conName = "";
-    var contactResult = aa.people.getCapContactByCapID(capId);
-    if (contactResult.getSuccess()) {
-        var capContacts = contactResult.getOutput();
-        for (var i in capContacts) {
-            if(matches(capContacts[i].getPeople().getContactType(),"Applicant","Authorized Agent","Property Owner"))
-            {
-                conName = getContactName(capContacts[i]);
-                var params = aa.util.newHashtable();
-                addParameter(params, "$$altID$$", capId.getCustomID()+"");
-                addParameter(params, "$$capTypeAlias$$", aa.cap.getCap(licCapId).getOutput().getCapType().getAlias()+"");
-                addParameter(params, "$$capName$$", capName);
-                addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptName"));
-                addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptPhone"));
-                addParameter(params, "$$deptHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptHours"));
-                addParameter(params, "$$deptEmail$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptEmail"));
-                addParameter(params, "$$deptFormalName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptFormalName"));
-                addParameter(params, "$$contactname$$", conName);
-                addParameter(params, "$$date$$", sysDateMMDDYYYY);
-                addParameter(params, "$$contactEmail$$", capContacts[i].getPeople().getEmail() + "");
-                addParameter(params, "$$ACAUrl$$", String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0]);
-                addParameter(params, "$$ACAURL$$", String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0]);
-                if(hm[capContacts[i].getPeople().getEmail() + ""] != 1) {
-                    sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail() + "", "", "CAN_ISSUANCE", params, null, capId);
-                    hm[capContacts[i].getPeople().getEmail() + ""] = 1;
-                }
             }
         }
     }
