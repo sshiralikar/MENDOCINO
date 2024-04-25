@@ -150,11 +150,12 @@ function mainProcess()
                             //logDebugBatch(fTask.getTaskDescription()+" --> "+ getTaskDueDateX(fTask.getTaskDescription()+""));
                             //logDebugBatch("todayDate: "+ todayDate);
 
-                            /*if (fTask.getDisposition() && fTask.getDisposition().toUpperCase().equals("DEFICIENCY")
+                            if (fTask.getDisposition() && fTask.getDisposition().toUpperCase().equals("DEFICIENCY")
                                 && (getTaskDueDateX(fTask.getTaskDescription()+"") == todayDate || getTaskDueDateX(fTask.getTaskDescription()+"") == todayDateX))
                             {
-                                logDebugBatch("Eligible for a Denial: "+ capIDString);
-                                taskCloseAllExcept("Denied","Closing via script","Appeal");
+                                logDebugBatch("No Response: "+ capIDString);
+                                updateAppStatus("No Response","Updating via Script");
+                                /*taskCloseAllExcept("Denied","Closing via script","Appeal");
                                 updateAppStatus("Denied","Updating via Script");
                                 updateTask("Appeal","In Progress","","");
                                 aa.workflow.adjustTask(capId, "Appeal", "Y", "N", null, null);
@@ -208,8 +209,8 @@ function mainProcess()
                                             hm[capContacts[i].getPeople().getEmail() + ""] = 1;
                                         }
                                     }
-                                }
-                            }*/
+                                }*/
+                            }
 
 
                             var threeDayDate = new Date();
