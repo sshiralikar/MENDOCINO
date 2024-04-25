@@ -5,9 +5,7 @@ if(wfStatus == "Void" || wfStatus == "Withdrawn")
     updateAppStatus(wfStatus,"Updating via Script");
 }
 //CAMEND-305
-
-//CAMEND-194, 223
-if(wfTask == "Issuance" && wfStatus == "Issued")
+if(wfTask == "Supervisor Review" && wfStatus == "Issued")
 {
     var hm = new Array();
     var licCapId = getParent();
@@ -36,6 +34,41 @@ if(wfTask == "Issuance" && wfStatus == "Issued")
     editAppSpecific("Issued Date", sysDateMMDDYYYY,licCapId);
     updateAppStatus("Active","Updating via Script",licCapId);
 
+    var conName = "";
+    var contactResult = aa.people.getCapContactByCapID(capId);
+    if (contactResult.getSuccess()) {
+        var capContacts = contactResult.getOutput();
+        for (var i in capContacts) {
+            if(matches(capContacts[i].getPeople().getContactType(),"Applicant","Authorized Agent"))
+            {
+                conName = getContactName(capContacts[i]);
+                var params = aa.util.newHashtable();
+                addParameter(params, "$$altID$$", capId.getCustomID()+"");
+                addParameter(params, "$$capTypeAlias$$", aa.cap.getCap(licCapId).getOutput().getCapType().getAlias()+"");
+                addParameter(params, "$$capName$$", capName);
+                addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptName"));
+                addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptPhone"));
+                addParameter(params, "$$deptHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptHours"));
+                addParameter(params, "$$deptEmail$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptEmail"));
+                addParameter(params, "$$deptFormalName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptFormalName"));
+                addParameter(params, "$$contactname$$", conName);
+                addParameter(params, "$$date$$", sysDateMMDDYYYY);
+                addParameter(params, "$$contactEmail$$", capContacts[i].getPeople().getEmail() + "");
+                addParameter(params, "$$ACAUrl$$", String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0]);
+                addParameter(params, "$$ACAURL$$", String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0]);
+                if(hm[capContacts[i].getPeople().getEmail() + ""] != 1) {
+                    sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail() + "", "", "CAN_ISSUANCE", params, null, capId);
+                    hm[capContacts[i].getPeople().getEmail() + ""] = 1;
+                }
+            }
+        }
+    }
+}
+//CAMEND-194, 223
+if(wfTask == "Issuance" && wfStatus == "Issued")
+{
+    var licCapId = getParent();
+    var hm = new Array();
     /*renewalCapProject = getRenewalCapByParentCapIDForIncomplete(parentCapId);
     if (renewalCapProject != null) {
         renewalCapProject.setStatus("Complete");
@@ -54,7 +87,7 @@ if(wfTask == "Issuance" && wfStatus == "Issued")
             var envParameters = aa.util.newHashMap();
             envParameters.put("RecordID", licCapId.getCustomID()+"");
             envParameters.put("IssueDT", sysDateMMDDYYYY);
-            envParameters.put("ExpireDT", newDate);
+            envParameters.put("ExpireDT", AInfo["New Expiration Date"]);
             aa.runAsyncScript("RUN_ASYNC_PERMIT_REPORT", envParameters);
 
             var conName = "";
@@ -65,8 +98,6 @@ if(wfTask == "Issuance" && wfStatus == "Issued")
                     if(matches(capContacts[i].getPeople().getContactType(),"Applicant","Authorized Agent"))
                     {
                         conName = getContactName(capContacts[i]);
-
-
                         /*var rParams = aa.util.newHashMap();
                         rParams.put("RecordID", licCapId.getCustomID()+"");
 
@@ -248,40 +279,6 @@ if(wfStatus == "Appeal Denied")
                 if(hm[capContacts[i].getPeople().getEmail() + ""] != 1)
                 {
                     sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail()+"", "", "GLOBAL_DENIED", params, null, capId);
-                    hm[capContacts[i].getPeople().getEmail() + ""] = 1;
-                }
-            }
-        }
-    }
-}
-if(wfTask == "Supervisor Review" && wfStatus == "Issued")
-{
-    var licCapId = getParent();
-    var hm = new Array();
-    var conName = "";
-    var contactResult = aa.people.getCapContactByCapID(capId);
-    if (contactResult.getSuccess()) {
-        var capContacts = contactResult.getOutput();
-        for (var i in capContacts) {
-            if(matches(capContacts[i].getPeople().getContactType(),"Applicant","Authorized Agent"))
-            {
-                conName = getContactName(capContacts[i]);
-                var params = aa.util.newHashtable();
-                addParameter(params, "$$altID$$", capId.getCustomID()+"");
-                addParameter(params, "$$capTypeAlias$$", aa.cap.getCap(licCapId).getOutput().getCapType().getAlias()+"");
-                addParameter(params, "$$capName$$", capName);
-                addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptName"));
-                addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptPhone"));
-                addParameter(params, "$$deptHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptHours"));
-                addParameter(params, "$$deptEmail$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptEmail"));
-                addParameter(params, "$$deptFormalName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptFormalName"));
-                addParameter(params, "$$contactname$$", conName);
-                addParameter(params, "$$date$$", sysDateMMDDYYYY);
-                addParameter(params, "$$contactEmail$$", capContacts[i].getPeople().getEmail() + "");
-                addParameter(params, "$$ACAUrl$$", String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0]);
-                addParameter(params, "$$ACAURL$$", String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0]);
-                if(hm[capContacts[i].getPeople().getEmail() + ""] != 1) {
-                    sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail() + "", "", "CAN_ISSUANCE", params, null, capId);
                     hm[capContacts[i].getPeople().getEmail() + ""] = 1;
                 }
             }
