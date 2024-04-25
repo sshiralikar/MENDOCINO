@@ -217,6 +217,13 @@ function mainProcess() {
                         deactivateTask("Permit Status");
                         updateAppStatus("Expired", "Updated by batch ", capId);
                     }
+                    if(balance > 0)
+                    {
+                        inspCancelAll();
+                        resultWorkflowTask("Permit Status", "Expired", "Updated by batch " + ".", "Updated by batch ")
+                        deactivateTask("Permit Status");
+                        updateAppStatus("Expired - Balance Due", "Updated by batch ", capId);
+                    }
                     var test = true;
                     var contactResult = aa.people.getCapContactByCapID(capId);
                     if (contactResult.getSuccess()) {
