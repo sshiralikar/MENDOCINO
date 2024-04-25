@@ -105,7 +105,7 @@ if(wfTask == "Issuance" && wfStatus == "Issued")
                         addParameter(params, "$$ACAUrl$$", String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0]);
                         addParameter(params, "$$ACAURL$$", String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0]);
                         if(hm[capContacts[i].getPeople().getEmail() + ""] != 1) {
-                            sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail() + "", "", "CAN_PERMIT_ISSUANCE", params, null, capId);
+                            sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail() + "", "", "CAN_ISSUANCE", params, null, capId);
                             hm[capContacts[i].getPeople().getEmail() + ""] = 1;
                         }
                     }
@@ -254,8 +254,7 @@ if(wfStatus == "Appeal Denied")
         }
     }
 }
-/*
-if(wfTask == "Issuance" && wfStatus == "Issued")
+if(wfTask == "Supervisor Review" && wfStatus == "Issued")
 {
     var licCapId = getParent();
     var hm = new Array();
@@ -282,14 +281,13 @@ if(wfTask == "Issuance" && wfStatus == "Issued")
                 addParameter(params, "$$ACAUrl$$", String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0]);
                 addParameter(params, "$$ACAURL$$", String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0]);
                 if(hm[capContacts[i].getPeople().getEmail() + ""] != 1) {
-                    sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail() + "", "", "CAN_PERMIT_ISSUANCE", params, null, capId);
+                    sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail() + "", "", "CAN_ISSUANCE", params, null, capId);
                     hm[capContacts[i].getPeople().getEmail() + ""] = 1;
                 }
             }
         }
     }
 }
-*/
 
 if(wfStatus == "Deficiency")
 {
