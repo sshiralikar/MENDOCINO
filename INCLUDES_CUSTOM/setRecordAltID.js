@@ -36,43 +36,54 @@ function setRecordAltID(vCapID)
                 recCnt++;
             }
         }
-        var amendNbr = "";
-        if(matches(cIds, null, "", undefined))
-            amendNbr = "00" + 1;
-        else {
-            if(recCnt <= 9)
-                amendNbr = "00" +  (recCnt+1);
-            else if(recCnt> 9 && recCnt <= 99)
-                amendNbr = "0" +  (recCnt+1);
-            else
-                amendNbr = (recCnt+1);
-        }
-        if(vCapType == "Cannabis/Amendment/Employee List/NA")
-            newAltId = newAltId+"-EMP-"+ amendNbr;
-        else if(vCapType == "Cannabis/Amendment/Modification/NA")
-            newAltId = newAltId+"-MOD-"+ amendNbr;
-        else if(vCapType == "Cannabis/Amendment/Notice of Application Stay/NA")
-            newAltId = newAltId+"-NOS-"+ amendNbr;
-        else if(vCapType == "Cannabis/Amendment/Notice of Non-Cultivation/NA")
-            newAltId = newAltId+"-NNC-"+ amendNbr;
-        else if(vCapType == "Cannabis/Amendment/Withdrawal/NA")
-            newAltId = newAltId+"-WIT-"+ amendNbr;
-        else if(vCapType == "Cannabis/Cultivation/Renewal/NA")
-            newAltId = newAltId+"-REN-"+ amendNbr;
-        else if(vCapType == "Cannabis/Nursery/Renewal/NA")
-            newAltId = newAltId+"-REN-"+ amendNbr;
-
         //aa.sendMail("no-reply@mendocinocounty.gov", "sshiralikar@trustvip.com", "", "FINALnewAltId", newAltId);
     }
+    var lastAltId = newAltId;
     if(newAltId!="")
     {
-        var updateResult = aa.cap.updateCapAltID(vCapID, newAltId);
-        if(!updateResult.getSuccess()){
-            //aa.sendMail("no-reply@mendocinocounty.gov", "sshiralikar@trustvip.com", "", "UNSUCCESSFULL", updateResult.getErrorMessage());
-            aa.print("Error updating Alt Id: " + newAltId + ":: " +updateResult.getErrorMessage());
-        }else{
-            //aa.sendMail("no-reply@mendocinocounty.gov", "sshiralikar@trustvip.com", "", "SUCCESS", "SUCCESS");
-            aa.print("Compliance Method record ID updated to : " + newAltId);
+        //var count = 0;
+        while(1)
+        {
+            var amendNbr = "";
+            if(matches(cIds, null, "", undefined))
+                amendNbr = "00" + 1;
+            else {
+                if(recCnt <= 9)
+                    amendNbr = "00" +  (recCnt+1);
+                else if(recCnt> 9 && recCnt <= 99)
+                    amendNbr = "0" +  (recCnt+1);
+                else
+                    amendNbr = (recCnt+1);
+            }
+            if(vCapType == "Cannabis/Amendment/Employee List/NA")
+                newAltId = lastAltId+"-EMP-"+ amendNbr;
+            else if(vCapType == "Cannabis/Amendment/Modification/NA")
+                newAltId = lastAltId+"-MOD-"+ amendNbr;
+            else if(vCapType == "Cannabis/Amendment/Notice of Application Stay/NA")
+                newAltId = lastAltId+"-NOS-"+ amendNbr;
+            else if(vCapType == "Cannabis/Amendment/Notice of Non-Cultivation/NA")
+                newAltId = lastAltId+"-NNC-"+ amendNbr;
+            else if(vCapType == "Cannabis/Amendment/Withdrawal/NA")
+                newAltId = lastAltId+"-WIT-"+ amendNbr;
+            else if(vCapType == "Cannabis/Cultivation/Renewal/NA")
+                newAltId = lastAltId+"-REN-"+ amendNbr;
+            else if(vCapType == "Cannabis/Nursery/Renewal/NA")
+                newAltId = lastAltId+"-REN-"+ amendNbr;
+
+            var updateResult = aa.cap.updateCapAltID(vCapID, newAltId);
+            if(!updateResult.getSuccess()){
+                recCnt ++;
+                //count ++;
+                //aa.sendMail("no-reply@mendocinocounty.gov", "sshiralikar@trustvip.com", "", "UNSUCCESSFULL", updateResult.getErrorMessage());
+                aa.print("Error updating Alt Id: " + newAltId + ":: " +updateResult.getErrorMessage());
+            }else{
+                break;
+                //aa.sendMail("no-reply@mendocinocounty.gov", "sshiralikar@trustvip.com", "", "SUCCESS", "SUCCESS");
+                aa.print("Compliance Method record ID updated to : " + newAltId);
+            }
+/*            if(count == 10)
+                break;*/
         }
     }
+    return newAltId;
 }

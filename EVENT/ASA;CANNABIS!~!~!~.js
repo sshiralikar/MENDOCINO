@@ -1,8 +1,9 @@
+var newAltId = "";
 try
 {
     if(!publicUser)
     {
-        setRecordAltID(capId);
+        newAltId = setRecordAltID(capId);
         if (parentCapId == "undefined" || parentCapId == null) {
             parentCapId = aa.env.getValue("ParentCapID");
             if(!parentCapId)
@@ -53,7 +54,11 @@ if(!publicUser) {
     if(appTypeArray[2]=="Renewal") {
 // Updated email for CAMEND-478 to use Async script so Renewal in back office (clone) pulls new Alt Id
         var envParameters = aa.util.newHashMap();
-        envParameters.put("capIdStr", capId.getCustomID()+"");
+        logDebug("capIdStr: "+ newAltId+"" );
+        if(newAltId!="")
+            envParameters.put("capIdStr", newAltId+"");
+        else
+            envParameters.put("capIdStr", capId.getCustomID()+"");
         aa.runAsyncScript("ASYNC_SEND_SUBMISSION_EMAIL", envParameters);
     }
 }
