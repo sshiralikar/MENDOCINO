@@ -9,46 +9,7 @@ if(wfStatus == "Void" || wfStatus == "Withdrawn")
 //CAMEND-194, 223
 if(wfTask == "Issuance" && wfStatus == "Issued")
 {
-    var hm = new Array();
-    var licCapId = createRecord("Cannabis",appTypeArray[1],"Permit",appTypeArray[3],capName);
-    aa.cap.createAppHierarchy(licCapId, capId);
-    copyASIFields(capId,licCapId);
-    copyASITables(capId, licCapId);
-    copyLicensedProf(capId, licCapId);
-    copyConditions(capId, licCapId);
-    //copyDocuments(capId, licCapId);
-    try
-    {
-        var newAltId = String(capId.getCustomID()).split("-APP")[0];
-        var updateResult = aa.cap.updateCapAltID(licCapId, newAltId);
-        if(!updateResult.getSuccess()){
-            aa.print("Error updating Alt Id: " + newAltId + ":: " +updateResult.getErrorMessage());
-        }else{
-            aa.print("Compliance Method record ID updated to : " + newAltId);
-        }
-        updateShortNotes("PH3",licCapId);
-    }
-    catch (err)
-    {
-        aa.print("Error on changing sequence ASA: "+ err);
-        aa.sendMail("no-reply@mendocinocounty.gov", "sshiralikar@trustvip.com", "", "Error on changing sequence CTRCA", err);
-    }
-    var c = new Date();
-    c.setFullYear(c.getFullYear() + 1);
-    var newDate = c.getMonth()+1+"/"+c.getDate()+"/"+c.getFullYear();
-
-    setLicExpirationDate(licCapId,"",newDate);
-
-    editAppSpecific("Expiration Date", newDate);
-    editAppSpecific("New Expiration Date", newDate);
-    editAppSpecific("Issued Date", sysDateMMDDYYYY);
-    editAppSpecific("Expiration Date", newDate, licCapId);
-    editAppSpecific("New Expiration Date", newDate,licCapId);
-    editAppSpecific("Issued Date", sysDateMMDDYYYY,licCapId);
-
-    updateAppStatus("Active","Updating via Script",licCapId);
-    updateAppStatus("Issued","Updating via Script",capId);
-
+    var licCapId = getParent();
     var capDetailObjResult = aa.cap.getCapDetail(capId); // Detail
     if (capDetailObjResult.getSuccess()) {
         capDetail = capDetailObjResult.getOutput();
@@ -295,7 +256,46 @@ if(wfStatus == "Appeal Denied")
 
 if(wfTask == "Supervisor Review" && wfStatus == "Issued")
 {
-    var licCapId = getParent();
+    var hm = new Array();
+    var licCapId = createRecord("Cannabis",appTypeArray[1],"Permit",appTypeArray[3],capName);
+    aa.cap.createAppHierarchy(licCapId, capId);
+    copyASIFields(capId,licCapId);
+    copyASITables(capId, licCapId);
+    copyLicensedProf(capId, licCapId);
+    copyConditions(capId, licCapId);
+    //copyDocuments(capId, licCapId);
+    try
+    {
+        var newAltId = String(capId.getCustomID()).split("-APP")[0];
+        var updateResult = aa.cap.updateCapAltID(licCapId, newAltId);
+        if(!updateResult.getSuccess()){
+            aa.print("Error updating Alt Id: " + newAltId + ":: " +updateResult.getErrorMessage());
+        }else{
+            aa.print("Compliance Method record ID updated to : " + newAltId);
+        }
+        updateShortNotes("PH3",licCapId);
+    }
+    catch (err)
+    {
+        aa.print("Error on changing sequence ASA: "+ err);
+        aa.sendMail("no-reply@mendocinocounty.gov", "sshiralikar@trustvip.com", "", "Error on changing sequence CTRCA", err);
+    }
+    var c = new Date();
+    c.setFullYear(c.getFullYear() + 1);
+    var newDate = c.getMonth()+1+"/"+c.getDate()+"/"+c.getFullYear();
+
+    setLicExpirationDate(licCapId,"",newDate);
+
+    editAppSpecific("Expiration Date", newDate);
+    editAppSpecific("New Expiration Date", newDate);
+    editAppSpecific("Issued Date", sysDateMMDDYYYY);
+    editAppSpecific("Expiration Date", newDate, licCapId);
+    editAppSpecific("New Expiration Date", newDate,licCapId);
+    editAppSpecific("Issued Date", sysDateMMDDYYYY,licCapId);
+
+    updateAppStatus("Active","Updating via Script",licCapId);
+    updateAppStatus("Issued","Updating via Script",capId);
+
     var hm = new Array();
     var conName = "";
     var contactResult = aa.people.getCapContactByCapID(capId);
