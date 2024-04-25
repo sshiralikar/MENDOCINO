@@ -99,7 +99,7 @@ if(wfTask == "Issuance" && wfStatus == "Issued")
                     if(matches(capContacts[i].getPeople().getContactType(),"Applicant","Authorized Agent"))
                     {
                         conName = getContactName(capContacts[i]);
-                        /*var rParams = aa.util.newHashMap();
+                        var rParams = aa.util.newHashMap();
                         rParams.put("RecordID", licCapId.getCustomID()+"");
 
                         var report = aa.reportManager.getReportInfoModelByName("Cannabis Permit Report");
@@ -118,7 +118,7 @@ if(wfTask == "Issuance" && wfStatus == "Issued")
                                 var reportFile=aa.reportManager.storeReportToDisk(reportOutput);
                                 reportFile=reportFile.getOutput();
                             }
-                        }*/
+                        }
 
                         var params = aa.util.newHashtable();
                         addParameter(params, "$$altID$$", capId.getCustomID()+"");
@@ -140,7 +140,7 @@ if(wfTask == "Issuance" && wfStatus == "Issued")
                         addParameter(params, "$$ACAUrl$$", String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0]);
                         addParameter(params, "$$ACAURL$$", String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0]);
                         if(hm[capContacts[i].getPeople().getEmail() + ""] != 1) {
-                            sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail() + "", "", "CAN_PERMIT_ISSUANCE", params, null, capId);
+                            sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail() + "", "", "CAN_PERMIT_ISSUANCE", params, reportFile, capId);
                             hm[capContacts[i].getPeople().getEmail() + ""] = 1;
                         }
                     }
