@@ -56,7 +56,7 @@ if(wfStatus == "Issued")
             if (capConds[cc].getConditionStatus() != "Met") {
                 var cDesc = capConds[cc].getConditionDescription();
                 var cType = capConds[cc].getConditionType();
-                unmetCondStr +=cType+ ": cType"+ cDesc+"<br>";
+                unmetCondStr +=cType+ ": "+ cDesc+"<br>";
                 unmetConditions = true;
             }
         }
