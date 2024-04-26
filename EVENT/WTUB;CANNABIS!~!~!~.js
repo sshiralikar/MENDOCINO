@@ -33,3 +33,38 @@ var chrisG = true;
         }
     }
 }*/
+if(wfStatus == "Issued")
+{
+    var balanceDue = 0;
+    var capDetailObjResult = aa.cap.getCapDetail(capId); // Detail
+    if (capDetailObjResult.getSuccess()) {
+        capDetail = capDetailObjResult.getOutput();
+        balanceDue = capDetail.getBalance();
+    }
+    if(balanceDue > 0)
+    {
+        cancel = true;
+        showMessage = true;
+        comment("There is an outstanding balance of $"+ balanceDue);
+    }
+    var unmetCondStr = "";
+    var unmetConditions = false;
+    var condResult = aa.capCondition.getCapConditions(capId);
+    if (condResult.getSuccess()) {
+        var capConds = condResult.getOutput();
+        for (cc in capConds) {
+            if (capConds[cc].getConditionStatus() != "Met") {
+                var cDesc = capConds[cc].getConditionDescription();
+                var cType = capConds[cc].getConditionType();
+                unmetCondStr +=cType+ ": cType"+ cDesc+"<br>";
+                unmetConditions = true;
+            }
+        }
+    }
+    if(unmetConditions)
+    {
+        cancel = true;
+        showMessage = true;
+        comment("There are unmet conditions on this record, please mark the below as met:<BR><BR>"+ unmetCondStr);
+    }
+}
