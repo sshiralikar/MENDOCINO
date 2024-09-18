@@ -69,6 +69,18 @@ function setRecordAltID(vCapID)
                 newAltId = lastAltId+"-REN-"+ amendNbr;
             else if(vCapType == "Cannabis/Nursery/Renewal/NA")
                 newAltId = lastAltId+"-REN-"+ amendNbr;
+            // CAMEND-582
+            else if(vCapType == "Cannabis/Amendment/Notice of Fallowing/Revocation")
+                newAltId = lastAltId+"-ROF-"+ amendNbr;
+            // CAMEND-568
+            else if(vCapType == "Cannabis/Amendment/Notice of Fallowing/Affidavit")
+                newAltId = lastAltId+"-FA-"+ amendNbr;
+            // CAMEND-503
+            else if(vCapType == "Cannabis/Amendment/Notice of Fallowing/NA")
+                newAltId = lastAltId+"-NOF-"+ amendNbr;
+            // CAMEND-524
+            else if(vCapType == "Cannabis/Amendment/Assignment/NA")
+                newAltId = lastAltId+"-ASGN-"+ amendNbr;
 
             var updateResult = aa.cap.updateCapAltID(vCapID, newAltId);
             if(!updateResult.getSuccess()){
