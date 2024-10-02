@@ -151,9 +151,8 @@ try {
     var capId = cap.getCapID();
 
     if(AInfo["Vegetation Removal Purpose"] == "Yes")
-    {
         aa.env.setValue("ReturnData", "{'PageFlow':{'HidePage':'Y'}}");
-    }
+
 } catch (err) {
     logDebug(err)
 }
