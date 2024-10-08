@@ -5,7 +5,7 @@ if(wfStatus == "Void" || wfStatus == "Withdrawn")
     updateAppStatus(wfStatus,"Updating via Script");
 }
 //CAMEND-305
-if(wfTask == "Supervisor Review" && wfStatus == "Issued")
+if(wfTask == "Issuance" && wfStatus == "Issued")
 {
     var hm = new Array();
     var myId = "";
@@ -83,11 +83,11 @@ if(wfTask == "Supervisor Review" && wfStatus == "Issued")
             }
         }
     }
-}
+/*}
 //CAMEND-194, 223
 if(wfTask == "Issuance" && wfStatus == "Issued")
-{
-    var licCapId = getParent();
+{*/
+    //var licCapId = getParent();
     var capDetailObjResult = aa.cap.getCapDetail(capId); // Detail
     if (capDetailObjResult.getSuccess()) {
         capDetail = capDetailObjResult.getOutput();
