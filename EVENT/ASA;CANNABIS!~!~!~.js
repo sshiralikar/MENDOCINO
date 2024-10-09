@@ -67,3 +67,14 @@ if(!publicUser) {
 //Populate Geographic Information
 include("POPULATE_GEOGRAPHIC_INFORMATION");
 //Populate Geographic Information
+if(!publicUser)
+{
+    try
+    {
+        createRefLicProfFromLicProf();
+    }
+    catch(err)
+    {
+        logDebug("LP Update not necessary");
+    }
+}
