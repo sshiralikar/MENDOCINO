@@ -315,7 +315,7 @@ if(wfStatus == "Deficiency")
 
 
 //CAMEND-392, CAMEND-512
-if(wfTask == "Draft Decision" && wfStatus == "Deficiency")
+if ((wfTask == "Plans Coordination" || wfTask == 'Draft Decision') && wfStatus == 'Deficiency')
 {
     //var date = getCapFileDate(capId);
     //if(isDateInRangeToOct(date) || isDateInRangeToFeb(date) || isDateInRangeCurr(date)) {
