@@ -28,6 +28,7 @@ if (wfStatus == "Approved") {
                     addParameter(params, "$$year$$", new Date().getFullYear());
                     addParameter(params, "$$date$$", sysDateMMDDYYYY);
                     addParameter(params, "$$parentAltId$$", pCapId.getCustomID()+"");
+                    addParameter(params, "$$contactname$$", conName);
                     addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptName"));
                     addParameter(params, "$$phoneHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "phoneHours"));
                     addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptPhone"));
