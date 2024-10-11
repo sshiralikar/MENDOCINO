@@ -39,3 +39,10 @@ catch(err)
 {
     logDebug("LP Update not necessary");
 }
+
+//CAMEND-574
+if (appMatch("Cannabis/Amendment/Assignment/NA")) {
+    if (AInfo["Vegetation Removal Purpose"] == "Yes") {
+        addStdConditionX("Vegetation", "Tree Removal Identified");
+    }
+}
