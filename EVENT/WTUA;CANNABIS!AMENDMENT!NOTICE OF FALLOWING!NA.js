@@ -26,6 +26,8 @@ if (wfStatus == "Approved") {
                     var params = aa.util.newHashtable();
                     addParameter(params, "$$altID$$", capId.getCustomID() + "");
                     addParameter(params, "$$year$$", new Date().getFullYear());
+                    addParameter(params, "$$date$$", sysDateMMDDYYYY);
+                    addParameter(params, "$$parentAltId$$", licCapId.getCustomID()+"");
                     addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptName"));
                     addParameter(params, "$$phoneHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "phoneHours"));
                     addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptPhone"));
