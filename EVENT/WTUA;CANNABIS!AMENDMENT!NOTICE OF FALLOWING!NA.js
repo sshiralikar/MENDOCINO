@@ -93,6 +93,10 @@ if (wfStatus == "Denied") {
                     addParameter(params, "$$parentCapId$$", pCapId.getCustomID());
                     addParameter(params, "$$Amendment$$", aa.cap.getCap(capId).getOutput().getCapType().getAlias() + "");
                     addParameter(params, "$$Location$$", getAddressInALine());
+                    if(wfComment!="" && wfComment!= null)
+                        addParameter(params, "$$wfComment$$", "Comments: "+ wfComment);
+                    else
+                        addParameter(params, "$$wfComment$$", "");
                     sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail() + "", "", "CAN_NOF_DENIED", params, null, capId);
                 }
             }
