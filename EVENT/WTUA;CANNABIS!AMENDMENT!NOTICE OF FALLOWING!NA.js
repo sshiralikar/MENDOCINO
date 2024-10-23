@@ -25,7 +25,7 @@ if (wfStatus == "Approved") {
                     conName = getContactName(capContacts[i]);
                     var params = aa.util.newHashtable();
                     addParameter(params, "$$altID$$", capId.getCustomID() + "");
-                    addParameter(params, "$$year$$", new Date().getFullYear());
+                    addParameter(params, "$$year$$", parseInt(new Date().getFullYear()));
                     addParameter(params, "$$date$$", sysDateMMDDYYYY);
                     addParameter(params, "$$parentAltId$$", pCapId.getCustomID()+"");
                     addParameter(params, "$$contactname$$", conName);
