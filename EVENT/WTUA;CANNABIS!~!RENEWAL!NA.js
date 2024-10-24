@@ -16,7 +16,7 @@ if(wfTask == "Draft Decision" && wfStatus == "Issued")
     copyASITablesWithRemove(capId, licCapId);
     if(today > expDateObj)
     {
-        today.setFullYear(today.getFullYear() + 1);
+        today.setFullYear(today.getFullYear() + 5);
         var newDate = today.getMonth()+1+"/"+today.getDate()+"/"+today.getFullYear();
         editAppSpecific("New Expiration Date", newDate);
         editAppSpecific("New Expiration Date", newDate, licCapId);
@@ -24,7 +24,7 @@ if(wfTask == "Draft Decision" && wfStatus == "Issued")
     }
     else
     {
-        expDateObj.setFullYear(today.getFullYear() + 1);
+        expDateObj.setFullYear(today.getFullYear() + 5);
         var newDate = expDateObj.getMonth()+1+"/"+expDateObj.getDate()+"/"+expDateObj.getFullYear();
         editAppSpecific("New Expiration Date", newDate);
         editAppSpecific("New Expiration Date", newDate, licCapId);
@@ -68,8 +68,8 @@ if(wfTask == "Draft Decision" && wfStatus == "Issued")
 //CAMEND-194, 223
 if(wfTask == "Issuance" && wfStatus == "Issued")
 {
-    var licCapId = getParent();
-    var hm = new Array();
+    //var licCapId = getParent();
+    //var hm = new Array();
     /*renewalCapProject = getRenewalCapByParentCapIDForIncomplete(parentCapId);
     if (renewalCapProject != null) {
         renewalCapProject.setStatus("Complete");
@@ -83,7 +83,7 @@ if(wfTask == "Issuance" && wfStatus == "Issued")
         if(balanceDue <= 0)
         {
             var today = new Date();
-            today.setFullYear(today.getFullYear() + 1);
+            today.setFullYear(today.getFullYear() + 5);
             var newDate = today.getMonth()+1+"/"+today.getDate()+"/"+today.getFullYear();
             var envParameters = aa.util.newHashMap();
             envParameters.put("RecordID", licCapId.getCustomID()+"");
