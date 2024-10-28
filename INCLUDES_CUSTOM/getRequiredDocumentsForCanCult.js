@@ -14,6 +14,21 @@ function getRequiredDocumentsForCanCult() {
     }
     var requirementArray = [];
 
+    var isAppeal = appMatch("Cannabis/Amendment/Appeal/NA");
+    var isAssignment = appMatch("Cannabis/Amendment/Assignment/NA");
+    var isNOF = appMatch("Cannabis/Amendment/Notice of Fallowing/NA");
+    var isNOFAffidavit = appMatch("Cannabis/Amendment/Notice of Fallowing/Affidavit");
+    var isNOFRevocation = appMatch("Cannabis/Amendment/Notice of Fallowing/Revocation");
+    var isTaxAppeal = appMatch("Cannabis/Amendment/Tax Appeal/NA");
+
+    var ccblAffidavit = {
+        condition: "CCBL Affidavit",
+        document: "CCBL Affidavit"
+    };
+
+
+
+
     var wfStopPermanentOnly = [
         /*{
         task: "Initial Review",
@@ -41,6 +56,12 @@ function getRequiredDocumentsForCanCult() {
         status: "Temporarily Approved"
     }*/
     ];
+
+    // CAMEND-602
+    if(appMatch("Cannabis/*/Application/NA")){
+        requirementArray.push(ccblAffidavit);
+    }
+
     if(appMatch("Cannabis/*/Renewal/NA"))
     {
         var DCCStateLicense = {
