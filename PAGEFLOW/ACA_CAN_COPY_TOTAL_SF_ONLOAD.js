@@ -148,10 +148,15 @@ logDebug("balanceDue = " + balanceDue);
 try {
 
     // CAMEND-631
+    var parentCapId = getParent();
     var parentTotalSF = getAppSpecific("Total SF", parentCapId);
-    if (!matches(parentTotalSF, "", null, undefined)) {
-        editAppSpecific4ACA("Total SF/Total Nursery SF", parentTotalSF, capId);
+    logDebug("parentTotalSF is: " + parentTotalSF);
+    if (parentTotalSF != null) {
+        editAppSpecific4ACA("Total SF/Total Nursery SF", parentTotalSF, cap);
     }
+
+    // Save all back to ACA capModel
+    aa.env.setValue("CapModel", cap);
 
 } catch (err) {
 
@@ -184,23 +189,27 @@ if (debug.indexOf("**ERROR") > 0) {
 /////////////////////////////////////
 
 function editAppSpecific4ACA(itemName, itemValue) {
-    var i = cap.getAppSpecificInfoGroups().iterator();
-    while (i.hasNext()) {
-        var group = i.next();
-        var fields = group.getFields();
-        if (fields != null) {
-            var iteFields = fields.iterator();
-            while (iteFields.hasNext()) {
-                var field = iteFields.next();
-                if ((useAppSpecificGroupName && itemName.equals(field.getCheckboxType() + "." + field.getCheckboxDesc())) || itemName.equals(field.getCheckboxDesc())) {
-                    field.setChecklistComment(itemValue);
-                }
-            }
-        }
-    }
+    var iCapModel = capModel.getAppSpecificInfoGroups();
+	if(iCapModel!=null){
+		var i = iCapModel.iterator();
+		while (i.hasNext()) {
+			var group = i.next();
+			var fields = group.getFields();
+			if (fields != null) {
+				var iteFields = fields.iterator();
+				while (iteFields.hasNext()) {
+					var field = iteFields.next();
+					if (itemName.equals(field.getCheckboxDesc())) {
+						logDebug("itemValue: " + itemValue);
+						field.setChecklistComment(itemValue);
+					}
+				}
+			}
+		}
+	}
 }
 
-function _getAppSpecific(itemName) { //optional: itemCap
+function getAppSpecific(itemName) { //optional: itemCap
     var updated = false;
     var i = 0;
     var itemCap = capId;
