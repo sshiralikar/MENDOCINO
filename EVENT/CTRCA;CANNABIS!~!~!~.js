@@ -36,8 +36,8 @@ catch (err) {
 }
 
 if (publicUser) {
-    //CAMEND-574
-    if (appMatch("Cannabis/Amendment/Assignment/NA")) {
+    //CAMEND-574 & CAMEND-640
+    if (appMatch("Cannabis/Amendment/Assignment/NA") || appMatch("Cannabis/*/Renewal/NA")) {
         if (AInfo["Vegetation Removal Purpose"] == "Yes") {
             addStdConditionX("Vegetation", "Tree Removal Identified");
         }
