@@ -2,10 +2,10 @@ function getRequiredDocumentsForCanCult() {
     //showDebug = true;
     controlString = "";
     var nov = loadASITable("NOTICE OF VIOLATIONS");
-    if (typeof(NOTICEOFVIOLATIONS) == "object")
+    if (typeof (NOTICEOFVIOLATIONS) == "object")
         nov = NOTICEOFVIOLATIONS;
     var waterSource = loadASITable("WATER SOURCE");
-    if (typeof(WATERSOURCE) == "object")
+    if (typeof (WATERSOURCE) == "object")
         waterSource = WATERSOURCE;
     var flag = false;
     if (arguments.length > 0) {
@@ -24,6 +24,11 @@ function getRequiredDocumentsForCanCult() {
     var ccblAffidavit = {
         condition: "CCBL Affidavit",
         document: "CCBL Affidavit"
+    };
+
+    var sitePlan = {
+        condition: "Site Plan",
+        document: "Site Plan"
     };
 
 
@@ -57,13 +62,19 @@ function getRequiredDocumentsForCanCult() {
     }*/
     ];
 
+    // CAMEND-600
+    if (isAssignment) {
+        if (AInfo["Changes Made Since Last Site Plan"] == "Yes") {
+            requirementArray.push(sitePlan);
+        }
+    }
+
     // CAMEND-602
-    if(appMatch("Cannabis/*/Application/NA")){
+    if (appMatch("Cannabis/*/Application/NA")) {
         requirementArray.push(ccblAffidavit);
     }
 
-    if(appMatch("Cannabis/*/Renewal/NA"))
-    {
+    if (appMatch("Cannabis/*/Renewal/NA")) {
         var DCCStateLicense = {
             condition: "Business Formation - DCC State License",
             document: "Business Formation - DCC State License",
@@ -89,11 +100,10 @@ function getRequiredDocumentsForCanCult() {
             document: "State Water Resource Control Board, Notice of Applicability",
             workflow: wfStopPermanentOnly
         };
-        if(AInfo["SWRCB Notice Type"] == "Notice of Applicability")
+        if (AInfo["SWRCB Notice Type"] == "Notice of Applicability")
             requirementArray.push(SWRCBNoticeType1);
     }
-    else
-    {
+    else {
         //CAMEND-153
         var businessInformation = {
             condition: "Business Formation",
@@ -211,18 +221,16 @@ function getRequiredDocumentsForCanCult() {
             workflow: wfStopPermanentOnly
         };
         var strTable = loadASITable("POWER SOURCE(S)");
-        if (typeof(POWERSOURCES) == "object")
+        if (typeof (POWERSOURCES) == "object")
             strTable = POWERSOURCES;
         var gFlag = false;
-        if(strTable && strTable.length > 0)
-        {
-            for(var i in strTable)
-            {
-                if(strTable[i]["Type of Power"] == "Generator")
+        if (strTable && strTable.length > 0) {
+            for (var i in strTable) {
+                if (strTable[i]["Type of Power"] == "Generator")
                     gFlag = true;
             }
         }
-        if(gFlag)
+        if (gFlag)
             requirementArray.push(SensitiveSpeciesHabitatReview);
 
 
@@ -231,7 +239,7 @@ function getRequiredDocumentsForCanCult() {
             document: "State Water Resource Control Board, Notice of Applicability",
             workflow: wfStopPermanentOnly
         };
-        if(AInfo["SWRCB Notice Type"] == "Notice of Applicability")
+        if (AInfo["SWRCB Notice Type"] == "Notice of Applicability")
             requirementArray.push(SWRCBNoticeType1);
 
         var SWRCBNoticeType2 = {
@@ -239,7 +247,7 @@ function getRequiredDocumentsForCanCult() {
             document: "State Water Resource Control Board, Notice of Exemption",
             workflow: wfStopPermanentOnly
         };
-        if(AInfo["SWRCB Notice Type"] == "Notice of Exemption")
+        if (AInfo["SWRCB Notice Type"] == "Notice of Exemption")
             requirementArray.push(SWRCBNoticeType2);
 
         //CAMEND-290
@@ -423,7 +431,7 @@ function getRequiredDocumentsForCanCult() {
             workflow: wfStopPermanentOnly
         };
         var conArr = getContactObjs(capId, "Authorized Agent");
-        if(conArr)
+        if (conArr)
             requirementArray.push(AgentConsentForm);
 
 
@@ -433,18 +441,16 @@ function getRequiredDocumentsForCanCult() {
             workflow: wfStopPermanentOnly
         };
         var strTable = loadASITable("STRUCTURE/SITE PLAN ID LIST");
-        if (typeof(STRUCTURESITEPLANIDLIST) == "object")
+        if (typeof (STRUCTURESITEPLANIDLIST) == "object")
             strTable = STRUCTURESITEPLANIDLIST;
         var septicFlag = false;
-        if(strTable && strTable.length > 0)
-        {
-            for(var i in strTable)
-            {
-                if(strTable[i]["Type of Structure"] == "Septic/Leach")
+        if (strTable && strTable.length > 0) {
+            for (var i in strTable) {
+                if (strTable[i]["Type of Structure"] == "Septic/Leach")
                     septicFlag = true;
             }
         }
-        if(septicFlag)
+        if (septicFlag)
             requirementArray.push(SepticSystemPermit);
 
         var waterAvailability = {
@@ -453,22 +459,20 @@ function getRequiredDocumentsForCanCult() {
             workflow: wfStopPermanentOnly
         };
         var wtrTable = loadASITable("WATER SOURCE");
-        if (typeof(WATERSOURCE) == "object")
+        if (typeof (WATERSOURCE) == "object")
             wtrTable = WATERSOURCE;
         var waterAnalysisFlag = false;
-        if(wtrTable && wtrTable.length > 0)
-        {
-            for(var i in wtrTable )
-            {
-                if(wtrTable[i]["Water Source Type"] != "Water Hauler Service Provider"
+        if (wtrTable && wtrTable.length > 0) {
+            for (var i in wtrTable) {
+                if (wtrTable[i]["Water Source Type"] != "Water Hauler Service Provider"
                     && wtrTable[i]["Water Source Type"] != "Community Provider")
                     waterAnalysisFlag = true;
             }
         }
         var zv = getZoningDistrictFromGISTable();
-        if(zv && zv.toUpperCase() == "AG")
+        if (zv && zv.toUpperCase() == "AG")
             waterAnalysisFlag = true;
-        if(waterAnalysisFlag)
+        if (waterAnalysisFlag)
             requirementArray.push(waterAvailability);
     }
     return requirementArray;
