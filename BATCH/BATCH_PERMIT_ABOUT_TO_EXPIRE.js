@@ -254,6 +254,7 @@ function mainProcess() {
             }
         }
         var numberOfDays = 90;
+        var hm = new Array();
         var dateCalc = new Date(dateAdd(todayDate, numberOfDays));
         dateCalc = ('0' + (dateCalc.getMonth()+1)).slice(-2) + '/'
             + ('0' + dateCalc.getDate()).slice(-2) + '/'
@@ -386,6 +387,7 @@ function mainProcess() {
             }
         }
         var numberOfDays = 60;
+        var hm = new Array();
         var dateCalc = new Date(dateAdd(todayDate, numberOfDays));
         dateCalc = ('0' + (dateCalc.getMonth()+1)).slice(-2) + '/'
             + ('0' + dateCalc.getDate()).slice(-2) + '/'
@@ -504,6 +506,7 @@ function mainProcess() {
             }
         }
         var numberOfDays = 30;
+        var hm = new Array();
         var dateCalc = new Date(dateAdd(todayDate, numberOfDays));
 
         dateCalc = ('0' + (dateCalc.getMonth()+1)).slice(-2) + '/'
