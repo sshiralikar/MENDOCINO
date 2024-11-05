@@ -104,6 +104,21 @@ function getRequiredDocumentsForCanCult() {
             requirementArray.push(sitePlan);
         }
     }
+    else if (isAppeal) {
+
+    }
+    else if (isNOF) {
+        
+    }
+    else if (isNOFAffidavit) {
+        
+    }
+    else if (isNOFRevocation) {
+        
+    }
+    else if (isTaxAppeal) {
+        
+    }
     else {
         //CAMEND-153
         var businessInformation = {
