@@ -2,15 +2,15 @@ try
 {
     var messageList = "";
 
-    // CAMEND-236
-    if (AInfo["Primary Leach fields"] == "Yes") {
-        var structureCounter = getASITRowCount("STRUCTURE/SITE PLAN ID LIST");
-        logDebug("structureCounter: " + structureCounter);
-        if (structureCounter < 1)
-        {
-            messageList += "Missing Table: " + "Structure/Site Plan ID" + br;
-        }
-    }
+    // CAMEND-236 & CAMEND-526
+    // if (AInfo["Primary Leach fields"] == "Yes") {
+    //     var structureCounter = getASITRowCount("STRUCTURE/SITE PLAN ID LIST");
+    //     logDebug("structureCounter: " + structureCounter);
+    //     if (structureCounter < 1)
+    //     {
+    //         messageList += "Missing Table: " + "Structure/Site Plan ID" + br;
+    //     }
+    // }
 
     // CAMEND-231 & CAMEND-254 & CAMEND-218
     var inputCounter = getASITRowCount("INPUT(S)");

@@ -3,34 +3,34 @@ try
 {
     var messageList = "";
 
-    // CAMEND-181
-    if (AInfo["Primary Leach fields"] == "Yes") {
-        var structureCounter = getASITRowCount("STRUCTURE/SITE PLAN ID LIST");
-        logDebug("structureCounter: " + structureCounter);
-        if (structureCounter < 1)
-        {
-            messageList += "Please add a row with 'Type of Structure': 'Septic/Leach' in the following table: " + "Structure/Site Plan ID" + br;
-        }
-        loadASITables();
-        var flag = false;
-        var structureCounter;
-        if (typeof (STRUCTURESITEPLANIDLIST) == "object")
-        {
-            structureCounter = STRUCTURESITEPLANIDLIST.length;
-            for(var i in STRUCTURESITEPLANIDLIST)
-            {
-                if(STRUCTURESITEPLANIDLIST[i]["Type of Structure"] == "Septic/Leach")
-                {
-                    flag = true;
-                    break;
-                }
-            }
-        }
-        if(structureCounter > 0 && !flag)
-        {
-            messageList += "Please add a row with 'Type of Structure': 'Septic/Leach' in the following table: " + "Structure/Site Plan ID" + br;
-        }
-    }
+    // CAMEND-181 & CAMEND-526
+    // if (AInfo["Primary Leach fields"] == "Yes") {
+    //     var structureCounter = getASITRowCount("STRUCTURE/SITE PLAN ID LIST");
+    //     logDebug("structureCounter: " + structureCounter);
+    //     if (structureCounter < 1)
+    //     {
+    //         messageList += "Please add a row with 'Type of Structure': 'Septic/Leach' in the following table: " + "Structure/Site Plan ID" + br;
+    //     }
+    //     loadASITables();
+    //     var flag = false;
+    //     var structureCounter;
+    //     if (typeof (STRUCTURESITEPLANIDLIST) == "object")
+    //     {
+    //         structureCounter = STRUCTURESITEPLANIDLIST.length;
+    //         for(var i in STRUCTURESITEPLANIDLIST)
+    //         {
+    //             if(STRUCTURESITEPLANIDLIST[i]["Type of Structure"] == "Septic/Leach")
+    //             {
+    //                 flag = true;
+    //                 break;
+    //             }
+    //         }
+    //     }
+    //     if(structureCounter > 0 && !flag)
+    //     {
+    //         messageList += "Please add a row with 'Type of Structure': 'Septic/Leach' in the following table: " + "Structure/Site Plan ID" + br;
+    //     }
+    // }
 
     // CAMEND-186 & CAMEND-163 & CAMEND-199
     var inputCounter = getASITRowCount("INPUT(S)");
