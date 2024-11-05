@@ -8,7 +8,7 @@ if(wfStatus == "Void" || wfStatus == "Withdrawn")
 if(wfStatus == "Issued")
 {
     var hm = new Array();
-    var licCapId = getParent();
+    var licCapId = getParentCapID4Renewal();
     logDebug("licCapId: "+ licCapId);
     var expDate = getAppSpecific("New Expiration Date", licCapId);
     var today = new Date();
