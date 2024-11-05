@@ -122,7 +122,7 @@ var AInfo = new Array(); // Create array for tokenized variables
 loadAppSpecific4ACA(AInfo); // Add AppSpecific Info
 //loadTaskSpecific(AInfo);                      // Add task specific info
 //loadParcelAttributes(AInfo);                      // Add parcel attributes
-if(!appMatch("Cannabis/Amendment/Assignment/NA"))
+if (!appMatch("Cannabis/Amendment/Assignment/NA"))
     loadASITables4ACA();
 
 logDebug("<B>EMSE Script Results for " + capIDString + "</B>");
@@ -162,12 +162,12 @@ try {
     uploadedDocs = new Array();
     for (var i in submittedDocList) uploadedDocs[submittedDocList[i].getDocCategory()] = true;
     conditionType = "Cannabis Required Document";
-    var capCondResult = aa.capCondition.getCapConditions(capId,conditionType);
+    var capCondResult = aa.capCondition.getCapConditions(capId, conditionType);
 
     if (capCondResult.getSuccess()) {
         var ccs = capCondResult.getOutput();
         for (var pc1 in ccs) {
-            var rmCapCondResult = aa.capCondition.deleteCapCondition(capId,ccs[pc1].getConditionNumber());
+            var rmCapCondResult = aa.capCondition.deleteCapCondition(capId, ccs[pc1].getConditionNumber());
         }
     }
     if (r.length > 0 && showList) {
@@ -202,44 +202,47 @@ try {
         }
     }
     //LP Docs
-    var flag = false;
-    var licProfList = cap.getLicenseProfessionalList();
-    if(licProfList != null && licProfList.size() > 0)
-    {
-        for(var i=licProfList.size(); i > 0; i--)
-        {
-            var lpModel = licProfList.get(i-1);
-            var licNum = lpModel.getLicenseNbr();
-            var docType = "State License - ["+licNum+"]"
-            message += "<li><span>" + docType + "</span></li>";
-            aa.capCondition.addCapCondition(capId,conditionType,docType,docType,sysDate,null,sysDate,null,null,"Notice",systemUserObj,systemUserObj,"Applied","ADMIN","A","Y");
-        }
-        flag = true;
-    }
-    var licProfResult = aa.licenseScript.getLicenseProf(capId);
-    var licProfList = licProfResult.getOutput();
-    if (licProfList && !flag)
-    {
-        for (i in licProfList)
-        {
+    var isAppeal = appMatch("Cannabis/Amendment/Appeal/NA");
+    var isAssignment = appMatch("Cannabis/Amendment/Assignment/NA");
+    var isNOF = appMatch("Cannabis/Amendment/Notice of Fallowing/NA");
+    var isNOFAffidavit = appMatch("Cannabis/Amendment/Notice of Fallowing/Affidavit");
+    var isNOFRevocation = appMatch("Cannabis/Amendment/Notice of Fallowing/Revocation");
+    var isTaxAppeal = appMatch("Cannabis/Amendment/Tax Appeal/NA");
 
-            var licNum = licProfList[i].getLicenseNbr();
-            var docType = "State License - ["+licNum+"]"
-            message += "<li><span>" + docType + "</span></li>";
-            aa.capCondition.addCapCondition(capId,conditionType,docType,docType,sysDate,null,sysDate,null,null,"Notice",systemUserObj,systemUserObj,"Applied","ADMIN","A","Y");
+    if (!isAppeal && isAssignment && isNOF && isNOFAffidavit && isNOFRevocation && isTaxAppeal) {
+        var flag = false;
+        var licProfList = cap.getLicenseProfessionalList();
+        if (licProfList != null && licProfList.size() > 0) {
+            for (var i = licProfList.size(); i > 0; i--) {
+                var lpModel = licProfList.get(i - 1);
+                var licNum = lpModel.getLicenseNbr();
+                var docType = "State License - [" + licNum + "]"
+                message += "<li><span>" + docType + "</span></li>";
+                aa.capCondition.addCapCondition(capId, conditionType, docType, docType, sysDate, null, sysDate, null, null, "Notice", systemUserObj, systemUserObj, "Applied", "ADMIN", "A", "Y");
+            }
+            flag = true;
+        }
+        var licProfResult = aa.licenseScript.getLicenseProf(capId);
+        var licProfList = licProfResult.getOutput();
+        if (licProfList && !flag) {
+            for (i in licProfList) {
+
+                var licNum = licProfList[i].getLicenseNbr();
+                var docType = "State License - [" + licNum + "]"
+                message += "<li><span>" + docType + "</span></li>";
+                aa.capCondition.addCapCondition(capId, conditionType, docType, docType, sysDate, null, sysDate, null, null, "Notice", systemUserObj, systemUserObj, "Applied", "ADMIN", "A", "Y");
+            }
         }
     }
     //LP Docs
 
     //Employee List
     var emplTable = loadASITable("EMPLOYEE LIST");
-    if (typeof(EMPLOYEELIST) == "object")
+    if (typeof (EMPLOYEELIST) == "object")
         emplTable = EMPLOYEELIST;
 
-    if(emplTable && emplTable.length > 0)
-    {
-        for(var i in emplTable)
-        {
+    if (emplTable && emplTable.length > 0) {
+        for (var i in emplTable) {
             /*var docType = "Government Issued ID - ["+emplTable[i]["Employee Name"]+"]"
             message += "<li><span>" + docType + "</span></li>";
             aa.capCondition.addCapCondition(capId,conditionType,docType,docType,sysDate,null,sysDate,null,null,"Notice",systemUserObj,systemUserObj,"Applied","ADMIN","A","Y");*/
@@ -253,8 +256,8 @@ try {
     //Employee List
 
     //Applicant
-    var conObj = getContactObjX(cap,"Applicant");
-    if (conObj ) {
+    var conObj = getContactObjX(cap, "Applicant");
+    if (conObj) {
         var name = conObj.getContactName();
         /*var docType = "Government Issued ID - ["+name+"]"
         message += "<li><span>" + docType + "</span></li>";
