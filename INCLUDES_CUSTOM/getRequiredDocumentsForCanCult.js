@@ -62,12 +62,7 @@ function getRequiredDocumentsForCanCult() {
     }*/
     ];
 
-    // CAMEND-600
-    if (isAssignment) {
-        if (AInfo["Changes Made Since Last Site Plan"] == "Yes") {
-            requirementArray.push(sitePlan);
-        }
-    }
+
 
     // CAMEND-602
     if (appMatch("Cannabis/*/Application/NA")) {
@@ -102,6 +97,12 @@ function getRequiredDocumentsForCanCult() {
         };
         if (AInfo["SWRCB Notice Type"] == "Notice of Applicability")
             requirementArray.push(SWRCBNoticeType1);
+    }
+    else if (isAssignment) {
+        // CAMEND-600
+        if (AInfo["Changes Made Since Last Site Plan"] == "Yes") {
+            requirementArray.push(sitePlan);
+        }
     }
     else {
         //CAMEND-153
