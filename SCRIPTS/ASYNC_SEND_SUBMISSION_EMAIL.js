@@ -1,6 +1,10 @@
 //aa.env.setValue("capIdStr","CAN-C-2019-0217-APP");
 capId = aa.cap.getCapID(aa.env.getValue("capIdStr")).getOutput();
 cap = aa.cap.getCap(capId).getOutput();
+appTypeResult = cap.getCapType();
+appTypeString = appTypeResult.toString();
+appTypeArray = appTypeString.split("/");
+
 try {
     var isAppeal = appMatch("Cannabis/Amendment/Appeal/NA");
     var isAssignment = appMatch("Cannabis/Amendment/Assignment/NA");
@@ -149,4 +153,22 @@ function dateFormatted(pMonth, pDay, pYear, pFormat) {
         ret = "" + mth + "/" + day + "/" + pYear.toString();
 
     return ret;
+}
+
+function appMatch(ats, matchCapId) // optional capId or CapID string
+{
+	if (!matchCapId) {
+		return false;
+	}
+
+	matchCap = aa.cap.getCap(matchCapId).getOutput();
+	matchArray = matchCap.getCapType().toString().split("/");
+
+	var isMatch = true;
+	var ata = ats.split("/");
+	for (xx in ata)
+		if (!ata[xx].equals(matchArray[xx]) && !ata[xx].equals("*"))
+			isMatch = false;
+
+	return isMatch;
 }
