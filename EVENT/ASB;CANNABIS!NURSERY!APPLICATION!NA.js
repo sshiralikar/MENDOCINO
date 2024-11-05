@@ -41,16 +41,6 @@ try
         }
     }
 
-    // CAMEND-239
-    if (AInfo["Contracted Security"] == "Yes") {
-        var securityCounter = getASITRowCount("SECURITY ON-SITE HOURS");
-        logDebug("securityCounter: " + securityCounter);
-        if (securityCounter < 1)
-        {
-            messageList += "Missing Table: " + "Security On-site Hours"  + br;
-        }
-    }
-
     // CAMEND-219
     if (AInfo["Water onsite"] == "Yes" || AInfo["Water source"] == "Yes") {
         var waterCounter = getASITRowCount("WATER SOURCE");
