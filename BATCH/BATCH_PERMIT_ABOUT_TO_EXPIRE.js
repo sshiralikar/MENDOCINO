@@ -201,28 +201,36 @@ function mainProcess() {
                 var appStatus = getAppStatus(capId);
                 targetAppType = cap.getCapType();     //create CapTypeModel object
                 targetAppTypeString = targetAppType.toString();
-                if(targetAppTypeString.split("/")[2] == "Permit" && appStatus!="Withdrawn" && appStatus!="Void")
+                if(targetAppTypeString.split("/")[2] == "Permit"
+                    && appStatus!="Withdrawn"
+                    && appStatus!="Void"
+                    && appStatus!="Renewal Under Review"
+                    && appStatus!="Revocation Pending"
+                    && appStatus!="Revoked"
+                    && appStatus!="Expired"
+                    && appStatus!="Denied"
+                    && appStatus!="Denied - Appeal")
                 {
                     logMessage(capIDString);
                     var thisCapModel = cap.getCapModel();
                     var thisTypeResult = cap.getCapType();
 
-                    var perfFlag = getAppSpecific("Performance Standard Violation",capId);
+                    /*var perfFlag = getAppSpecific("Performance Standard Violation",capId);
                     if(perfFlag == "CHECKED" && appStatus != "Modification Under Review")
                     {
                         template = "GLOBAL_MODIFICATION_REQUIRED";
-/*                        var pCapId = getParent(capId);
+/!*                        var pCapId = getParent(capId);
                         if(pCapId)
-                        {*/
+                        {*!/
                             updateAppStatus("Modification Required","",capId);
                             setLicExpirationDate(capId,"","","About to Expire");
                         //}
                     }
                     else if(appStatus != "Modification Under Review")
-                    {
+                    {*/
                         updateAppStatus("About to Expire","",capId);
                         setLicExpirationDate(capId,"",dateCalc,"About to Expire");
-                    }
+                    //}
                     var contactResult = aa.people.getCapContactByCapID(capId);
                     if (contactResult.getSuccess()) {
                         var capContacts = contactResult.getOutput();
