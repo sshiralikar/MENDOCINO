@@ -66,13 +66,13 @@ if(wfStatus == "Issued")
         }
     }
     //var licCapId = getParent();
-    var hm = new Array();
+   /* var hm = new Array();
     renewalCapProject = getRenewalCapByParentCapIDForIncomplete(parentCapId);
     if (renewalCapProject != null) {
         renewalCapProject.setStatus("Complete");
         renewalCapProject.setRelationShip("R"); // move to related records
         aa.cap.updateProject(renewalCapProject);
-    }
+    }*/
     var capDetailObjResult = aa.cap.getCapDetail(capId); // Detail
     if (capDetailObjResult.getSuccess()) {
         capDetail = capDetailObjResult.getOutput();
@@ -97,6 +97,7 @@ if(wfStatus == "Issued")
                     {
                         conName = getContactName(capContacts[i]);
                         var rParams = aa.util.newHashMap();
+                        var rFiles = [];
                         rParams.put("RecordID", licCapId.getCustomID()+"");
 
                         var report = aa.reportManager.getReportInfoModelByName("Cannabis Permit Report");
@@ -114,6 +115,7 @@ if(wfStatus == "Issued")
                                 reportOutput = reportResult.getOutput();
                                 var reportFile=aa.reportManager.storeReportToDisk(reportOutput);
                                 reportFile=reportFile.getOutput();
+                                rFiles.push(reportFile);
                             }
                         }
 
@@ -137,7 +139,7 @@ if(wfStatus == "Issued")
                         addParameter(params, "$$ACAUrl$$", String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0]);
                         addParameter(params, "$$ACAURL$$", String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0]);
                         if(hm[capContacts[i].getPeople().getEmail() + ""] != 1) {
-                            sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail() + "", "", "CAN_PERMIT_ISSUANCE", params, reportFile, capId);
+                            sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail() + "", "", "CAN_PERMIT_ISSUANCE", params, rFiles, capId);
                             hm[capContacts[i].getPeople().getEmail() + ""] = 1;
                         }
                     }
