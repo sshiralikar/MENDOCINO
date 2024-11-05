@@ -5,7 +5,7 @@ if(wfStatus == "Void" || wfStatus == "Withdrawn")
     updateAppStatus(wfStatus,"Updating via Script");
 }
 //CAMEND-305, CAMEND-507
-if(wfTask == "Draft Decision" && wfStatus == "Issued")
+if(wfStatus == "Issued")
 {
     var hm = new Array();
     var licCapId = getParent();
