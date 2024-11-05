@@ -51,14 +51,14 @@ try
         }
     }
 
-    // CAMEND-180
-    if (AInfo["Employees on-site"] == "Yes") {
-        var employeeCounter = getASITRowCount("EMPLOYEE LIST");
-        logDebug("employeeCounter: " + employeeCounter);
-        if (employeeCounter < 1)
-        {
-            messageList += "Missing Table: " + "Employee List"  + br;
-        }
+    // CAMEND-180 & CAMEND-526
+    // if (AInfo["Employees on-site"] == "Yes") {
+    //     var employeeCounter = getASITRowCount("EMPLOYEE LIST");
+    //     logDebug("employeeCounter: " + employeeCounter);
+    //     if (employeeCounter < 1)
+    //     {
+    //         messageList += "Missing Table: " + "Employee List"  + br;
+    //     }
     }
 
     // CAMEND-198
