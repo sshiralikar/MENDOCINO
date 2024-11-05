@@ -134,14 +134,14 @@ function getRequiredDocumentsForCanCult() {
         if (AInfo["Is NOA old"] == "Yes")
             requirementArray.push(WaterMonitoringReport);
 
-        //CAMEND-160
-        var compliancePlan = {
-            condition: "Compliance Plan",
-            document: "Compliance Plan",
-            workflow: wfStopPermanentOnly
-        };
-        if (AInfo["Unpermitted Existing Septic"] == "CHECKED")
-            requirementArray.push(compliancePlan);
+        // //CAMEND-160 & CAMEND-526
+        // var compliancePlan = {
+        //     condition: "Compliance Plan",
+        //     document: "Compliance Plan",
+        //     workflow: wfStopPermanentOnly
+        // };
+        // if (AInfo["Unpermitted Existing Septic"] == "CHECKED")
+        //     requirementArray.push(compliancePlan);
 
         //CAMEND-161
         var WaterSourceTable = {
@@ -194,8 +194,9 @@ function getRequiredDocumentsForCanCult() {
             workflow: wfStopPermanentOnly
         };
 
-        if (AInfo["Portable Toilets"] == "CHECKED" && AInfo["Municipal sewer"] == "CHECKED")
-            requirementArray.push(WillServeLetterPortableToilet);
+        // CAMEND-526
+        // if (AInfo["Portable Toilets"] == "CHECKED" && AInfo["Municipal sewer"] == "CHECKED")
+        //     requirementArray.push(WillServeLetterPortableToilet);
         //CAMEND-221
 
         for (var x in waterSource) {
