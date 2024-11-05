@@ -9,6 +9,7 @@ if(wfStatus == "Issued")
 {
     var hm = new Array();
     var licCapId = getParent();
+    logDebug("licCapId: "+ licCapId);
     var expDate = getAppSpecific("New Expiration Date", licCapId);
     var today = new Date();
     var expDateObj = new Date(expDate);
@@ -64,18 +65,14 @@ if(wfStatus == "Issued")
             }
         }
     }
-}
-//CAMEND-194, 223
-if(wfTask == "Issuance" && wfStatus == "Issued")
-{
     //var licCapId = getParent();
-    //var hm = new Array();
-    /*renewalCapProject = getRenewalCapByParentCapIDForIncomplete(parentCapId);
+    var hm = new Array();
+    renewalCapProject = getRenewalCapByParentCapIDForIncomplete(parentCapId);
     if (renewalCapProject != null) {
         renewalCapProject.setStatus("Complete");
         renewalCapProject.setRelationShip("R"); // move to related records
         aa.cap.updateProject(renewalCapProject);
-    }*/
+    }
     var capDetailObjResult = aa.cap.getCapDetail(capId); // Detail
     if (capDetailObjResult.getSuccess()) {
         capDetail = capDetailObjResult.getOutput();
