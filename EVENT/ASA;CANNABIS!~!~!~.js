@@ -68,7 +68,7 @@ if (!publicUser) {
         aa.runAsyncScript("ASYNC_SEND_SUBMISSION_EMAIL", envParameters);
     }
     // CAMEND-566
-    if (isAppeal) {
+    if (isNOF) {
         // Updated email for CAMEND-478 to use Async script so Renewal in back office (clone) pulls new Alt Id
         var envParameters = aa.util.newHashMap();
         logDebug("capIdStr: " + newAltId + "");

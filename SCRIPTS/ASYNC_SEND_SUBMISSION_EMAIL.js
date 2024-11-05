@@ -45,7 +45,7 @@ try {
         }
     }
     // CAMEND-566
-    if (isAppeal) {
+    if (isNOF) {
         var pCapId = getParent();
         var capDetailObjResult = aa.cap.getCapDetail(pCapId); // Detail
         if (capDetailObjResult.getSuccess()) {
