@@ -29,7 +29,7 @@ include("POPULATE_GEOGRAPHIC_INFORMATION");
 //Populate Geographic Information
 
 try {
-    createRefLicProfFromLicProf();
+    //createRefLicProfFromLicProf();
 }
 catch (err) {
     logDebug("LP Update not necessary");
