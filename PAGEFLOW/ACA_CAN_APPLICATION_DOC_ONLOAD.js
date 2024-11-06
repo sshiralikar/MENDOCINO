@@ -122,7 +122,13 @@ var AInfo = new Array(); // Create array for tokenized variables
 loadAppSpecific4ACA(AInfo); // Add AppSpecific Info
 //loadTaskSpecific(AInfo);                      // Add task specific info
 //loadParcelAttributes(AInfo);                      // Add parcel attributes
-if (!appMatch("Cannabis/Amendment/Assignment/NA"))
+var isAppeal = appMatch("Cannabis/Amendment/Appeal/NA");
+var isAssignment = appMatch("Cannabis/Amendment/Assignment/NA");
+var isNOF = appMatch("Cannabis/Amendment/Notice of Fallowing/NA");
+var isNOFAffidavit = appMatch("Cannabis/Amendment/Notice of Fallowing/Affidavit");
+var isNOFRevocation = appMatch("Cannabis/Amendment/Notice of Fallowing/Revocation");
+var isTaxAppeal = appMatch("Cannabis/Amendment/Tax Appeal/NA");
+if (!isAppeal && !isAssignment && !isNOF && !isNOFAffidavit && !isNOFRevocation && !isTaxAppeal)
     loadASITables4ACA();
 
 logDebug("<B>EMSE Script Results for " + capIDString + "</B>");
