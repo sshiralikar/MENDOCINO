@@ -171,7 +171,20 @@ function copy() {
         copyParcel(parentCapId, targetCapId);
         copyPeople(parentCapId, targetCapId);
         var isAssignment = appMatch("Cannabis/Amendment/Assignment/NA");
-        aa.sendMail("no-reply@mendocinocounty.gov", "sshiralikar@trustvip.com", "", "DEBUG", isAssignment);
+        if(isAssignment)
+        {
+            var cons = aa.people.getCapContactByCapID(targetCapId).getOutput();
+            for (thisCon in cons) {
+                if (cons[thisCon].getCapContactModel().getPeople().getContactType() == "Applicant") {
+                    conToChange = cons[thisCon].getCapContactModel();
+                    p = conToChange.getPeople();
+                    p.setContactType("Previous Applicant");
+                    conToChange.setPeople(p);
+                    aa.people.editCapContact(conToChange);
+                    logDebug("Contact type successfully switched to Previous Applicant");
+                }
+            }
+        }
         copyOwner(parentCapId, targetCapId);
         copyCapCondition(parentCapId, targetCapId);
         copyAdditionalInfo(parentCapId, targetCapId);
