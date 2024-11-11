@@ -189,11 +189,11 @@ function copy() {
         aa.env.setValue("CAP_MODEL_INITED", "TRUE");
 
 
-        /*cancel = true;
+        cancel = true;
         showMessage = true;
-        showDebug = true;*/
+        showDebug = true;
     } catch (e) {
-        //logError("Error: " + e);
+        logError("Error: " + e);
         //end();
     }
 }
