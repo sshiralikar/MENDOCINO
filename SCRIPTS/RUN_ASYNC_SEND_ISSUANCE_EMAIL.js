@@ -1,5 +1,6 @@
 try
 {
+    java.lang.Thread.sleep(20000);
     var VRFiles = [];
     var hm = new Array();
     var rParams = aa.util.newHashMap();
