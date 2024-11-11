@@ -17,6 +17,11 @@ if(wfStatus == "Approved")
             }
         }
         copyContactsByType(capId, parentCapId, "Applicant");*/
+        var envParameters = aa.util.newHashMap();
+        envParameters.put("RecordID", parentCapId.getCustomID()+"");
+        envParameters.put("IssueDT", sysDateMMDDYYYY);
+        envParameters.put("ExpireDT", getAppSpecific("New Expiration Date",parentCapId));
+        aa.runAsyncScript("RUN_ASYNC_PERMIT_REPORT", envParameters);
 
         var envParameters = aa.util.newHashMap();
         envParameters.put("RecordID", parentCapId.getCustomID()+"");
