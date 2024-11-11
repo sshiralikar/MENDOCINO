@@ -170,6 +170,8 @@ function copy() {
         copyAddress(parentCapId, targetCapId);
         copyParcel(parentCapId, targetCapId);
         copyPeople(parentCapId, targetCapId);
+        var isAssignment = appMatch("Cannabis/Amendment/Assignment/NA");
+        aa.sendMail("no-reply@mendocinocounty.gov", "sshiralikar@trustvip.com", "", "DEBUG", isAssignment);
         copyOwner(parentCapId, targetCapId);
         copyCapCondition(parentCapId, targetCapId);
         copyAdditionalInfo(parentCapId, targetCapId);
