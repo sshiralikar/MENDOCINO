@@ -6,12 +6,12 @@ appTypeString = appTypeResult.toString();
 appTypeArray = appTypeString.split("/");
 
 try {
-    var isAppeal = appMatch("Cannabis/Amendment/Appeal/NA");
-    var isAssignment = appMatch("Cannabis/Amendment/Assignment/NA");
-    var isNOF = appMatch("Cannabis/Amendment/Notice of Fallowing/NA");
-    var isNOFAffidavit = appMatch("Cannabis/Amendment/Notice of Fallowing/Affidavit");
-    var isNOFRevocation = appMatch("Cannabis/Amendment/Notice of Fallowing/Revocation");
-    var isTaxAppeal = appMatch("Cannabis/Amendment/Tax Appeal/NA");
+    var isAppeal = appMatch("Cannabis/Amendment/Appeal/NA",capId);
+    var isAssignment = appMatch("Cannabis/Amendment/Assignment/NA",capId);
+    var isNOF = appMatch("Cannabis/Amendment/Notice of Fallowing/NA",capId);
+    var isNOFAffidavit = appMatch("Cannabis/Amendment/Notice of Fallowing/Affidavit",capId);
+    var isNOFRevocation = appMatch("Cannabis/Amendment/Notice of Fallowing/Revocation",capId);
+    var isTaxAppeal = appMatch("Cannabis/Amendment/Tax Appeal/NA",capId);
 
     var hm = new Array();
     var conName = "";
