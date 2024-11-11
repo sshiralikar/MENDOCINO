@@ -5,7 +5,7 @@ if(wfStatus == "Approved")
     //updateTask("Permit Status","Active","","",pCapId);
     moveWFTask("Permit Status","Active", " ", "", pCapId, null, sysDateMMDDYYYY);
     editAppSpecific("ROF Date", sysDateMMDDYYYY, pCapId);
-    /*var conName = "";
+    var conName = "";
     var contactResult = aa.people.getCapContactByCapID(pCapId);
     if (contactResult.getSuccess()) {
         var capContacts = contactResult.getOutput();
@@ -32,7 +32,7 @@ if(wfStatus == "Approved")
             addParameter(params, "$$Location$$", getAddressInALine());
             sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail() + "", "", "CAN_ROF_APPROVED", params, null, capId);
         }
-    }*/
+    }
 }
 if(wfStatus == "Denied")
 {
