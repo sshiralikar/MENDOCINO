@@ -189,11 +189,11 @@ function copy() {
         aa.env.setValue("CAP_MODEL_INITED", "TRUE");
 
 
-        cancel = true;
+        /*cancel = true;
         showMessage = true;
-        showDebug = true;
+        showDebug = true;*/
     } catch (e) {
-        logError("Error: " + e);
+        //logError("Error: " + e);
         //end();
     }
 }
@@ -841,9 +841,6 @@ function copyPeople(srcCapId, targetCapId) {
             }
         }
         //3.3 It is a matched people model.
-        //var isAssignment = appMatch("Cannabis/Amendment/Assignment/NA");
-        if(targetPeopleModel.getContactType() == "Applicant")
-            targetPeopleModel.setContactType("Previous Applicant");
         if (targetPeopleModel != null) {
             //3.3.1 Copy information from source to target.
             aa.people.copyCapContactModel(sourcePeopleModel.getCapContactModel(), targetPeopleModel.getCapContactModel());
