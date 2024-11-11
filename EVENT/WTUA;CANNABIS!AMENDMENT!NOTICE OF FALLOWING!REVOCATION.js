@@ -1,8 +1,8 @@
 if(wfStatus == "Approved")
 {
-    var licCapId = getParent();
-    updateAppStatus("Active","",licCapId);
-    updateTask("Permit Status","Active","","",licCapId);
+    var pCapId = getParent();
+    updateAppStatus("Active","",pCapId);
+    updateTask("Permit Status","Active","","",pCapId);
 
     var conName = "";
     var contactResult = aa.people.getCapContactByCapID(pCapId);
@@ -35,9 +35,9 @@ if(wfStatus == "Approved")
 }
 if(wfStatus == "Denied")
 {
-    var licCapId = getParent();
-    updateAppStatus("Active","",licCapId);
-    updateTask("Permit Status","Active","","",licCapId);
+    var pCapId = getParent();
+    updateAppStatus("Active","",pCapId);
+    updateTask("Permit Status","Active","","",pCapId);
 
     var conName = "";
     var contactResult = aa.people.getCapContactByCapID(pCapId);
