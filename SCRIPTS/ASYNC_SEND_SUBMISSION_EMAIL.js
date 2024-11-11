@@ -46,6 +46,7 @@ try {
     }
     // CAMEND-566
     if (isNOF) {
+        var hm = new Array();
         var pCapId = getParent();
         var capDetailObjResult = aa.cap.getCapDetail(pCapId); // Detail
         if (capDetailObjResult.getSuccess()) {
@@ -85,10 +86,12 @@ try {
                     addParameter(params, "$$parentCapId$$", pCapId.getCustomID());
                     addParameter(params, "$$Amendment$$", aa.cap.getCap(capId).getOutput().getCapType().getAlias() + "");
                     addParameter(params, "$$Location$$", getAddressInALine());
-                    sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail() + "", "", "CAN_NOF_SUBMITTED", params, null, capId);
+                    if (hm[capContacts[i].getPeople().getEmail() + ""] != 1) {
+                        sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail() + "", "", "CAN_NOF_SUBMITTED", params, null, capId);
+                        hm[capContacts[i].getPeople().getEmail() + ""] = 1;
+                    }
                 }
             }
-
         }
     }
 }
