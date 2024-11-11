@@ -4,6 +4,7 @@ if(wfStatus == "Approved")
     updateAppStatus("Active","",pCapId);
     //updateTask("Permit Status","Active","","",pCapId);
     moveWFTask("Permit Status","Active", " ", "", pCapId, null, sysDateMMDDYYYY);
+    editAppSpecific("ROF Date", sysDateMMDDYYYY, pCapId);
     var conName = "";
     var contactResult = aa.people.getCapContactByCapID(pCapId);
     if (contactResult.getSuccess()) {
