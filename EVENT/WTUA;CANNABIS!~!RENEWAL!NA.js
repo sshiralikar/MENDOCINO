@@ -221,6 +221,7 @@ if(wfTask == "Issuance" && wfStatus == "Denied")
             }
         }
         updateAppStatus("Termination Pending","Updating via Script",licCapId);
+        updateTask("Permit Status","Termination Pending","","",licCapId);
         var hm = new Array();
         var conName = "";
         var contactResult = aa.people.getCapContactByCapID(capId);
