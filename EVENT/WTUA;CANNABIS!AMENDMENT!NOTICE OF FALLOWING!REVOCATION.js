@@ -26,7 +26,7 @@ if(wfStatus == "Approved")
             addParameter(params, "$$deptAddress$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptAddress"));
             addParameter(params, "$$deptFormalName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptFormalName"));
             addParameter(params, "$$FullNameBusName$$", conName);
-            addParameter(params, "$$capAlias$$", aa.cap.getCap(pCapId).getOutput().getCapType().getAlias() + "");
+            addParameter(params, "$$capAlias$$", aa.cap.getCap(capId).getOutput().getCapType().getAlias() + "");
             addParameter(params, "$$parentCapId$$", pCapId.getCustomID());
             addParameter(params, "$$Amendment$$", aa.cap.getCap(capId).getOutput().getCapType().getAlias() + "");
             addParameter(params, "$$Location$$", getAddressInALine());
