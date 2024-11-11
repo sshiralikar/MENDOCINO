@@ -23,18 +23,6 @@ if (appTypeArray[1] == "Amendment" || appTypeArray[2] == "Application" || appTyp
         envParameters.put("capIdStr", capId.getCustomID() + "");
     aa.runAsyncScript("ASYNC_SEND_SUBMISSION_EMAIL", envParameters);
 }
-var isNOF = appMatch("Cannabis/Amendment/Notice of Fallowing/NA");
-// CAMEND-566
-if (isNOF) {
-    // Updated email for CAMEND-478 to use Async script so Renewal in back office (clone) pulls new Alt Id
-    var envParameters = aa.util.newHashMap();
-    logDebug("capIdStr: " + newAltId + "");
-    if (newAltId != "")
-        envParameters.put("capIdStr", newAltId + "");
-    else
-        envParameters.put("capIdStr", capId.getCustomID() + "");
-    aa.runAsyncScript("ASYNC_SEND_SUBMISSION_EMAIL", envParameters);
-}
 //Populate Geographic Information
 include("POPULATE_GEOGRAPHIC_INFORMATION");
 //Populate Geographic Information
