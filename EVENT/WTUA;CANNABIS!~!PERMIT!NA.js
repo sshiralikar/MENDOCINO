@@ -18,6 +18,7 @@ if(wfTask == "Permit Status" && wfStatus == "Terminated")
                 var appStatus = getAppStatus(vCapId);
                 if(appStatus!="Withdrawn" && appStatus!="Void" && appStatus!="Closed" && appStatus!="Open")
                 {
+                    updateAppStatus("Terminated","Update via Script, parent license was Terminated", vCapId);
                     var tmp = capId;
                     capId = vCapId;
                     taskCloseAllExcept("Terminated","Update via Script, parent license was Terminated");
