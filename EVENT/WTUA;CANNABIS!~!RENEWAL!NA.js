@@ -221,7 +221,8 @@ if(wfTask == "Issuance" && wfStatus == "Denied")
             }
         }
         updateAppStatus("Termination Pending","Updating via Script",licCapId);
-        updateTask("Permit Status","Termination Pending","","",licCapId);
+        //updateTask("Permit Status","Termination Pending","","",licCapId);
+        moveWFTask("Permit Status","Termination Pending", " ", "", licCapId, null, sysDateMMDDYYYY);
         var hm = new Array();
         var conName = "";
         var contactResult = aa.people.getCapContactByCapID(capId);
@@ -553,4 +554,89 @@ function copyASITablesWithRemove(pFromCapId, pToCapId) {
         addASITable(tn, tempArray, pToCapId);
         logDebug("ASI Table Array : " + tn + " (" + numrows + " Rows)");
     }
+}
+function moveWFTask(ipTask,ipStatus,ipComment,ipNote) // Optional CapID, Process, StatusDate
+{
+    var vCapId = capId;
+    if (arguments.length > 4 && arguments[4] != null)
+    {
+        var vCapId = arguments[4];
+    }
+
+    if (ipTask == "")
+        ipTask = getCurrentTask(vCapId).getTaskDescription();
+
+    var vUseProcess = false;
+    var vProcessName = "";
+    if (arguments.length > 5 && arguments[5] != null && arguments[5] != "")
+    {
+        vProcessName = arguments[5]; // subprocess
+        vUseProcess = true;
+    }
+
+    var vUseStatusDate = false;
+    var vStatusDate = null;
+    var vToday = new Date();
+    if (arguments.length > 6 && arguments[6] != null && arguments[6] != "")
+    {
+        vStatusDate = new Date(arguments[6]);
+        vUseStatusDate = true;
+    }
+
+    var vWFResult = aa.workflow.getTaskItems(vCapId,ipTask,vProcessName,null,null,null);
+    if (vWFResult.getSuccess())
+        var vWFObj = vWFResult.getOutput();
+    else
+    {
+        logMessage("**ERROR: Failed to get workflow object: " + vWFResult.getErrorMessage());
+        return false;
+    }
+
+    if (!ipStatus)
+        ipStatus = "NA";
+
+    if (vWFObj.length == 0)
+        return false;
+
+    var vMoved = false;
+    for (var vCounter in vWFObj)
+    {
+        var vTaskObj = vWFObj[vCounter];
+        if (vTaskObj.getTaskDescription().toUpperCase().equals(ipTask.toUpperCase())  && (!vUseProcess || vTaskObj.getProcessCode().equals(vProcessName)))
+        {
+            var vTaskStatusObj = aa.workflow.getTaskStatus(vTaskObj,ipStatus).getOutput();
+            if (!vTaskStatusObj)
+                continue;
+            if (vUseStatusDate)
+            {
+                var vTaskModel = vTaskObj.getTaskItem();
+                vTaskModel.setStatusDate(vStatusDate);
+                vTaskModel.setDisposition(ipStatus);
+                vTaskModel.setDispositionNote(ipNote);
+                vTaskModel.setDispositionComment(ipComment);
+                vTaskModel.setDispositionDate(vToday);
+                aa.workflow.handleDisposition(vTaskModel,vCapId);
+                vMoved = true;
+                logMessage("Moved Workflow Task: " + ipTask + " with status " + ipStatus);
+                logDebug("Moved Workflow Task: " + ipTask + " with status " + ipStatus);
+            }
+            else
+            {
+                var vResultAction = vTaskStatusObj.resultAction;
+                var vStepNumber = vTaskObj.getStepNumber();
+                var vProcessID = vTaskObj.getProcessID();
+                var vDispositionDate = aa.date.getCurrentDate();
+
+                if (vUseProcess)
+                    aa.workflow.handleDisposition(vCapId,vStepNumber,vProcessID,ipStatus,vDispositionDate,ipNote,ipComment,systemUserObj,vResultAction);
+                else
+                    aa.workflow.handleDisposition(vCapId,vStepNumber,ipStatus,vDispositionDate,ipNote,ipComment,systemUserObj,vResultAction);
+
+                vMoved = true;
+                logMessage("Moved Workflow Task: " + ipTask + " with status " + ipStatus);
+                logDebug("Moved Workflow Task: " + ipTask + " with status " + ipStatus);
+            }
+        }
+    }
+    return vMoved;
 }

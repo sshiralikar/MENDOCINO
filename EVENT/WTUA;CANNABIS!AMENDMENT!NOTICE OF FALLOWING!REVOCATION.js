@@ -3,7 +3,7 @@ if(wfStatus == "Approved")
     var pCapId = getParent();
     updateAppStatus("Active","",pCapId);
     //updateTask("Permit Status","Active","","",pCapId);
-    moveWFTask("Permit Status","Active", " ", "updated via script", pCapId, null, sysDateMMDDYYYY);
+    moveWFTask("Permit Status","Active", " ", "", pCapId, null, sysDateMMDDYYYY);
     var conName = "";
     var contactResult = aa.people.getCapContactByCapID(pCapId);
     if (contactResult.getSuccess()) {
@@ -38,7 +38,7 @@ if(wfStatus == "Denied")
     var pCapId = getParent();
     updateAppStatus("Active","",pCapId);
     //updateTask("Permit Status","Active","","",pCapId);
-    moveWFTask("Permit Status","Active", " ", "updated via script", pCapId, null, sysDateMMDDYYYY);
+    moveWFTask("Permit Status","Active", " ", "", pCapId, null, sysDateMMDDYYYY);
     var conName = "";
     var contactResult = aa.people.getCapContactByCapID(pCapId);
     if (contactResult.getSuccess()) {
