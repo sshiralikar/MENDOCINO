@@ -285,7 +285,7 @@ function mainProcess() {
                 var appStatus = getAppStatus(capId);
                 targetAppType = cap.getCapType();     //create CapTypeModel object
                 targetAppTypeString = targetAppType.toString();
-                if(targetAppTypeString.split("/")[2] == "Permit" && appStatus!="Withdrawn" && appStatus!="Void")
+                if(targetAppTypeString.split("/")[2] == "Permit" && appStatus!="Withdrawn" && appStatus!="Void" && appStatus!="Terminated")
                 {
                     logMessage(capIDString);
                     var thisCapModel = cap.getCapModel();
