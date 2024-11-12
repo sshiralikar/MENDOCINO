@@ -299,10 +299,7 @@ if (debug.indexOf("**ERROR") > 0) {
         if (showDebug) aa.env.setValue("ErrorMessage", debug);
     }
 }
-function getAppStatus() {
-    var itemCap = capId;
-    if (arguments.length == 1) itemCap = arguments[0]; // use cap ID specified in args
-
+function getAppStatus(itemCap) {
     var appStatus = null;
     var capResult = aa.cap.getCap(itemCap);
     if (capResult.getSuccess()) {
