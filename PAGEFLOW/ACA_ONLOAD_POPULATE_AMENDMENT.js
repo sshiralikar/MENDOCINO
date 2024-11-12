@@ -223,6 +223,31 @@ function copy() {
                     comment("Notice of Fallowing cannot be submitted as the permit status is <b>"+appStatus+"</b><style>#ctl00_PlaceHolderMain_actionBarBottom_btnContinue{display:none !important}</style>");
                 }
             }
+            var isNOFAffidavit = appMatch("Cannabis/Amendment/Notice of Fallowing/Affidavit");
+            if(isNOFAffidavit)
+            {
+                var open = new Date(lookup("CAN_NOF_CONTROLS", "NOF Affidavit Window Open Date")+"").setHours(0,0,0,0);
+                var close = new Date(lookup("CAN_NOF_CONTROLS", "NOF Affidavit Window Close Date")+"").setHours(0,0,0,0);
+                var t = lookup("CAN_NOF_CONTROLS", "Today Date")+"";
+
+                var today;
+                if(t == "SYSTEM")
+                    today = new Date().setHours(0,0,0,0);
+                else
+                    today = new Date(t).setHours(0,0,0,0);
+
+                if((today < open) || (today > close))
+                {
+                    showMessage = true;
+                    comment("Fallowing Affidavit can only be submitted from "+lookup("CAN_NOF_CONTROLS", "NOF Affidavit Window Open Date")+" to "+lookup("CAN_NOF_CONTROLS", "NOF Affidavit Window Close Date")+"<style>#ctl00_PlaceHolderMain_actionBarBottom_btnContinue{display:none !important}</style>");
+                }
+                var appStatus = getAppStatus(targetCapId);
+                if(appStatus != "Notice of Fallowing")
+                {
+                    showMessage = true;
+                    comment("Fallowing Affidavit cannot be submitted if the permit status is <b>"+appStatus+"</b><style>#ctl00_PlaceHolderMain_actionBarBottom_btnContinue{display:none !important}</style>");
+                }
+            }
         }
         catch(err)
         {
