@@ -150,9 +150,19 @@ try {
     // CAMEND-631
     var parentCapId = getParent();
     var parentTotalSF = getAppSpecific("Total SF", parentCapId);
+    var parentTotalNurseSF = getAppSpecific("Total Nursery SF", parentCapId);
     logDebug("parentTotalSF is: " + parentTotalSF);
-    if (parentTotalSF != null) {
-        editAppSpecific4ACA("Total SF/Total Nursery SF", parentTotalSF, cap);
+    logDebug("parentTotalNurseSF is: " + parentTotalNurseSF);
+    if (appMatch("Cannabis/Cultivation/Permit/NA")) {
+        if (parentTotalSF != null) {
+            editAppSpecific4ACA("Total SF/Total Nursery SF", parentTotalSF, cap);
+        }
+    }
+
+    if (appMatch("Cannabis/Nursery/Permit/NA")) {
+        if (parentTotalNurseSF != null) {
+            editAppSpecific4ACA("Total SF/Total Nursery SF", parentTotalNurseSF, cap);
+        }
     }
 
     // Save all back to ACA capModel
@@ -190,23 +200,23 @@ if (debug.indexOf("**ERROR") > 0) {
 
 function editAppSpecific4ACA(itemName, itemValue) {
     var iCapModel = capModel.getAppSpecificInfoGroups();
-	if(iCapModel!=null){
-		var i = iCapModel.iterator();
-		while (i.hasNext()) {
-			var group = i.next();
-			var fields = group.getFields();
-			if (fields != null) {
-				var iteFields = fields.iterator();
-				while (iteFields.hasNext()) {
-					var field = iteFields.next();
-					if (itemName.equals(field.getCheckboxDesc())) {
-						logDebug("itemValue: " + itemValue);
-						field.setChecklistComment(itemValue);
-					}
-				}
-			}
-		}
-	}
+    if (iCapModel != null) {
+        var i = iCapModel.iterator();
+        while (i.hasNext()) {
+            var group = i.next();
+            var fields = group.getFields();
+            if (fields != null) {
+                var iteFields = fields.iterator();
+                while (iteFields.hasNext()) {
+                    var field = iteFields.next();
+                    if (itemName.equals(field.getCheckboxDesc())) {
+                        logDebug("itemValue: " + itemValue);
+                        field.setChecklistComment(itemValue);
+                    }
+                }
+            }
+        }
+    }
 }
 
 function getAppSpecific(itemName) { //optional: itemCap
