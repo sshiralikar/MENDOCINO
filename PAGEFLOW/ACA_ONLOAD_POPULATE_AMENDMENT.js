@@ -205,7 +205,7 @@ function copy() {
                     showMessage = true;
                     comment("Notice of Fallowing can only be submitted from "+lookup("CAN_NOF_CONTROLS", "NOF Window Open Date")+" to "+lookup("CAN_NOF_CONTROLS", "NOF Window Close Date")+"<style>#ctl00_PlaceHolderMain_actionBarBottom_btnContinue{display:none !important}</style>");
                 }
-                var appStatus = getAppStatus(targetCapId);
+                var appStatus = getAppStatus(parentCapId);
                 if(appStatus == "Notice of Fallowing"
                     || appStatus == "Denied"
                     || appStatus == "Expired"
@@ -241,7 +241,7 @@ function copy() {
                     showMessage = true;
                     comment("Fallowing Affidavit can only be submitted from "+lookup("CAN_NOF_CONTROLS", "NOF Affidavit Window Open Date")+" to "+lookup("CAN_NOF_CONTROLS", "NOF Affidavit Window Close Date")+"<style>#ctl00_PlaceHolderMain_actionBarBottom_btnContinue{display:none !important}</style>");
                 }
-                var appStatus = getAppStatus(targetCapId);
+                var appStatus = getAppStatus(parentCapId);
                 if(appStatus != "Notice of Fallowing")
                 {
                     showMessage = true;
