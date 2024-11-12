@@ -180,7 +180,7 @@ function mainProcess() {
         var numberOfDays = 0;
         var hm = new Array();
         var dateCalc = dateAdd(todayDate, numberOfDays);
-        var addZero = leadZero(dateCalc);
+        var addZero = leadZeroX(dateCalc);
         //dateCalc = ('0' + dateCalc.getDate()).slice(-2) + '/'
         //+ ('0' + (dateCalc.getMonth()+1)).slice(-2) + '/'
         //+ dateCalc.getFullYear();
@@ -223,6 +223,7 @@ function mainProcess() {
                         resultWorkflowTask("Permit Status", "Expired", "Updated by batch " + ".", "Updated by batch ")
                         deactivateTask("Permit Status");
                         updateAppStatus("Expired - Balance Due", "Updated by batch ", capId);
+                        addLicenseCondition("Balance","Applied","Out of Program Balance Due","Out of Program Balance Due","Notice");
                     }
                     var test = true;
                     var contactResult = aa.people.getCapContactByCapID(capId);
@@ -272,17 +273,48 @@ function mainProcess() {
 /*------------------------------------------------------------------------------------------------------/
 | <===========Internal Functions and Classes (Used by this script)
 /------------------------------------------------------------------------------------------------------*/
-function leadZero(mypart)
+function leadZeroX(dateCalc)
 {
-    datePart = mypart.toString();
-    if (datePart.length > 1)
+    var dObj = new Date(dateCalc);
+    dateCalc = ('0' + dObj.getDate()).slice(-2) + '/'
+    + ('0' + (dObj.getMonth()+1)).slice(-2) + '/'
+    + dObj.getFullYear();
+    return dateCalc;
+}
+function addLicenseCondition(cType,cStatus,cDesc,cComment,cImpact)
+{
+    // Optional 6th argument is license number, otherwise add to all CAEs on CAP
+    refLicArr = new Array();
+    if (arguments.length == 6) // License Number provided
     {
-        longer = "0" + datePart;
-        return longer;
+        refLicArr.push(getRefLicenseProf(arguments[5]));
     }
-    else
+    else // adding to cap lic profs
     {
-        return datePart;
+        var capLicenseResult = aa.licenseScript.getLicenseProf(capId);
+        if (capLicenseResult.getSuccess())
+        { var refLicArr = capLicenseResult.getOutput();  }
+        else
+        { logDebug("**ERROR: getting lic profs from Cap: " + capLicenseResult.getErrorMessage()); return false; }
+    }
+
+    for (var refLic in refLicArr)
+    {
+        if (arguments.length == 6) // use sequence number
+            licSeq = refLicArr[refLic].getLicSeqNbr();
+        else
+            licSeq = refLicArr[refLic].getLicenseNbr();
+
+        var addCAEResult = aa.caeCondition.addCAECondition(licSeq, cType, cDesc, cComment, null, null, cImpact, cStatus, sysDate, null, sysDate, sysDate, systemUserObj, systemUserObj)
+
+        if (addCAEResult.getSuccess())
+        {
+            logDebug("Successfully added licensed professional (" + licSeq + ") condition (" + cImpact + ") " + cDesc);
+        }
+        else
+        {
+            logDebug( "**ERROR: adding licensed professional (" + licSeq + ") condition (" + cImpact + "): " + addCAEResult.getErrorMessage());
+        }
     }
 }
 
