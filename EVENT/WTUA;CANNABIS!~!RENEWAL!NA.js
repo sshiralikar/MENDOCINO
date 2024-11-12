@@ -233,7 +233,7 @@ if(wfTask == "Issuance" && wfStatus == "Denied")
                     conName = getContactName(capContacts[i]);
                     var params = aa.util.newHashtable();
                     addParameter(params, "$$altID$$", capId.getCustomID()+"");
-                    addParameter(params, "$$capTypeAlias$$", aa.cap.getCap(licCapId).getOutput().getCapType().getAlias()+"");
+                    addParameter(params, "$$capTypeAlias$$", aa.cap.getCap(capId).getOutput().getCapType().getAlias()+"");
                     addParameter(params, "$$capName$$", capName);
                     addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptName"));
                     addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptPhone"));
@@ -244,7 +244,7 @@ if(wfTask == "Issuance" && wfStatus == "Denied")
                     addParameter(params, "$$ACAUrl$$", String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0]);
                     addParameter(params, "$$ACAURL$$", String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0]);
                     if(hm[capContacts[i].getPeople().getEmail() + ""] != 1){
-                        sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail()+"", "", "GLOBAL_DENIED", params, VRFiles, capId);
+                        sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail()+"", "", "GLOBAL_DENIED", params, null, capId);
                         hm[capContacts[i].getPeople().getEmail() + ""] = 1;
                     }
                 }

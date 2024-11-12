@@ -46,6 +46,7 @@ try {
     }
     // CAMEND-566
     if (isNOF) {
+        var hm = new Array();
         var pCapId = getParent();
         var capDetailObjResult = aa.cap.getCapDetail(pCapId); // Detail
         if (capDetailObjResult.getSuccess()) {
@@ -69,7 +70,7 @@ try {
                     var params = aa.util.newHashtable();
                     addParameter(params, "$$altID$$", pCapId.getCustomID() + "");
                     addParameter(params, "$$year$$", String(aa.date.getCurrentDate().getYear()));
-                    addParameter(params, "$$date$$", sysDateMMDDYYYY);
+                    addParameter(params, "$$date$$",aa.date.parseDate((new Date().getMonth() + 1) + "/" + new Date().getDate() + "/" + new Date().getFullYear()));
                     addParameter(params, "$$parentAltId$$", pCapId.getCustomID() + "");
                     addParameter(params, "$$contactname$$", conName);
                     addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptName"));
@@ -85,15 +86,39 @@ try {
                     addParameter(params, "$$parentCapId$$", pCapId.getCustomID());
                     addParameter(params, "$$Amendment$$", aa.cap.getCap(capId).getOutput().getCapType().getAlias() + "");
                     addParameter(params, "$$Location$$", getAddressInALine());
-                    sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail() + "", "", "CAN_NOF_SUBMITTED", params, null, capId);
+                    if (hm[capContacts[i].getPeople().getEmail() + ""] != 1) {
+                        sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail() + "", "", "CAN_NOF_SUBMITTED", params, null, capId);
+                        hm[capContacts[i].getPeople().getEmail() + ""] = 1;
+                    }
                 }
             }
-
         }
     }
 }
 catch (err) {
     aa.sendMail("no-reply@mendocinocounty.gov", "sshiralikar@trustvip.com", "", "Error on Issuance Email ASYNC", err);
+}
+function getParent()
+{
+    // returns the capId object of the parent.  Assumes only one parent!
+    //
+    getCapResult = aa.cap.getProjectParents(capId,1);
+    if (getCapResult.getSuccess())
+    {
+        parentArray = getCapResult.getOutput();
+        if (parentArray.length)
+            return parentArray[0].getCapID();
+        else
+        {
+            logDebug( "**WARNING: GetParent found no project parent for this application");
+            return false;
+        }
+    }
+    else
+    {
+        logDebug( "**WARNING: getting project parents:  " + getCapResult.getErrorMessage());
+        return false;
+    }
 }
 function getContactName(vConObj) {
     if (vConObj.people.getContactTypeFlag() == "organization") {
