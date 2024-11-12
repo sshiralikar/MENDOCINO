@@ -209,7 +209,8 @@ function mainProcess() {
                     && appStatus!="Revoked"
                     && appStatus!="Expired"
                     && appStatus!="Denied"
-                    && appStatus!="Denied - Appeal")
+                    && appStatus!="Denied - Appeal"
+                    && appStatus!="Terminated")
                 {
                     logMessage(capIDString);
                     var thisCapModel = cap.getCapModel();
@@ -358,7 +359,7 @@ function mainProcess() {
                 targetAppType = cap.getCapType();     //create CapTypeModel object
                 targetAppTypeString = targetAppType.toString();
                 var appStatus = getAppStatus(capId);
-                if(targetAppTypeString.split("/")[2] == "Permit" && appStatus!="Withdrawn" && appStatus!="Void")
+                if(targetAppTypeString.split("/")[2] == "Permit" && appStatus!="Withdrawn" && appStatus!="Void" && appStatus!="Terminated")
                 {
                     var thisCapModel = cap.getCapModel();
                     var thisTypeResult = cap.getCapType();
@@ -418,7 +419,7 @@ function mainProcess() {
                 targetAppType = cap.getCapType();     //create CapTypeModel object
                 targetAppTypeString = targetAppType.toString();
                 var appStatus = getAppStatus(capId);
-                if(targetAppTypeString.split("/")[2] == "Permit" && appStatus!="Withdrawn" && appStatus!="Void")
+                if(targetAppTypeString.split("/")[2] == "Permit" && appStatus!="Withdrawn" && appStatus!="Void" && appStatus!="Terminated")
                 {
                     var thisCapModel = cap.getCapModel();
                     var thisTypeResult = cap.getCapType();
@@ -477,7 +478,7 @@ function mainProcess() {
                 targetAppType = cap.getCapType();     //create CapTypeModel object
                 targetAppTypeString = targetAppType.toString();
                 var appStatus = getAppStatus(capId);
-                if(targetAppTypeString.split("/")[2] == "Permit" && appStatus!="Withdrawn" && appStatus!="Void")
+                if(targetAppTypeString.split("/")[2] == "Permit" && appStatus!="Withdrawn" && appStatus!="Void" && appStatus!="Terminated")
                 {
                     var thisCapModel = cap.getCapModel();
                     var thisTypeResult = cap.getCapType();
@@ -538,7 +539,7 @@ function mainProcess() {
                 targetAppType = cap.getCapType();     //create CapTypeModel object
                 targetAppTypeString = targetAppType.toString();
                 var appStatus = getAppStatus(capId);
-                if(targetAppTypeString.split("/")[2] == "Permit" && appStatus!="Withdrawn" && appStatus!="Void")
+                if(targetAppTypeString.split("/")[2] == "Permit" && appStatus!="Withdrawn" && appStatus!="Void" && appStatus!="Terminated")
                 {
                     var thisCapModel = cap.getCapModel();
                     var thisTypeResult = cap.getCapType();
