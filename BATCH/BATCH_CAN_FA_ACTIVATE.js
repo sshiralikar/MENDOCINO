@@ -155,6 +155,8 @@ function mainProcess()
 
                     if((today == first) || (today == second) || (today == third))
                     {
+                        if(!appHasConditionX("Cannabis Required Document", null, "Fallowing Affidavit Required", null))
+                            addStdConditionX("Cannabis Required Document", "Fallowing Affidavit Required");
                         var hm = new Array();
                         var conName = "";
                         var contactResult = aa.people.getCapContactByCapID(capId);
