@@ -198,15 +198,15 @@ function mainProcess() {
                 capIDString = capId.getCustomID();
 
                 cap = aa.cap.getCap(capId).getOutput();
-
+                var appStatus = getAppStatus(capId);
                 targetAppType = cap.getCapType();     //create CapTypeModel object
                 targetAppTypeString = targetAppType.toString();
-                if(targetAppTypeString.split("/")[2] == "Permit")
+                if(targetAppTypeString.split("/")[2] == "Permit" && appStatus!="Terminated")
                 {
                     logMessage(capIDString);
                     var thisCapModel = cap.getCapModel();
                     var thisTypeResult = cap.getCapType();
-                    var appStatus = getAppStatus(capId);
+
                     var capDetail = aa.cap.getCapDetail(capId);
                     capDetail = capDetail.getOutput();
                     var balance = capDetail.getBalance();
