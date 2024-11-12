@@ -70,7 +70,7 @@ try {
                     var params = aa.util.newHashtable();
                     addParameter(params, "$$altID$$", pCapId.getCustomID() + "");
                     addParameter(params, "$$year$$", String(aa.date.getCurrentDate().getYear()));
-                    addParameter(params, "$$date$$",aa.date.parseDate((new Date().getMonth() + 1) + "/" + new Date().getDate() + "/" + new Date().getFullYear()));
+                    addParameter(params, "$$date$$", (new Date().getMonth() + 1) + "/" + new Date().getDate() + "/" + new Date().getFullYear());
                     addParameter(params, "$$parentAltId$$", pCapId.getCustomID() + "");
                     addParameter(params, "$$contactname$$", conName);
                     addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptName"));
