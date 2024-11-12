@@ -153,13 +153,13 @@ try {
     var parentTotalNurseSF = getAppSpecific("Total Nursery SF", parentCapId);
     logDebug("parentTotalSF is: " + parentTotalSF);
     logDebug("parentTotalNurseSF is: " + parentTotalNurseSF);
-    if (appMatch("Cannabis/Cultivation/Permit/NA")) {
+    if (appMatch("Cannabis/Cultivation/Permit/NA"), parentCapId) {
         if (parentTotalSF != null) {
             editAppSpecific4ACA("Total SF/Total Nursery SF", parentTotalSF, cap);
         }
     }
 
-    if (appMatch("Cannabis/Nursery/Permit/NA")) {
+    if (appMatch("Cannabis/Nursery/Permit/NA"), parentCapId) {
         if (parentTotalNurseSF != null) {
             editAppSpecific4ACA("Total SF/Total Nursery SF", parentTotalNurseSF, cap);
         }
