@@ -185,6 +185,51 @@ function copy() {
                 }
             }
         }
+        try
+        {
+            var isNOF = appMatch("Cannabis/Amendment/Notice of Fallowing/NA");
+            if(isNOF)
+            {
+                var open = new Date(lookup("CAN_NOF_CONTROLS", "NOF Window Open Date")+"").setHours(0,0,0,0);
+                var close = new Date(lookup("CAN_NOF_CONTROLS", "NOF Window Close Date")+"").setHours(0,0,0,0);
+                var t = lookup("CAN_NOF_CONTROLS", "Today Date")+"";
+
+                var today = null;
+                if(t == "SYSTEM")
+                    today = new Date().setHours(0,0,0,0);
+                else
+                    today = new Date(t).setHours(0,0,0,0);
+
+                if((today < open) || (today > close))
+                {
+                    showMessage = true;
+                    comment("Notice of Fallowing can only be submitted from "+lookup("CAN_NOF_CONTROLS", "NOF Window Open Date")+" to "+lookup("CAN_NOF_CONTROLS", "NOF Window Close Date")+"<style>#ctl00_PlaceHolderMain_actionBarBottom_btnContinue{display:none !important}</style>");
+                }
+                var appStatus = getAppStatus(targetCapId);
+                if(appStatus == "Notice of Fallowing"
+                    || appStatus == "Denied"
+                    || appStatus == "Expired"
+                    || appStatus == "Void"
+                    || appStatus == "Withdrawn"
+                    || appStatus == "Notice of Application Stay"
+                    || appStatus == "Revoked"
+                    || appStatus == "Denied - Appeal"
+                    || appStatus == "Revocation"
+                    || appStatus == "Revocation Pending"
+                    || appStatus == "Appeal Pending"
+                    || appStatus == "Appeal Submitted")
+                {
+                    showMessage = true;
+                    comment("Notice of Fallowing cannot be submitted as the permit status is <b>"+appStatus+"</b><style>#ctl00_PlaceHolderMain_actionBarBottom_btnContinue{display:none !important}</style>");
+                }
+            }
+        }
+        catch(err)
+        {
+            showMessage = true;
+            comment("Err: "+ err);
+        }
+
         copyOwner(parentCapId, targetCapId);
         copyCapCondition(parentCapId, targetCapId);
         copyAdditionalInfo(parentCapId, targetCapId);
@@ -228,6 +273,22 @@ if (debug.indexOf("**ERROR") > 0) {
         if (showMessage) aa.env.setValue("ErrorMessage", message);
         if (showDebug) aa.env.setValue("ErrorMessage", debug);
     }
+}
+function getAppStatus() {
+    var itemCap = capId;
+    if (arguments.length == 1) itemCap = arguments[0]; // use cap ID specified in args
+
+    var appStatus = null;
+    var capResult = aa.cap.getCap(itemCap);
+    if (capResult.getSuccess()) {
+        licCap = capResult.getOutput();
+        if (licCap != null) {
+            appStatus = "" + licCap.getCapStatus();
+        }
+    } else {
+        logDebug("ERROR: Failed to get app status: " + capResult.getErrorMessage());
+    }
+    return appStatus;
 }
 function editAppSpecific4ACAX(itemName, itemValue, xcap) {
 
