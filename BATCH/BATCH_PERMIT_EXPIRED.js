@@ -187,7 +187,7 @@ function mainProcess() {
         logMessage("Now getting records with Expiration date of " + addZero);
         //dateCalc = aa.date.parseDate(dateCalc);
         //var recordListResult = aa.cap.getCapIDsByAppSpecificInfoDateRange("PERMIT DETAILS", "Expiration Date", dateCalc, dateCalc);
-        var recordListResult = aa.cap.getCapIDsByAppSpecificInfoField("Expiration Date", String(addZero));
+        var recordListResult = aa.cap.getCapIDsByAppSpecificInfoField("New Expiration Date", String(addZero));
         if (!recordListResult.getSuccess())
             logMessage("**ERROR: Failed to get capId List : " + recordListResult.getErrorMessage());
         else {
