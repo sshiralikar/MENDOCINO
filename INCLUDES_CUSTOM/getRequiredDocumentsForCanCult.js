@@ -31,6 +31,11 @@ function getRequiredDocumentsForCanCult() {
         document: "Site Plan"
     };
 
+    var propertyOwnerConsent = {
+        condition: "Property Owner Consent",
+        document: "Property Owner Consent"
+    }
+
 
 
 
@@ -102,6 +107,10 @@ function getRequiredDocumentsForCanCult() {
         // CAMEND-600
         if (AInfo["Changes Made Since Last Site Plan"] == "Yes") {
             requirementArray.push(sitePlan);
+        }
+        // CAMEND-600
+        if (AInfo["Owner of Property"] == "Yes") {
+            requirementArray.push(propertyOwnerConsent);
         }
     }
     else if (isAppeal) {
