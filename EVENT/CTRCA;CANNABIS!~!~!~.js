@@ -34,11 +34,14 @@ catch (err) {
     logDebug("LP Update not necessary");
 }
 
-if (publicUser) {
-    //CAMEND-574 & CAMEND-640
-    if (appMatch("Cannabis/Amendment/Assignment/NA") || appMatch("Cannabis/*/Renewal/NA")) {
-        if (AInfo["Vegetation Removal Purpose"] == "Yes") {
-            addStdConditionX("Vegetation", "Tree Removal Identified");
-        }
+//CAMEND-574 & CAMEND-640
+if (appMatch("Cannabis/Amendment/Assignment/NA")) {
+    if (AInfo["Vegetation Removal Purpose"] == "Yes") {
+        addStdConditionX("Vegetation", "Tree Removal Identified");
+    }
+}
+if (appMatch("Cannabis/*/Renewal/NA")) {
+    if (AInfo["Trees Removed"] == "Yes") {
+        addStdConditionX("Vegetation", "Tree Removal Identified");
     }
 }
