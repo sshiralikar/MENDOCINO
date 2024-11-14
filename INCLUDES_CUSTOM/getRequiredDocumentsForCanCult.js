@@ -109,7 +109,7 @@ function getRequiredDocumentsForCanCult() {
             requirementArray.push(sitePlan);
         }
         // CAMEND-600
-        if (AInfo["Owner of Property"] == "Yes") {
+        if (AInfo["Owner of Property"] == "No") {
             requirementArray.push(propertyOwnerConsent);
         }
     }
