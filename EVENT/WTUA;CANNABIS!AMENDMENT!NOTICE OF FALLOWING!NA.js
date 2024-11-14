@@ -47,6 +47,24 @@ if (wfStatus == "Approved") {
             }
         }
     }
+
+    // CAMEND-620
+    var today = new Date();
+    var newDate = "";
+    var pCapId = getParent();
+    var submittedDate = new Date(AInfo["NOF Submitted Date"] + "");
+
+    if ((submittedDate.getMonth() == 11) && (today.getFullYear() - 1 == submittedDate.getFullYear())) { //If NOF Submitted Date was between 12/01/2024 - 12/31/2024
+        logDebug("Submitted Date is between 12/01/2024 - 12/31/2024");
+        newDate = 12 + "/" + 31 + "/" + (parseInt(submittedDate.getFullYear()) + 1);
+    } else if ((submittedDate.getMonth() == 0) && (today.getFullYear() == submittedDate.getFullYear())) { // If NOF Submitted Date was between 01/01/2025 - 01/31/2025
+        logDebug("Submitted Date is between 01/01/2025 - 01/31/2025");
+        newDate = 12 + "/" + 31 + "/" + submittedDate.getFullYear();
+    }
+
+    logDebug(newDate)
+    editAppSpecific("NOF Expiration Date", newDate, pCapId);
+    // CAMEND-620
 }
 
 // CAMEND-561
