@@ -180,6 +180,7 @@ function mainProcess() {
         var numberOfDays = 0;
         var hm = new Array();
         var dateCalc = dateAdd(todayDate, numberOfDays);
+        aa.print(dateCalc);
         var addZero = leadZeroX(dateCalc);
         //dateCalc = ('0' + dateCalc.getDate()).slice(-2) + '/'
         //+ ('0' + (dateCalc.getMonth()+1)).slice(-2) + '/'
@@ -187,7 +188,7 @@ function mainProcess() {
         logMessage("Now getting records with Expiration date of " + addZero);
         //dateCalc = aa.date.parseDate(dateCalc);
         //var recordListResult = aa.cap.getCapIDsByAppSpecificInfoDateRange("PERMIT DETAILS", "Expiration Date", dateCalc, dateCalc);
-        var recordListResult = aa.cap.getCapIDsByAppSpecificInfoField("Expiration Date", String(addZero));
+        var recordListResult = aa.cap.getCapIDsByAppSpecificInfoField("New Expiration Date", String(addZero));
         if (!recordListResult.getSuccess())
             logMessage("**ERROR: Failed to get capId List : " + recordListResult.getErrorMessage());
         else {
@@ -276,8 +277,8 @@ function mainProcess() {
 function leadZeroX(dateCalc)
 {
     var dObj = new Date(dateCalc);
-    dateCalc = ('0' + dObj.getDate()).slice(-2) + '/'
-    + ('0' + (dObj.getMonth()+1)).slice(-2) + '/'
+    dateCalc = ('0' + (dObj.getMonth()+1)).slice(-2) + '/'
+    + ('0' + dObj.getDate()).slice(-2) + '/'
     + dObj.getFullYear();
     return dateCalc;
 }
