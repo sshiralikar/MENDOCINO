@@ -55,14 +55,7 @@ if (wfStatus == "Approved") {
     var nofSubmittedDate = getAppSpecific("NOF Submitted Date", pCapId);
     var submittedDate = new Date(nofSubmittedDate + "");
 
-    if ((submittedDate.getMonth() == 11) && (today.getFullYear() - 1 == submittedDate.getFullYear())) { //If NOF Submitted Date was between 12/01/2024 - 12/31/2024
-        logDebug("Submitted Date is between 12/01/2024 - 12/31/2024");
-        newDate = 12 + "/" + 31 + "/" + (parseInt(submittedDate.getFullYear()) + 1);
-    } else if ((submittedDate.getMonth() == 0) && (today.getFullYear() == submittedDate.getFullYear())) { // If NOF Submitted Date was between 01/01/2025 - 01/31/2025
-        logDebug("Submitted Date is between 01/01/2025 - 01/31/2025");
-        newDate = 12 + "/" + 31 + "/" + submittedDate.getFullYear();
-    }
-
+    newDate = 12 + "/" + 31 + "/" + (parseInt(submittedDate.getFullYear()) + 1);
     logDebug(newDate)
     editAppSpecific("NOF Expiration Date", newDate, pCapId);
     // CAMEND-620
