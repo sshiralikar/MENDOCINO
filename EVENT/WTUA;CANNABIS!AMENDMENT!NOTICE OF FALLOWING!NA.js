@@ -52,7 +52,8 @@ if (wfStatus == "Approved") {
     var today = new Date();
     var newDate = "";
     var pCapId = getParent();
-    var submittedDate = new Date(AInfo["NOF Submitted Date"] + "");
+    var nofSubmittedDate = getAppSpecific("NOF Submitted Date", pCapId);
+    var submittedDate = new Date(nofSubmittedDate + "");
 
     if ((submittedDate.getMonth() == 11) && (today.getFullYear() - 1 == submittedDate.getFullYear())) { //If NOF Submitted Date was between 12/01/2024 - 12/31/2024
         logDebug("Submitted Date is between 12/01/2024 - 12/31/2024");
