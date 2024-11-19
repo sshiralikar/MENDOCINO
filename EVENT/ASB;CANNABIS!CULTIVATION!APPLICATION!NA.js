@@ -1,4 +1,4 @@
-if(publicUser)
+if(!publicUser)
 {
     try
     {
