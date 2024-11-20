@@ -149,14 +149,14 @@ function getRequiredDocumentsForCanCult() {
         if (isPropertyOwner)
             requirementArray.push(POConsent);
 
-        //CAMEND-160
-        var WaterMonitoringReport = {
-            condition: "Water Monitoring Report",
-            document: "Water Monitoring Report",
-            workflow: wfStopPermanentOnly
-        };
-        if (AInfo["Is NOA old"] == "Yes")
-            requirementArray.push(WaterMonitoringReport);
+        //CAMEND-160 & CAMEND-683
+        // var WaterMonitoringReport = {
+        //     condition: "Water Monitoring Report",
+        //     document: "Water Monitoring Report",
+        //     workflow: wfStopPermanentOnly
+        // };
+        // if (AInfo["Is NOA old"] == "Yes")
+        //     requirementArray.push(WaterMonitoringReport);
 
         // //CAMEND-160 & CAMEND-526
         // var compliancePlan = {
