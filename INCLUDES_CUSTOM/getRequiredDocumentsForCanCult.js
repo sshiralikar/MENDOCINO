@@ -75,13 +75,14 @@ function getRequiredDocumentsForCanCult() {
     }
 
     if (appMatch("Cannabis/*/Renewal/NA")) {
-        var DCCStateLicense = {
-            condition: "Business Formation - DCC State License",
-            document: "Business Formation - DCC State License",
-            workflow: wfStopPermanentOnly
-        };
-        if (AInfo["State License Business"] == "Yes")
-            requirementArray.push(DCCStateLicense);
+        // CAMEND-682
+        // var DCCStateLicense = {
+        //     condition: "Business Formation - DCC State License",
+        //     document: "Business Formation - DCC State License",
+        //     workflow: wfStopPermanentOnly
+        // };
+        // if (AInfo["State License Business"] == "Yes")
+        //     requirementArray.push(DCCStateLicense);
 
         var doc5 = {
             condition: "Site Plan",
@@ -136,7 +137,7 @@ function getRequiredDocumentsForCanCult() {
             workflow: wfStopPermanentOnly
         };
         var isAuthorized = (AInfo["Authorized"] == "Yes");
-        if (isAuthorized || AInfo["Seller's Permit"] == "Yes")
+        if (isAuthorized)
             requirementArray.push(businessInformation);
 
         //CAMEND-154
@@ -276,14 +277,14 @@ function getRequiredDocumentsForCanCult() {
         if (AInfo["SWRCB Notice Type"] == "Notice of Exemption")
             requirementArray.push(SWRCBNoticeType2);
 
-        //CAMEND-290
-        var DCCStateLicense = {
-            condition: "Business Formation - DCC State License",
-            document: "Business Formation - DCC State License",
-            workflow: wfStopPermanentOnly
-        };
-        if (AInfo["State License Business"] == "Yes")
-            requirementArray.push(DCCStateLicense);
+        //CAMEND-290 & CAMEND-682
+        // var DCCStateLicense = {
+        //     condition: "Business Formation - DCC State License",
+        //     document: "Business Formation - DCC State License",
+        //     workflow: wfStopPermanentOnly
+        // };
+        // if (AInfo["State License Business"] == "Yes")
+        //     requirementArray.push(DCCStateLicense);
 
         //CAMEND-289
         var SellersPermit = {
@@ -294,14 +295,14 @@ function getRequiredDocumentsForCanCult() {
         //if (AInfo["Seller's Permit"] == "Yes")
         //requirementArray.push(SellersPermit);
 
-        //CAMEND-289
-        var PropertyOwner = {
-            condition: "Business Formation - Property Owner",
-            document: "Business Formation - Property Owner",
-            workflow: wfStopPermanentOnly
-        };
-        if (AInfo["Property Owner Business"] == "Yes")
-            requirementArray.push(PropertyOwner);
+        //CAMEND-289 & CAMEND-682
+        // var PropertyOwner = {
+        //     condition: "Business Formation - Property Owner",
+        //     document: "Business Formation - Property Owner",
+        //     workflow: wfStopPermanentOnly
+        // };
+        // if (AInfo["Property Owner Business"] == "Yes")
+        //     requirementArray.push(PropertyOwner);
 
         //CAMEND-294
         var IndoorQuestionnaire = {
