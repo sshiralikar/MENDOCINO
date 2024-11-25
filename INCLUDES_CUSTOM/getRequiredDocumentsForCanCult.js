@@ -36,6 +36,11 @@ function getRequiredDocumentsForCanCult() {
         document: "Property Owner Consent"
     }
 
+    var annualTrueUpInvoice = {
+        condition: "Annual True-Up Invoice",
+        document: "Annual True-Up Invoice"
+    }
+
 
 
 
@@ -127,7 +132,10 @@ function getRequiredDocumentsForCanCult() {
         
     }
     else if (isTaxAppeal) {
-        
+        // CAMEND-652
+        if (AInfo["Received Tax Invoice"] == "Yes") {
+            requirementArray.push(annualTrueUpInvoice);
+        }
     }
     else {
         //CAMEND-153
