@@ -51,6 +51,7 @@ if (wfStatus == "Approved") {
     // CAMEND-620
     var today = new Date();
     var newDate = "";
+    var calendarYear = "";
     var pCapId = getParent();
     var nofSubmittedDate = getAppSpecific("NOF Submitted Date", pCapId);
     var submittedDate = new Date(nofSubmittedDate + "");
@@ -58,6 +59,16 @@ if (wfStatus == "Approved") {
     newDate = 12 + "/" + 31 + "/" + (parseInt(submittedDate.getFullYear()) + 1);
     logDebug(newDate)
     editAppSpecific("NOF Expiration Date", newDate, pCapId);
+
+    // CAMEND-644
+    if(submittedDate.getMonth() == 11) {
+        calendarYear = parseInt(submittedDate.getFullYear()) + 1;
+    } else if(submittedDate.getMonth() == 0){
+        calendarYear = parseInt(submittedDate.getFullYear());
+    }
+    logDebug("NOF Calendar Year: " + calendarYear);
+    editAppSpecific("NOF Calendar Year", calendarYear);
+    editAppSpecific("NOF Calendar Year", calendarYear, pCapId);
     
     // CAMEND-633
     var newTableToAdd = [];
