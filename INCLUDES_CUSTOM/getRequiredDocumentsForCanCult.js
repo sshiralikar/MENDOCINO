@@ -41,6 +41,16 @@ function getRequiredDocumentsForCanCult() {
         document: "Annual True-Up Invoice"
     }
 
+    var cannabisProgramTaxImposed = {
+        condition: "Cannabis Program Participants - Tax Imposed",
+        document: "Cannabis Program Participants - Tax Imposed"
+    }
+
+    var commercialBusinessTaxForm = {
+        condition: "Commercial Cannabis Cultivation Business Tax Registration Form",
+        document: "Commercial Cannabis Cultivation Business Tax Registration Form"
+    }
+
 
 
 
@@ -74,9 +84,11 @@ function getRequiredDocumentsForCanCult() {
 
 
 
-    // CAMEND-602
+    // CAMEND-602 & CAMEND-711
     if (appMatch("Cannabis/*/Application/NA")) {
         requirementArray.push(ccblAffidavit);
+        requirementArray.push(cannabisProgramTaxImposed);
+        requirementArray.push(commercialBusinessTaxForm);
     }
 
     if (appMatch("Cannabis/*/Renewal/NA")) {
