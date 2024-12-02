@@ -471,7 +471,7 @@ function createRefLicProfFromLicProfX()
     //newLic.setLicenseExpirationDate(licProfScriptModel.getLicenseExpirDate());
     newLic.setLicenseExpirationDate(licProfScriptModel.getLicesnseOrigIssueDate());
     //newLic.setLicenseProfessionalModel(licProfScriptModel.getLicenseProfessionalModel);
-    for(var k in licProfScriptModel)aa.print(k);
+    for(var k in licProfScriptModel)aa.print(k+" --> "+ licProfScriptModel[k]);
     if (updating)
         myResult = aa.licenseScript.editRefLicenseProf(newLic);
     else
