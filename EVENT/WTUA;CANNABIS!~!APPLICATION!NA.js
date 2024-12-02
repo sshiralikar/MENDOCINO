@@ -467,8 +467,8 @@ function createRefLicProfFromLicProfX()
     newLic.setSuffixName(licProfScriptModel.getSuffixName());
     newLic.setWcExempt(licProfScriptModel.getWorkCompExempt());
     newLic.setZip(licProfScriptModel.getZip());
-    logDebug("licProfScriptModel.getLicenseExpirationDate(): "+ licProfScriptModel.getLicenseExpirationDate());
-    newLic.setLicenseExpirationDate(licProfScriptModel.getLicenseExpirationDate());
+    //logDebug("licProfScriptModel.getLicenseExpirationDate(): "+ licProfScriptModel.getLicenseExpirationDate());
+    //newLic.setLicenseExpirationDate(licProfScriptModel.getLicenseExpirationDate());
     newLic.setAttributes(licProfScriptModel.getAttributes());
 
     if (updating)
