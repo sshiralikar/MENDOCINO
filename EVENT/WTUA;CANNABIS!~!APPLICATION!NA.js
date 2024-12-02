@@ -469,7 +469,7 @@ function createRefLicProfFromLicProfX()
     newLic.setZip(licProfScriptModel.getZip());
     //logDebug("licProfScriptModel.getLicenseExpirationDate(): "+ licProfScriptModel.getLicenseExpirationDate());
     //newLic.setLicenseExpirationDate(licProfScriptModel.getLicenseExpirDate());
-    newLic.setLicenseExpirationDate(licProfScriptModel.licesnseOrigIssueDate());
+    newLic.setLicenseExpirationDate(licProfScriptModel.getLicesnseOrigIssueDate());
     //newLic.setLicenseProfessionalModel(licProfScriptModel.getLicenseProfessionalModel);
     for(var k in licProfScriptModel)aa.print(k);
     if (updating)
