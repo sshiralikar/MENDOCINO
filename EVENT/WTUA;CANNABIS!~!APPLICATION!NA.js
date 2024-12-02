@@ -38,7 +38,7 @@ if(wfTask == "Issuance" && wfStatus == "Issued")
         createRefLicProfFromLicProfX();
     }
     catch (err) {
-        logDebug("LP Update not necessary");
+        logDebug("LP Update not necessary: "+ err);
     }
     var c = new Date();
     c.setFullYear(c.getFullYear() + 1);
