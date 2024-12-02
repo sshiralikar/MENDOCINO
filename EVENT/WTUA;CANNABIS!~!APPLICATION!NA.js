@@ -33,6 +33,13 @@ if(wfTask == "Issuance" && wfStatus == "Issued")
         aa.print("Error on changing sequence ASA: "+ err);
         aa.sendMail("no-reply@mendocinocounty.gov", "sshiralikar@trustvip.com", "", "Error on changing sequence CTRCA", err);
     }
+    //CAMEND-635
+    try {
+        createRefLicProfFromLicProf();
+    }
+    catch (err) {
+        logDebug("LP Update not necessary");
+    }
     var c = new Date();
     c.setFullYear(c.getFullYear() + 1);
     var newDate = c.getMonth()+1+"/"+c.getDate()+"/"+c.getFullYear();
