@@ -150,7 +150,8 @@ try {
     var cap = aa.env.getValue("CapModel");
     var capId = cap.getCapID();
 
-    if(AInfo["Vegetation Removal Purpose"] == "Yes")
+    // CAMEND-758
+    if(AInfo["Vegetation Removal"] == "No")
         aa.env.setValue("ReturnData", "{'PageFlow':{'HidePage':'Y'}}");
 
 } catch (err) {
