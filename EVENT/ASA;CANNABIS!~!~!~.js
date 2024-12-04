@@ -79,6 +79,18 @@ if (!publicUser) {
         aa.runAsyncScript("ASYNC_SEND_SUBMISSION_EMAIL", envParameters);
     }
 
+    // CAMEND-783
+    if (isNOFAffidavit) {
+        // Updated email for CAMEND-478 to use Async script so Renewal in back office (clone) pulls new Alt Id
+        var envParameters = aa.util.newHashMap();
+        logDebug("capIdStr: " + newAltId + "");
+        if (newAltId != "")
+            envParameters.put("capIdStr", newAltId + "");
+        else
+            envParameters.put("capIdStr", capId.getCustomID() + "");
+        aa.runAsyncScript("ASYNC_SEND_SUBMISSION_EMAIL", envParameters);
+    }
+
     //CAMEND-574 & CAMEND-640
     if (appMatch("Cannabis/Amendment/Assignment/NA")) {
         if (AInfo["Vegetation Removal Purpose"] == "Yes") {
