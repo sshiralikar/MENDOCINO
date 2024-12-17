@@ -43,14 +43,14 @@ if(!publicUser)
 
 
         // CAMEND-184
-        if (AInfo["Clones cut/grown on-site"] == "Yes" || AInfo["Seeds produced/started on-site"] == "Yes") {
-            var propagationCounter = getASITRowCount("PROPAGATION");
-            logDebug("propagationCounter: " + propagationCounter);
-            if (propagationCounter < 1)
-            {
-                messageList += "Missing Table: " + "Propagation"  + br;
-            }
-        }
+        // if (AInfo["Clones cut/grown on-site"] == "Yes" || AInfo["Seeds produced/started on-site"] == "Yes") {
+        //     var propagationCounter = getASITRowCount("PROPAGATION");
+        //     logDebug("propagationCounter: " + propagationCounter);
+        //     if (propagationCounter < 1)
+        //     {
+        //         messageList += "Missing Table: " + "Propagation"  + br;
+        //     }
+        // }
 
         // CAMEND-180 & CAMEND-526
         // if (AInfo["Employees on-site"] == "Yes") {
