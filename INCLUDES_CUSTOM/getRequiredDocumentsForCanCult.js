@@ -51,6 +51,49 @@ function getRequiredDocumentsForCanCult() {
         document: "Commercial Cannabis Cultivation Business Tax Registration Form"
     }
 
+    // CAMEND-703
+    var suppDocs = {
+        condition: "Supporting Document",
+        document: "Supporting Document"
+    };
+    var suppDocs2 = {
+        condition: "Supporting Document 2",
+        document: "Supporting Document"
+    };
+    var suppDocs3 = {
+        condition: "Supporting Document 3",
+        document: "Supporting Document"
+    };
+    var suppDocs4 = {
+        condition: "Supporting Document 4",
+        document: "Supporting Document"
+    };
+    var suppDocs5 = {
+        condition: "Supporting Document 5",
+        document: "Supporting Document"
+    };
+    var suppDocs6 = {
+        condition: "Supporting Document 6",
+        document: "Supporting Document"
+    };
+    var suppDocs7 = {
+        condition: "Supporting Document 7",
+        document: "Supporting Document"
+    };
+    var suppDocs8 = {
+        condition: "Supporting Document 8",
+        document: "Supporting Document"
+    };
+    var suppDocs9 = {
+        condition: "Supporting Document 9",
+        document: "Supporting Document"
+    };
+    var suppDocs10 = {
+        condition: "Supporting Document 10",
+        document: "Supporting Document"
+    };
+    // CAMEND-703
+
 
 
 
@@ -132,21 +175,93 @@ function getRequiredDocumentsForCanCult() {
         }
     }
     else if (isAppeal) {
-
+        // CAMEND-703
+        var SupportingDocs = AInfo["Supporting Documentation"];
+        if (String(SupportingDocs).toUpperCase() == "YES") {
+            var numberOfFiles = AInfo["How many documents"];
+            numberOfFiles = parseInt(numberOfFiles);
+            if (numberOfFiles >= 1) {
+                requirementArray.push(suppDocs);
+            }
+            if (numberOfFiles >= 2) {
+                requirementArray.push(suppDocs2);
+            }
+            if (numberOfFiles >= 3) {
+                requirementArray.push(suppDocs3);
+            }
+            if (numberOfFiles >= 4) {
+                requirementArray.push(suppDocs4);
+            }
+            if (numberOfFiles >= 5) {
+                requirementArray.push(suppDocs5);
+            }
+            if (numberOfFiles >= 6) {
+                requirementArray.push(suppDocs6);
+            }
+            if (numberOfFiles >= 7) {
+                requirementArray.push(suppDocs7);
+            }
+            if (numberOfFiles >= 8) {
+                requirementArray.push(suppDocs8);
+            }
+            if (numberOfFiles >= 9) {
+                requirementArray.push(suppDocs9);
+            }
+            if (numberOfFiles >= 10) {
+                requirementArray.push(suppDocs10);
+            }
+        }
     }
     else if (isNOF) {
-        
+
     }
     else if (isNOFAffidavit) {
-        
+
     }
     else if (isNOFRevocation) {
-        
+
     }
     else if (isTaxAppeal) {
         // CAMEND-652
         if (AInfo["Received Tax Invoice"] == "Yes") {
             requirementArray.push(annualTrueUpInvoice);
+        }
+
+        // CAMEND-703
+        var SupportingDocs = AInfo["Supporting Documentation"];
+        if (String(SupportingDocs).toUpperCase() == "YES") {
+            var numberOfFiles = AInfo["How many documents"];
+            numberOfFiles = parseInt(numberOfFiles);
+            if (numberOfFiles >= 1) {
+                requirementArray.push(suppDocs);
+            }
+            if (numberOfFiles >= 2) {
+                requirementArray.push(suppDocs2);
+            }
+            if (numberOfFiles >= 3) {
+                requirementArray.push(suppDocs3);
+            }
+            if (numberOfFiles >= 4) {
+                requirementArray.push(suppDocs4);
+            }
+            if (numberOfFiles >= 5) {
+                requirementArray.push(suppDocs5);
+            }
+            if (numberOfFiles >= 6) {
+                requirementArray.push(suppDocs6);
+            }
+            if (numberOfFiles >= 7) {
+                requirementArray.push(suppDocs7);
+            }
+            if (numberOfFiles >= 8) {
+                requirementArray.push(suppDocs8);
+            }
+            if (numberOfFiles >= 9) {
+                requirementArray.push(suppDocs9);
+            }
+            if (numberOfFiles >= 10) {
+                requirementArray.push(suppDocs10);
+            }
         }
     }
     else {
