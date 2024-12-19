@@ -148,13 +148,12 @@ logDebug("balanceDue = " + balanceDue);
 try {
 
     // CAMEND-769
-    var parent = getParent();
-    var parentCap = aa.cap.getCap(parentCapId).getOutput();
-
-    logDebug("parent cap id is: " + parentCapId.getCustomID());
-    parentCapAltId = parentCapId.getCustomID()
-
-    editAppSpecific4ACA("CCBL Number", parentCapAltId, cap);
+    var parentCapId = getParentByCapId(capId);
+    if (parentCapId != null) {
+        var parentAltID = parentCapId.getCustomID().toString();
+        //logDebug("customID = " + parentAltID);
+        editAppSpecific4ACA("CCBL Number", parentAltID, capId);
+    }
 
     // Save all back to ACA capModel
     aa.env.setValue("CapModel", cap);
