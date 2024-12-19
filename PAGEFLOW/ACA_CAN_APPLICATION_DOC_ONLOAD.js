@@ -276,6 +276,43 @@ try {
 
     //Applicant
 
+    // CAMEND-703
+    var docType = "Supporting Documentation 2"
+    message += "<li><span>" + docType + "</span></li>";
+    aa.capCondition.addCapCondition(capId, conditionType, docType, docType, sysDate, null, sysDate, null, null, "Notice", systemUserObj, systemUserObj, "Applied", "ADMIN", "A", "Y");
+
+    var docType = "Supporting Documentation 3"
+    message += "<li><span>" + docType + "</span></li>";
+    aa.capCondition.addCapCondition(capId, conditionType, docType, docType, sysDate, null, sysDate, null, null, "Notice", systemUserObj, systemUserObj, "Applied", "ADMIN", "A", "Y");
+
+    var docType = "Supporting Documentation 4"
+    message += "<li><span>" + docType + "</span></li>";
+    aa.capCondition.addCapCondition(capId, conditionType, docType, docType, sysDate, null, sysDate, null, null, "Notice", systemUserObj, systemUserObj, "Applied", "ADMIN", "A", "Y");
+
+    var docType = "Supporting Documentation 5"
+    message += "<li><span>" + docType + "</span></li>";
+    aa.capCondition.addCapCondition(capId, conditionType, docType, docType, sysDate, null, sysDate, null, null, "Notice", systemUserObj, systemUserObj, "Applied", "ADMIN", "A", "Y");
+
+    var docType = "Supporting Documentation 6"
+    message += "<li><span>" + docType + "</span></li>";
+    aa.capCondition.addCapCondition(capId, conditionType, docType, docType, sysDate, null, sysDate, null, null, "Notice", systemUserObj, systemUserObj, "Applied", "ADMIN", "A", "Y");
+
+    var docType = "Supporting Documentation 7"
+    message += "<li><span>" + docType + "</span></li>";
+    aa.capCondition.addCapCondition(capId, conditionType, docType, docType, sysDate, null, sysDate, null, null, "Notice", systemUserObj, systemUserObj, "Applied", "ADMIN", "A", "Y");
+
+    var docType = "Supporting Documentation 8"
+    message += "<li><span>" + docType + "</span></li>";
+    aa.capCondition.addCapCondition(capId, conditionType, docType, docType, sysDate, null, sysDate, null, null, "Notice", systemUserObj, systemUserObj, "Applied", "ADMIN", "A", "Y");
+
+    var docType = "Supporting Documentation 9"
+    message += "<li><span>" + docType + "</span></li>";
+    aa.capCondition.addCapCondition(capId, conditionType, docType, docType, sysDate, null, sysDate, null, null, "Notice", systemUserObj, systemUserObj, "Applied", "ADMIN", "A", "Y");
+
+    var docType = "Supporting Documentation 10"
+    message += "<li><span>" + docType + "</span></li>";
+    aa.capCondition.addCapCondition(capId, conditionType, docType, docType, sysDate, null, sysDate, null, null, "Notice", systemUserObj, systemUserObj, "Applied", "ADMIN", "A", "Y");
+
 
 
     if (r.length > 0 && showList && docsMissing) {
