@@ -53,44 +53,44 @@ function getRequiredDocumentsForCanCult() {
 
     // CAMEND-703
     var suppDocs = {
-        condition: "Supporting Document",
-        document: "Supporting Document"
+        condition: "Supporting Documentation",
+        document: "Supporting Documentation"
     };
     var suppDocs2 = {
-        condition: "Supporting Document 2",
-        document: "Supporting Document"
+        condition: "Supporting Documentation 2",
+        document: "Supporting Documentation"
     };
     var suppDocs3 = {
-        condition: "Supporting Document 3",
-        document: "Supporting Document"
+        condition: "Supporting Documentation 3",
+        document: "Supporting Documentation"
     };
     var suppDocs4 = {
-        condition: "Supporting Document 4",
-        document: "Supporting Document"
+        condition: "Supporting Documentation 4",
+        document: "Supporting Documentation"
     };
     var suppDocs5 = {
-        condition: "Supporting Document 5",
-        document: "Supporting Document"
+        condition: "Supporting Documentation 5",
+        document: "Supporting Documentation"
     };
     var suppDocs6 = {
-        condition: "Supporting Document 6",
-        document: "Supporting Document"
+        condition: "Supporting Documentation 6",
+        document: "Supporting Documentation"
     };
     var suppDocs7 = {
-        condition: "Supporting Document 7",
-        document: "Supporting Document"
+        condition: "Supporting Documentation 7",
+        document: "Supporting Documentation"
     };
     var suppDocs8 = {
-        condition: "Supporting Document 8",
-        document: "Supporting Document"
+        condition: "Supporting Documentation 8",
+        document: "Supporting Documentation"
     };
     var suppDocs9 = {
-        condition: "Supporting Document 9",
-        document: "Supporting Document"
+        condition: "Supporting Documentation 9",
+        document: "Supporting Documentation"
     };
     var suppDocs10 = {
-        condition: "Supporting Document 10",
-        document: "Supporting Document"
+        condition: "Supporting Documentation 10",
+        document: "Supporting Documentation"
     };
     // CAMEND-703
 
