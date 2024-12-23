@@ -155,7 +155,10 @@ function getRequiredDocumentsForCanCult() {
             document: "Lake and Streambed Alteration Agreement",
             workflow: wfStopPermanentOnly
         };
-        requirementArray.push(doc2);
+        // CAMEND-766
+        if (AInfo["LSAA"] == "Yes") {
+            requirementArray.push(doc2);
+        }
         var SWRCBNoticeType1 = {
             condition: "State Water Resource Control Board, Notice of Applicability",
             document: "State Water Resource Control Board, Notice of Applicability",
@@ -508,7 +511,10 @@ function getRequiredDocumentsForCanCult() {
             workflow: wfStopPermanentOnly
         };
         requirementArray.push(doc1);
-        requirementArray.push(doc2);
+        // CAMEND-766
+        if (AInfo["LSAA"] == "Yes") {
+            requirementArray.push(doc2);
+        }
         requirementArray.push(doc3);
         requirementArray.push(doc4);
         requirementArray.push(doc5);
