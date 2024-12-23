@@ -248,6 +248,26 @@ function copy() {
                     comment("Fallowing Affidavit cannot be submitted if the permit status is <b>"+appStatus+"</b><style>#ctl00_PlaceHolderMain_actionBarBottom_btnContinue{display:none !important}</style>");
                 }
             }
+            //CAMEND-677
+            var isNOF = appMatch("Cannabis/Amendment/Tax Appeal/NA");
+            if(isNOF)
+            {
+                var open = new Date(lookup("CAN_TAXAPP_CONTROLS", "Tax Appeal Window Open Date")+"").setHours(0,0,0,0);
+                var close = new Date(lookup("CAN_TAXAPP_CONTROLS", "Tax Appeal Window Close Date")+"").setHours(0,0,0,0);
+                var t = lookup("CAN_TAXAPP_CONTROLS", "Today Date")+"";
+
+                var today = null;
+                if(t == "SYSTEM")
+                    today = new Date().setHours(0,0,0,0);
+                else
+                    today = new Date(t).setHours(0,0,0,0);
+
+                if((today < open) || (today > close))
+                {
+                    showMessage = true;
+                    comment("Tax Appeal can only be submitted from "+lookup("CAN_TAXAPP_CONTROLS", "Tax Appeal Window Open Date")+" to "+lookup("CAN_TAXAPP_CONTROLS", "Tax Appeal Window Close Date")+"<style>#ctl00_PlaceHolderMain_actionBarBottom_btnContinue{display:none !important}</style>");
+                }
+            }
         }
         catch(err)
         {
