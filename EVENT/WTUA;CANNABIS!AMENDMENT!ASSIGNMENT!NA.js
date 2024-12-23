@@ -1,5 +1,5 @@
 //CAMEND-725
-if(wfStatus == "Accepted")
+if(wfStatus == "Accepted" || wfStatus == "Approved")
 {
     var documentsToSend = new Array();
     var capDocResult = aa.document.getDocumentListByEntity(capId, "CAP");
