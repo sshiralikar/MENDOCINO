@@ -11,12 +11,12 @@ if(wfStatus == "Accepted")
             {
                 var documentObject = capDocResult.getOutput().get(docInx);
                 var docCat = "" + documentObject.getDocCategory();
-                if(docNo == "Cannabis Program Participants - Tax Imposed")
+                if(docCat == "Cannabis Program Participants - Tax Imposed")
                 {
                     var docDownload = aa.document.downloadFile2Disk(documentObject, "Cannabis", "", "", false).getOutput();
                     documentsToSend.push(docDownload);
                 }
-                if(docNo == "Commercial Cannabis Cultivation Business Tax Registration Form")
+                if(docCat == "Commercial Cannabis Cultivation Business Tax Registration Form")
                 {
                     var docDownload = aa.document.downloadFile2Disk(documentObject, "Cannabis", "", "", false).getOutput();
                     documentsToSend.push(docDownload);
