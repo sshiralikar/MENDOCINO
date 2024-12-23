@@ -249,8 +249,8 @@ function copy() {
                 }
             }
             //CAMEND-677
-            var isNOF = appMatch("Cannabis/Amendment/Tax Appeal/NA");
-            if(isNOF)
+            var TxApp = appMatch("Cannabis/Amendment/Tax Appeal/NA");
+            if(TxApp)
             {
                 var open = new Date(lookup("CAN_TAXAPP_CONTROLS", "Tax Appeal Window Open Date")+"").setHours(0,0,0,0);
                 var close = new Date(lookup("CAN_TAXAPP_CONTROLS", "Tax Appeal Window Close Date")+"").setHours(0,0,0,0);
