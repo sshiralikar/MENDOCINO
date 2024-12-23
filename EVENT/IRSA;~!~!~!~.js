@@ -52,6 +52,7 @@ if (contactResult.getSuccess()) {
             addParameter(params, "$$deptEmail$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptEmail"));
             addParameter(params, "$$deptEmail2$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptEmail2"));
             addParameter(params, "$$deptFormalName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptFormalName"));
+            var COAs = "";
             var condResult = aa.capCondition.getCapConditions(capId);
             if (condResult.getSuccess()) {
                 var capConds = condResult.getOutput();
