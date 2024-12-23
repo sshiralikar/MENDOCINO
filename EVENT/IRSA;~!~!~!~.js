@@ -52,6 +52,24 @@ if (contactResult.getSuccess()) {
             addParameter(params, "$$deptEmail$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptEmail"));
             addParameter(params, "$$deptEmail2$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptEmail2"));
             addParameter(params, "$$deptFormalName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptFormalName"));
+            var COAs = "";
+            var condResult = aa.capCondition.getCapConditions(capId);
+            if (condResult.getSuccess()) {
+                var capConds = condResult.getOutput();
+                for (var cc in capConds) {
+                    var thisCondX = capConds[cc];
+                    var cNbr = thisCondX.getConditionNumber();
+                    var thisCond = aa.capCondition.getCapCondition(capId, cNbr).getOutput();
+                    var cStatus = thisCond.getConditionStatus();
+                    var isCOA = thisCond.getConditionOfApproval();
+                    if (matches(cStatus, "Applied","Pending") && isCOA == "Y") {
+                        COAs+= "  - "+thisCond.getConditionDescription();+", ";
+                    }
+                }
+            }
+            if(COAs!="")
+                COAs = "The following documents are missing:\n" + COAs;
+            addParameter(params, "$$COAs$$", COAs);
             if(hm[applicantEmail+""] != 1 )
             {
                 sendEmail("no-reply@mendocinocounty.org", applicantEmail, "", "CAN_INSP_RESULT", params, VRFiles, capId);
