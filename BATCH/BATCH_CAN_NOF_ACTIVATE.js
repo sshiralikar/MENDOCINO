@@ -258,7 +258,41 @@ function mainProcess()
                 //break;
             }
         }
-
+        //CAMEND-698
+        var capModel = aa.cap.getCapModel().getOutput();
+        capTypeModel = capModel.getCapType();
+        capTypeModel.setGroup("Cannabis");
+        //capTypeModel.setType(appTypeArray[1]);
+        capTypeModel.setSubType("Permit");
+        //capTypeModel.setCategory(appTypeArray[3]);
+        capModel.setCapType(capTypeModel);
+        capModel.setCapStatus("Notice of Fallowing");
+        var recordListResult = aa.cap.getCapIDListByCapModel(capModel);
+        if (!recordListResult.getSuccess())
+        {
+            logDebugBatch("**ERROR: Failed to get capId List : " + recordListResult.getErrorMessage());
+        }
+        else
+        {
+            var recArray = recordListResult.getOutput();
+            logDebugBatch("Looping through " + recArray.length + " Records for status About to Expire");
+            for (var j in recArray)
+            {
+                capId = aa.cap.getCapID(recArray[j].getID1(), recArray[j].getID2(), recArray[j].getID3()).getOutput();
+                capIDString = capId.getCustomID();
+                cap = aa.cap.getCap(capId).getOutput();
+                if (cap)
+                {
+                    var nofDateStr = getAppSpecific("NOF Expiration Date", capId);
+                    var today = new Date();
+                    today.setDate(today.getDate() - 1);
+                    today.setHours(0,0,0,0);
+                    var nofDate = new Date(nofDateStr).setHours(0,0,0,0);
+                    if(nofDate == today)
+                        updateAppStatus("Active","updated by batch as NOF Exp date is past expiration",capId);
+                }
+            }
+        }
     }
     catch (err)
     {
