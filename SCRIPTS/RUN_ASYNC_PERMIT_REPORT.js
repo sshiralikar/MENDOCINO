@@ -1,3 +1,4 @@
+java.lang.Thread.sleep(20000);
 var rParams = aa.util.newHashMap();
 currentUserID = "ADMIN";
 var licCapId = aa.cap.getCapID(aa.env.getValue("RecordID")).getOutput();
