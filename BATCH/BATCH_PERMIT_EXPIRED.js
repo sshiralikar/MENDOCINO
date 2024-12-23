@@ -212,8 +212,9 @@ function mainProcess() {
                     capDetail = capDetail.getOutput();
                     var balance = capDetail.getBalance();
                     var inspCount = getInspectionCount();
-                    if(balance == 0 && inspCount > 0){
+                    if(inspCount > 0)
                         inspCancelAll();
+                    if(balance <= 0){
                         resultWorkflowTask("Permit Status", "Expired", "Updated by batch " + ".", "Updated by batch ")
                         deactivateTask("Permit Status");
                         updateAppStatus("Expired", "Updated by batch ", capId);
