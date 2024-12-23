@@ -286,8 +286,11 @@ function mainProcess()
                     var nofDateStr = getAppSpecific("NOF Expiration Date", capId);
                     var today = new Date();
                     today.setDate(today.getDate() - 1);
-                    today.setHours(0,0,0,0);
+                    today = today.setHours(0,0,0,0);
                     var nofDate = new Date(nofDateStr).setHours(0,0,0,0);
+                    //aa.print("CapID: "+ capId.getCustomID());
+                    //aa.print("today: "+ today);
+                    //aa.print("nofDate: "+ nofDate);
                     if(nofDate == today)
                         updateAppStatus("Active","updated by batch as NOF Exp date is past expiration",capId);
                 }
