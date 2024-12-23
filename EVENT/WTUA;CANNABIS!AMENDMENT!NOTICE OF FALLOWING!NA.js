@@ -69,7 +69,9 @@ if (wfStatus == "Approved") {
     logDebug("NOF Calendar Year: " + calendarYear);
     editAppSpecific("NOF Calendar Year", calendarYear);
     editAppSpecific("NOF Calendar Year", calendarYear, pCapId);
-    
+    //CAMEND-535
+    updateAppStatus("Notice of Fallowing","",pCapId);
+    updateTask("Permit Status","Notice of Fallowing","","",pCapId);
     // CAMEND-633
     var newTableToAdd = [];
     newTableToAdd["Total SF/Total Nursery SF"] = parseInt(AInfo["Total SF/Total Nursery SF"]);
