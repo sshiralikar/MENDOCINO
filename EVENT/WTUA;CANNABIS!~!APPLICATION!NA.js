@@ -1,33 +1,3 @@
-//CAMEND-719
-if(wfStatus == "Accepted")
-{
-    var documentsToSend = new Array();
-    var capDocResult = aa.document.getDocumentListByEntity(capId, "CAP");
-    if (capDocResult.getSuccess())
-    {
-        if (capDocResult.getOutput().size() > 0)
-        {
-            for (docInx = 0; docInx < capDocResult.getOutput().size(); docInx++)
-            {
-                var documentObject = capDocResult.getOutput().get(docInx);
-                var docCat = "" + documentObject.getDocCategory();
-                if(docCat == "Cannabis Program Participants - Tax Imposed")
-                {
-                    var docDownload = aa.document.downloadFile2Disk(documentObject, "Cannabis", "", "", false).getOutput();
-                    documentsToSend.push(docDownload);
-                }
-                if(docCat == "Commercial Cannabis Cultivation Business Tax Registration Form")
-                {
-                    var docDownload = aa.document.downloadFile2Disk(documentObject, "Cannabis", "", "", false).getOutput();
-                    documentsToSend.push(docDownload);
-                }
-            }
-        }
-    }
-    var params = aa.util.newHashtable();
-    addParameter(params, "$$altID$$", capId.getCustomID()+"");
-    sendEmail("no-reply@mendocinocounty.org",  String(lookup("TTC EMAIL", "EMAIL")), "", "CAN_TTC", params, documentsToSend, capId);
-}
 //CAMEND-305
 if(wfStatus == "Void" || wfStatus == "Withdrawn")
 {
@@ -207,6 +177,33 @@ if(wfTask == "Issuance" && wfStatus == "Issued")
             }*/
         }
     }
+    //CAMEND-719
+    var documentsToSend = new Array();
+    var capDocResult = aa.document.getDocumentListByEntity(capId, "CAP");
+    if (capDocResult.getSuccess())
+    {
+        if (capDocResult.getOutput().size() > 0)
+        {
+            for (docInx = 0; docInx < capDocResult.getOutput().size(); docInx++)
+            {
+                var documentObject = capDocResult.getOutput().get(docInx);
+                var docCat = "" + documentObject.getDocCategory();
+                if(docCat == "Cannabis Program Participants - Tax Imposed")
+                {
+                    var docDownload = aa.document.downloadFile2Disk(documentObject, "Cannabis", "", "", false).getOutput();
+                    documentsToSend.push(docDownload);
+                }
+                if(docCat == "Commercial Cannabis Cultivation Business Tax Registration Form")
+                {
+                    var docDownload = aa.document.downloadFile2Disk(documentObject, "Cannabis", "", "", false).getOutput();
+                    documentsToSend.push(docDownload);
+                }
+            }
+        }
+    }
+    var params = aa.util.newHashtable();
+    addParameter(params, "$$altID$$", capId.getCustomID()+"");
+    sendEmail("no-reply@mendocinocounty.org",  String(lookup("TTC EMAIL", "EMAIL")), "", "CAN_TTC", params, documentsToSend, capId);
 }
 //CAMEND-194,223
 
