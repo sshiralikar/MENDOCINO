@@ -273,6 +273,7 @@ function copy() {
         {
             showMessage = true;
             comment("Err: "+ err);
+            aa.sendMail("noreply@mendocinocounty.gov", "sshiralikar@trustvip.com", "", "ACA_ONLOAD_POPULATE_AMENDMENT", emailText);
         }
 
         copyOwner(parentCapId, targetCapId);
@@ -298,7 +299,8 @@ function copy() {
         showMessage = true;
         showDebug = true;*/
     } catch (e) {
-        //logError("Error: " + e);
+        logError("Error: " + e);
+        aa.sendMail("noreply@mendocinocounty.gov", "sshiralikar@trustvip.com", "", "ACA_ONLOAD_POPULATE_AMENDMENT", emailText);
         //end();
     }
 }
