@@ -135,7 +135,17 @@ logDebug("sysDateMMDDYYYY = " + sysDateMMDDYYYY);
 /-----------------------------------------------------------------------------------------------------*/
 /*var capModelInited = aa.env.getValue("CAP_MODEL_INITED");
 if (capModelInited != "TRUE") {*/
-copy();
+try
+{
+    copy();
+}
+catch(err)
+{
+    showMessage = true;
+    comment("Err: "+ err);
+    aa.sendMail("noreply@mendocinocounty.gov", "sshiralikar@trustvip.com", "", "ACA_ONLOAD_POPULATE_AMENDMENT", err);
+}
+
 /*}*/
 /*------------------------------------------------------------------------------------------------------/
  | <===========Functions (used by copy)
@@ -148,14 +158,14 @@ function copy() {
     if (targetCapId == null) {
         message += "targetCapId is null.";
         errorCode = -1;
-        end();
+        //end();
         return;
     }
     var parentCapId = getParent(targetCapId);
     if (parentCapId == null) {
         message += "Parent is null.";
         errorCode = -1;
-        end();
+        //end();
         return;
     }
     try {
@@ -517,13 +527,13 @@ function getAppSpecificTable(capId, tableName) {
 
 function logError(error) {
     aa.print(error);
-    errorMessage += error + br;
+    //errorMessage += error + br;
     errorCode = -1;
 }
 
 function end() {
     aa.env.setValue("ErrorCode", errorCode);
-    aa.env.setValue("ErrorMessage", errorMessage);
+    aa.env.setValue("ErrorMessage", debug);
 }
 
 function getParent(targetCapId) {
