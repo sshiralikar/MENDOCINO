@@ -184,7 +184,7 @@ if(wfStatus == "Modification Required") {
             }
         }
     }
-    taskCloseAllExcept(wfStatus,"Closing via script");
+    // taskCloseAllExcept(wfStatus,"Closing via script"); // CAMEND-657
     updateAppStatus(wfStatus,"Updating via Script");
     updateAppStatus(wfStatus,"Updating via Script",licCapId);
 }
