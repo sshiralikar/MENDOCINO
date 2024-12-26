@@ -1,7 +1,7 @@
 //CAMEND-620 & CAMEND-586
 updateAppStatus("Amendment Review", "Approved");
 updateTask("Amendment Review", "Approved", "", "");
-aa.workflow.adjustTask(capId, "Amendment Review", "Y", "N", null, null);
+aa.workflow.adjustTask(capId, "Amendment Review", "N", "Y", null, null);
 var licCapId = getParent();
 if (parentCapId != null && parentCapId != "")
     licCapId = parentCapId;
