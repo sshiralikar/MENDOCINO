@@ -12,7 +12,7 @@ if (!publicUser) {
     if (capCondResult.getSuccess()) {
         var coArray = capCondResult.getOutput();
         for (co in coArray) {
-            if (coArray[co].getConditionDescription() == "Fallowing Affidavit Required" && coArray[co].getConditionStatus() == "Applied") {
+            if (coArray[co].getConditionDescription() == "Fallowing Affidavit Required" && coArray[co].getConditionStatus() == "Pending") {
                 coArray[co].setConditionStatus("Met");
                 aa.capCondition.editCapCondition(coArray[co]);
                 logDebug("Fallowing Affidavit Required has been Met");
