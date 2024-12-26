@@ -51,6 +51,21 @@ function getRequiredDocumentsForCanCult() {
         document: "Commercial Cannabis Cultivation Business Tax Registration Form"
     }
 
+    var deathCertificate = {
+        condition: "Death Certificate",
+        document: "Death Certificate"
+    }
+
+    var decendentWillTestament = {
+        condition: "Decendent's Last Will & Testament",
+        document: "Decendent's Last Will & Testament"
+    }
+
+    var courtLettersTestamentary = {
+        condition: "Court Provided Letters Testamentary",
+        document: "Court Provided Letters Testamentary"
+    }
+
     // CAMEND-703
     var suppDocs = {
         condition: "Supporting Documentation",
@@ -176,6 +191,17 @@ function getRequiredDocumentsForCanCult() {
         if (AInfo["Owner of Property"] == "No") {
             requirementArray.push(propertyOwnerConsent);
         }
+        // CAMEND-757
+        if (AInfo["Deceased or Incapacitated Documents"] == "Death Certificate") {
+            requirementArray.push(deathCertificate);
+        }
+        if (AInfo["Deceased or Incapacitated Documents"] == "Decendent's Last Will & Testament") {
+            requirementArray.push(decendentWillTestament);
+        }
+        if (AInfo["Deceased or Incapacitated Documents"] == "Court Provided Letters Testamentary") {
+            requirementArray.push(courtLettersTestamentary);
+        }
+        // CAMEND-757
     }
     else if (isAppeal) {
 
