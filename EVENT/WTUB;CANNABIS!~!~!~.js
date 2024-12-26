@@ -95,7 +95,7 @@ if (wfStatus == "Approved" || wfStatus == "Denied") {
 // CAMEND-576
 
 // CAMEND-641
-if (wfTask = "Draft Decision" && wfStatus == "Approved") {
+if (wfTask == "Draft Decision" && wfStatus == "Approved") {
     var balanceDue = 0;
     var capDetailObjResult = aa.cap.getCapDetail(capId); // Detail
     if (capDetailObjResult.getSuccess()) {
@@ -109,7 +109,7 @@ if (wfTask = "Draft Decision" && wfStatus == "Approved") {
     }
 }
 
-if (wfTask = "Amendment Review" && wfStatus == "Approved") {
+if (wfTask == "Amendment Review" && wfStatus == "Approved") {
     var balanceDue = 0;
     var capDetailObjResult = aa.cap.getCapDetail(capId); // Detail
     if (capDetailObjResult.getSuccess()) {
