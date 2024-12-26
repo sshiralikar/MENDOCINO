@@ -33,19 +33,17 @@ var chrisG = true;
         }
     }
 }*/
-if(wfStatus == "Issued")
-{
+if (wfStatus == "Issued") {
     var balanceDue = 0;
     var capDetailObjResult = aa.cap.getCapDetail(capId); // Detail
     if (capDetailObjResult.getSuccess()) {
         capDetail = capDetailObjResult.getOutput();
         balanceDue = capDetail.getBalance();
     }
-    if(balanceDue > 0)
-    {
+    if (balanceDue > 0) {
         cancel = true;
         showMessage = true;
-        comment("There is an outstanding balance of $"+ balanceDue);
+        comment("There is an outstanding balance of $" + balanceDue);
     }
     var unmetCondStr = "";
     var unmetConditions = false;
@@ -56,21 +54,19 @@ if(wfStatus == "Issued")
             if (capConds[cc].getConditionStatus() != "Met" && capConds[cc].getConditionStatus() != "Document Received") {
                 var cDesc = capConds[cc].getConditionDescription();
                 var cType = capConds[cc].getConditionType();
-                unmetCondStr +=cType+ ": "+ cDesc+"<br>";
+                unmetCondStr += cType + ": " + cDesc + "<br>";
                 unmetConditions = true;
             }
         }
     }
-    if(unmetConditions)
-    {
+    if (unmetConditions) {
         cancel = true;
         showMessage = true;
-        comment("There are unmet conditions on this record, please mark the below as met:<BR><BR>"+ unmetCondStr);
+        comment("There are unmet conditions on this record, please mark the below as met:<BR><BR>" + unmetCondStr);
     }
 }
-//CAMEND-576
-if(wfStatus == "Approved" || wfStatus == "Denied")
-{
+// CAMEND-576
+if (wfStatus == "Approved" || wfStatus == "Denied") {
     var flag = false;
     var capConds = aa.capCondition.getCapConditions(capId).getOutput();
     for (cc in capConds) {
@@ -86,16 +82,44 @@ if(wfStatus == "Approved" || wfStatus == "Denied")
         if (cImpact == null)
             cImpact = " ";
         if ((cStatus.toUpperCase().equals("APPLIED".toUpperCase()))
-            && (cDesc == "Tree Removal Identified"))
-        {
+            && (cDesc == "Tree Removal Identified")) {
             flag = true;
         }
     }
-    if(flag)
-    {
+    if (flag) {
         cancel = true;
         showMessage = true;
         comment("Tree Removal Identified will have to be met before resulting workflow task.");
     }
 }
-//CAMEND-576
+// CAMEND-576
+
+// CAMEND-641
+if (wfTask = "Draft Decision" && wfStatus == "Approved") {
+    var balanceDue = 0;
+    var capDetailObjResult = aa.cap.getCapDetail(capId); // Detail
+    if (capDetailObjResult.getSuccess()) {
+        capDetail = capDetailObjResult.getOutput();
+        balanceDue = capDetail.getBalance();
+    }
+    if (balanceDue > 0) {
+        cancel = true;
+        showMessage = true;
+        comment("There is an outstanding balance of $" + balanceDue);
+    }
+}
+
+if (wfTask = "Amendment Review" && wfStatus == "Approved") {
+    var balanceDue = 0;
+    var capDetailObjResult = aa.cap.getCapDetail(capId); // Detail
+    if (capDetailObjResult.getSuccess()) {
+        capDetail = capDetailObjResult.getOutput();
+        balanceDue = capDetail.getBalance();
+    }
+    if (balanceDue > 0) {
+        cancel = true;
+        showMessage = true;
+        comment("There is an outstanding balance of $" + balanceDue);
+    }
+}
+// CAMEND-641
