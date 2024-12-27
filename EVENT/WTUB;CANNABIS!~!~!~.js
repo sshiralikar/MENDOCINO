@@ -67,29 +67,34 @@ if (wfStatus == "Issued") {
 }
 // CAMEND-576
 if (wfStatus == "Approved" || wfStatus == "Denied") {
-    var flag = false;
-    var capConds = aa.capCondition.getCapConditions(capId).getOutput();
-    for (cc in capConds) {
-        var thisCond = capConds[cc];
-        var cStatus = thisCond.getConditionStatus();
-        var cDesc = thisCond.getConditionDescription();
-        var cImpact = thisCond.getImpactCode();
-        var cType = thisCond.getConditionType();
-        if (cStatus == null)
-            cStatus = " ";
-        if (cDesc == null)
-            cDesc = " ";
-        if (cImpact == null)
-            cImpact = " ";
-        if ((cStatus.toUpperCase().equals("APPLIED".toUpperCase()))
-            && (cDesc == "Tree Removal Identified")) {
-            flag = true;
+    // CAMEND-773
+    var isRenewal = appMatch("Cannabis/*/Renewal/*");
+    var isAssignment = appMatch("Cannabis/Amendment/Assignment/NA");
+    if (isRenewal || isAssignment) {
+        var flag = false;
+        var capConds = aa.capCondition.getCapConditions(capId).getOutput();
+        for (cc in capConds) {
+            var thisCond = capConds[cc];
+            var cStatus = thisCond.getConditionStatus();
+            var cDesc = thisCond.getConditionDescription();
+            var cImpact = thisCond.getImpactCode();
+            var cType = thisCond.getConditionType();
+            if (cStatus == null)
+                cStatus = " ";
+            if (cDesc == null)
+                cDesc = " ";
+            if (cImpact == null)
+                cImpact = " ";
+            if ((cStatus.toUpperCase().equals("APPLIED".toUpperCase()))
+                && (cDesc == "Tree Removal Identified")) {
+                flag = true;
+            }
         }
-    }
-    if (flag) {
-        cancel = true;
-        showMessage = true;
-        comment("Tree Removal Identified will have to be met before resulting workflow task.");
+        if (flag) {
+            cancel = true;
+            showMessage = true;
+            comment("Tree Removal Identified will have to be met before resulting workflow task.");
+        }
     }
 }
 // CAMEND-576
