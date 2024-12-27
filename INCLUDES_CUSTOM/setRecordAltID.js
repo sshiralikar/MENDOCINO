@@ -77,7 +77,12 @@ function setRecordAltID(vCapID)
                 newAltId = lastAltId+"-FA-"+ amendNbr;
             // CAMEND-503
             else if(vCapType == "Cannabis/Amendment/Notice of Fallowing/NA")
-                newAltId = lastAltId+"-NOF-"+ amendNbr;
+                // CAMEND-693
+                if (AInfo["NOF Intent Partial"] == "Yes")
+                    newAltId = lastAltId+"-NOFP-"+ amendNbr;
+                else {
+                    newAltId = lastAltId+"-NOF-"+ amendNbr;
+                }
             // CAMEND-524
             else if(vCapType == "Cannabis/Amendment/Assignment/NA")
                 newAltId = lastAltId+"-ASGN-"+ amendNbr;
