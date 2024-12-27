@@ -552,7 +552,7 @@ function getRequiredDocumentsForCanCult() {
             document: "Agent Consent Form",
             workflow: wfStopPermanentOnly
         };
-        var conArr = getContactObjs(capId, "Authorized Agent");
+        var conArr = getContactObjs(capId, ["Authorized Agent"]);
         if (conArr)
             requirementArray.push(AgentConsentForm);
 
