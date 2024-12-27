@@ -57,8 +57,8 @@ function getRequiredDocumentsForCanCult() {
     }
 
     var decendentWillTestament = {
-        condition: "Decendent's Last Will & Testament",
-        document: "Decendent's Last Will & Testament"
+        condition: "Decedent's Last Will & Testament",
+        document: "Decedent's Last Will & Testament"
     }
 
     var courtLettersTestamentary = {
@@ -195,7 +195,7 @@ function getRequiredDocumentsForCanCult() {
         if (AInfo["Deceased or Incapacitated Documents"] == "Death Certificate") {
             requirementArray.push(deathCertificate);
         }
-        if (AInfo["Deceased or Incapacitated Documents"] == "Decendent's Last Will & Testament") {
+        if (AInfo["Deceased or Incapacitated Documents"] == "Decedent's Last Will & Testament") {
             requirementArray.push(decendentWillTestament);
         }
         if (AInfo["Deceased or Incapacitated Documents"] == "Court Provided Letters Testamentary") {
