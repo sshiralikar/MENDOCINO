@@ -31,7 +31,7 @@ if (wfStatus == "Approved") {
                     addParameter(params, "$$parentCapId$$", pCapId.getCustomID());
                     addParameter(params, "$$Amendment$$", aa.cap.getCap(capId).getOutput().getCapType().getAlias() + "");
                     addParameter(params, "$$Location$$", getAddressInALine());
-                    sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail() + "", String(lookup("TTC EMAIL", "EMAIL"))+"", "CAN_NONC_APPROVED", params, null, capId);
+                    sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail() + "", String(lookup("CAN_TREASURER_TAX_COLLECTOR", "TTC_Email"))+"", "CAN_NONC_APPROVED", params, null, capId);
                 }
             }
         }

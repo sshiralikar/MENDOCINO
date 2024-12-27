@@ -203,7 +203,7 @@ if(wfTask == "Issuance" && wfStatus == "Issued")
     }
     var params = aa.util.newHashtable();
     addParameter(params, "$$altID$$", capId.getCustomID()+"");
-    sendEmail("no-reply@mendocinocounty.org",  String(lookup("TTC EMAIL", "EMAIL")), "", "CAN_TTC", params, documentsToSend, capId);
+    sendEmail("no-reply@mendocinocounty.org",  String(lookup("CAN_TREASURER_TAX_COLLECTOR", "TTC_Email")), "", "CAN_TTC", params, documentsToSend, capId);
 }
 //CAMEND-194,223
 

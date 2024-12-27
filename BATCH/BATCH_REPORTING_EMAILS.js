@@ -177,7 +177,7 @@ function mainProcess() {
         var todayObj = new Date().setHours(0,0,0,0);
         var fallowListDate = String(lookup("CAN_NOF_CONTROLS", "Report to TTC"))+"/"+today.getFullYear();
         var taxAppealDate = String(lookup("CAN_TAXAPP_CONTROLS", "Report to TTC"))+"/"+today.getFullYear();
-        var ttcEmail =  String(lookup("TTC EMAIL", "EMAIL"));
+        var ttcEmail =  String(lookup("CAN_TREASURER_TAX_COLLECTOR", "TTC_Email"));
         var fallowListDateObj = new Date(fallowListDate).setHours(0,0,0,0);
         var taxAppealDateObj = new Date(taxAppealDate).setHours(0,0,0,0);
         if(fallowListDateObj == todayObj)
