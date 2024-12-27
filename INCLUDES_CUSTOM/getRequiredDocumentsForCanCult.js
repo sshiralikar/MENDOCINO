@@ -553,9 +553,9 @@ function getRequiredDocumentsForCanCult() {
             workflow: wfStopPermanentOnly
         };
         var conArr = getContactObjs(capId, ["Authorized Agent"]);
-        if (conArr)
+        if (conArr) {
             requirementArray.push(AgentConsentForm);
-
+        }
 
         var SepticSystemPermit = {
             condition: "Septic System Permit",
