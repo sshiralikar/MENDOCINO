@@ -9,3 +9,8 @@ if (wfStatus == "Denied") {
     var pCapId = getParent();
     editAppSpecific("Appeal Decision Date", sysDateMMDDYYYY, pCapId);
 }
+
+if (wfStatus == "Pending Decision") {
+    // CAMEND-661
+    editTaskDueDate("Appeal", dateAdd(newDate, 10));
+}
