@@ -12,5 +12,7 @@ if (wfStatus == "Denied") {
 
 if (wfStatus == "Pending Decision") {
     // CAMEND-661
+    var c = new Date();
+    var newDate = c.getMonth()+1+"/"+c.getDate()+"/"+c.getFullYear();
     editTaskDueDate("Appeal", dateAdd(newDate, 10));
 }
