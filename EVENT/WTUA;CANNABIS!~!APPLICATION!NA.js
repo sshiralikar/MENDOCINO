@@ -464,7 +464,7 @@ if (wfTask == "Draft Decision" && wfStatus == "Approved") {
     addParameter(params, "$$date$$", sysDateMMDDYYYY);
     addParameter(params, "$$capStatus$$", thisCapStatus);
     addParameter(params, "$$totalSF$$", totalSF);
-    addParameter(params, "$$contactname$$", conName);
+    addParameter(params, "$$contactName$$", conName);
     addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptName"));
     addParameter(params, "$$phoneHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "phoneHours"));
     addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptPhone"));
