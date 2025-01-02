@@ -433,13 +433,14 @@ if(wfTask == "Supervisor Review" && wfStatus == "Deficiency")
 
 // CAMEND-692
 if (wfTask == "Draft Decision" && wfStatus == "Approved") {
+    var conName = "";
     var contactResult = aa.people.getCapContactByCapID(capId);
     if (contactResult.getSuccess()) {
         var capContacts = contactResult.getOutput();
         for (c in capContacts) {
             if (capContacts[c].getCapContactModel().getPrimaryFlag() == "Y") {
                 logDebug("Primary Contact: " + getContactName(capContacts[c]));
-                var conName = getContactName(capContacts[c]);
+                conName = getContactName(capContacts[c]);
             }
         }
     }
