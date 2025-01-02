@@ -433,14 +433,13 @@ if(wfTask == "Supervisor Review" && wfStatus == "Deficiency")
 
 // CAMEND-692
 if (wfTask == "Draft Decision" && wfStatus == "Approved") {
-    var applicantName = "";
-
     var contactResult = aa.people.getCapContactByCapID(capId);
     if (contactResult.getSuccess()) {
         var capContacts = contactResult.getOutput();
-        for (var i in capContacts) {
-            if (capContacts[i].getPeople().getContactType() == "Applicant") {
-                applicantName = getContactName(capContacts[i]);
+        for (c in capContacts) {
+            if (capContacts[c].getCapContactModel().getPrimaryFlag() == "Y") {
+                logDebug("Primary Contact: " + getContactName(capContacts[c]));
+                var conName = getContactName(capContacts[c]);
             }
         }
     }
@@ -464,7 +463,7 @@ if (wfTask == "Draft Decision" && wfStatus == "Approved") {
     addParameter(params, "$$date$$", sysDateMMDDYYYY);
     addParameter(params, "$$capStatus$$", thisCapStatus);
     addParameter(params, "$$totalSF$$", totalSF);
-    addParameter(params, "$$contactname$$", applicantName);
+    addParameter(params, "$$contactname$$", conName);
     addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptName"));
     addParameter(params, "$$phoneHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "phoneHours"));
     addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptPhone"));
@@ -473,7 +472,7 @@ if (wfTask == "Draft Decision" && wfStatus == "Approved") {
     addParameter(params, "$$deptEmail$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptEmail"));
     addParameter(params, "$$deptAddress$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptAddress"));
     addParameter(params, "$$deptFormalName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptFormalName"));
-    addParameter(params, "$$FullNameBusName$$", applicantName);
+    addParameter(params, "$$FullNameBusName$$", conName);
     addParameter(params, "$$capAlias$$", aa.cap.getCap(capId).getOutput().getCapType().getAlias() + "");
     addParameter(params, "$$parentCapId$$", parent.getCustomID());
     addParameter(params, "$$Amendment$$", aa.cap.getCap(capId).getOutput().getCapType().getAlias() + "");
