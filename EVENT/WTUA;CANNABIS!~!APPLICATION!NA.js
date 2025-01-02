@@ -476,7 +476,8 @@ if(wfTask == "Supervisor Review" && wfStatus == "Deficiency")
 //         }
 //     }
 // }
-if (wfStatus == "Approved") {
+
+if (wfTask == "Draft Decision" && wfStatus == "Approved") {
     var hm = new Array();
     var parent = getParent();
     var parentCap = aa.cap.getCap(parentCapId).getOutput();
@@ -517,10 +518,7 @@ if (wfStatus == "Approved") {
             addParameter(params, "$$parentCapId$$", parent.getCustomID());
             addParameter(params, "$$Amendment$$", aa.cap.getCap(capId).getOutput().getCapType().getAlias() + "");
             addParameter(params, "$$Location$$", getAddressInALine());
-            if(hm[capContacts[i].getPeople().getEmail() + ""] != 1) {
-                sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail() + "", String(lookup("CAN_TREASURER_TAX_COLLECTOR", "TTC_Email"))+"", "CAN_TTC_APPLICATION_STATUS", params, null, capId);
-                hm[capContacts[i].getPeople().getEmail() + ""] = 1;
-            }
+            sendEmail("no-reply@mendocinocounty.org",  String(lookup("CAN_TREASURER_TAX_COLLECTOR", "TTC_Email")), "", "CAN_TTC_APPLICATION_STATUS", params, null, capId);
         }
     }
 }
