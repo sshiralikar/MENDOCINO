@@ -11,7 +11,6 @@ if (wfTask == "Appeal" && wfStatus == "Approved") {
                 var params = aa.util.newHashtable();
                 addParameter(params, "$$altID$$", capId.getCustomID() + "");
                 addParameter(params, "$$year$$", String(aa.date.getCurrentDate().getYear()));
-                addParameter(params, "$$capTypeAlias$$", aa.cap.getCap(licCapId).getOutput().getCapType().getAlias() + "");
                 addParameter(params, "$$capName$$", capName);
                 addParameter(params, "$$parentAltId$$", newAltId + "");
                 addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptName"));
