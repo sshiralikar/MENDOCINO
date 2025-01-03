@@ -1,5 +1,6 @@
 // CAMEND-707
 if (wfTask == "Appeal" && wfStatus == "Approved") {
+    var parent = getParent();
     var hm = new Array();
     var conName = "";
     var contactResult = aa.people.getCapContactByCapID(capId);
@@ -12,7 +13,7 @@ if (wfTask == "Appeal" && wfStatus == "Approved") {
                 addParameter(params, "$$altID$$", capId.getCustomID() + "");
                 addParameter(params, "$$year$$", String(aa.date.getCurrentDate().getYear()));
                 addParameter(params, "$$capName$$", capName);
-                addParameter(params, "$$parentAltId$$", newAltId + "");
+                addParameter(params, "$$parentAltId$$", parent.getCustomID() + "");
                 addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptName"));
                 addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptPhone"));
                 addParameter(params, "$$deptAddress$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptAddress"));
