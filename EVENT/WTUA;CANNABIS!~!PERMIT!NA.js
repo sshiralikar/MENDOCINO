@@ -45,11 +45,11 @@ if (wfStatus == "Terminated" || wfStatus == "Withdrawn" || wfStatus == "Expired"
     }
     var hm = new Array();
     var parent = getParent();
-    var parentCap = aa.cap.getCap(parentCapId).getOutput();
+    // var parentCap = aa.cap.getCap(parentCapId).getOutput();
     var capStatus = aa.cap.getCap(capId).getOutput();
     var thisCapStatus = capStatus.getCapStatus();
     var params = aa.util.newHashtable();
-    addParameter(params, "$$altID$$", parent.getCustomID() + "");
+    addParameter(params, "$$altID$$", capId.getCustomID() + "");
     addParameter(params, "$$year$$", String(aa.date.getCurrentDate().getYear()));
     addParameter(params, "$$date$$", sysDateMMDDYYYY);
     addParameter(params, "$$capStatus$$", thisCapStatus);
@@ -64,7 +64,7 @@ if (wfStatus == "Terminated" || wfStatus == "Withdrawn" || wfStatus == "Expired"
     addParameter(params, "$$deptFormalName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptFormalName"));
     addParameter(params, "$$FullNameBusName$$", conName);
     addParameter(params, "$$capAlias$$", aa.cap.getCap(capId).getOutput().getCapType().getAlias() + "");
-    addParameter(params, "$$parentCapId$$", parent.getCustomID());
+    // addParameter(params, "$$parentCapId$$", parent.getCustomID());
     addParameter(params, "$$Amendment$$", aa.cap.getCap(capId).getOutput().getCapType().getAlias() + "");
     addParameter(params, "$$Location$$", getAddressInALine());
     sendEmail("no-reply@mendocinocounty.org", String(lookup("CAN_TREASURER_TAX_COLLECTOR", "TTC_Email")), "", "CAN_TTC_LICENSE_STATUS", params, null, capId);
