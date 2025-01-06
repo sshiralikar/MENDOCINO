@@ -24,9 +24,12 @@ if(wfStatus == "Accepted" || wfStatus == "Approved")
             }
         }
     }
-    var params = aa.util.newHashtable();
-    addParameter(params, "$$altID$$", capId.getCustomID()+"");
-    sendEmail("no-reply@mendocinocounty.org",  String(lookup("CAN_TREASURER_TAX_COLLECTOR", "TTC_Email")), "", "CAN_TTC", params, documentsToSend, capId);
+    if(documentsToSend && documentsToSend.length >0)
+    {
+        var params = aa.util.newHashtable();
+        addParameter(params, "$$altID$$", capId.getCustomID()+"");
+        sendEmail("no-reply@mendocinocounty.org",  String(lookup("CAN_TREASURER_TAX_COLLECTOR", "TTC_Email")), "", "CAN_TTC", params, documentsToSend, capId);
+    }
 }
 if(wfStatus == "Approved")
 {

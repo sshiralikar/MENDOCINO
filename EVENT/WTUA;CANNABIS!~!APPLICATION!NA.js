@@ -201,9 +201,12 @@ if(wfTask == "Issuance" && wfStatus == "Issued")
             }
         }
     }
-    var params = aa.util.newHashtable();
-    addParameter(params, "$$altID$$", capId.getCustomID()+"");
-    sendEmail("no-reply@mendocinocounty.org",  String(lookup("CAN_TREASURER_TAX_COLLECTOR", "TTC_Email")), "", "CAN_TTC", params, documentsToSend, capId);
+    if(documentsToSend && documentsToSend.length>0)
+    {
+        var params = aa.util.newHashtable();
+        addParameter(params, "$$altID$$", capId.getCustomID()+"");
+        sendEmail("no-reply@mendocinocounty.org",  String(lookup("CAN_TREASURER_TAX_COLLECTOR", "TTC_Email")), "", "CAN_TTC", params, documentsToSend, capId);
+    }
 }
 //CAMEND-194,223
 
@@ -540,7 +543,7 @@ function createRefLicProfFromLicProfX()
     newLic.setPhone1(licProfScriptModel.getPhone1());
     newLic.setPhone2(licProfScriptModel.getPhone2());
     newLic.setSelfIns(licProfScriptModel.getSelfIns());
-    newLic.setState(licProfScriptModel.getState());
+    newLic.setState("CA");
     newLic.setLicState(licProfScriptModel.getState());
     newLic.setSuffixName(licProfScriptModel.getSuffixName());
     newLic.setWcExempt(licProfScriptModel.getWorkCompExempt());
