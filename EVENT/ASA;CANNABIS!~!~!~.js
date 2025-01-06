@@ -101,6 +101,10 @@ if (!publicUser) {
         if (AInfo["Trees Removed"] == "Yes") {
             addStdConditionX("Vegetation", "Tree Removal Identified");
         }
+        // CAMEND-527
+        if (AInfo["Permit Type Change"] == "Yes") {
+            addStdConditionX("General", "Modification Required");
+        }
     }
 }
 
