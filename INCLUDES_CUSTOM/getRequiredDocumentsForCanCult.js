@@ -552,8 +552,9 @@ function getRequiredDocumentsForCanCult() {
             document: "Agent Consent Form",
             workflow: wfStopPermanentOnly
         };
+        // CAMEND-767
         var conArr = getContactObjs(capId, ["Authorized Agent"]);
-        if (conArr) {
+        if (conArr.length > 0) {
             requirementArray.push(AgentConsentForm);
         }
 
