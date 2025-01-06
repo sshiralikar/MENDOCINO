@@ -78,7 +78,7 @@ function createRefLicProfFromLicProfX()
     newLic.setPhone1(licProfScriptModel.getPhone1());
     newLic.setPhone2(licProfScriptModel.getPhone2());
     newLic.setSelfIns(licProfScriptModel.getSelfIns());
-    newLic.setState(licProfScriptModel.getState());
+    newLic.setState("CA");
     newLic.setLicState(licProfScriptModel.getState());
     newLic.setSuffixName(licProfScriptModel.getSuffixName());
     newLic.setWcExempt(licProfScriptModel.getWorkCompExempt());
