@@ -1,64 +1,59 @@
 //CAMEND-305
-if(wfStatus == "Void" || wfStatus == "Withdrawn")
-{
-    taskCloseAllExcept(wfStatus,"Closing via script");
-    updateAppStatus(wfStatus,"Updating via Script");
+if (wfStatus == "Void" || wfStatus == "Withdrawn") {
+    taskCloseAllExcept(wfStatus, "Closing via script");
+    updateAppStatus(wfStatus, "Updating via Script");
 }
 //CAMEND-305, CAMEND-507
-if(wfStatus == "Issued")
-{
+if (wfStatus == "Issued") {
     var hm = new Array();
     var licCapId = getParent();
-    logDebug("licCapId: "+ licCapId);
+    logDebug("licCapId: " + licCapId);
     var expDate = getAppSpecific("New Expiration Date", licCapId);
     var today = new Date();
     var expDateObj = new Date(expDate);
-    copyAppSpecificInfo(capId,licCapId);
+    copyAppSpecificInfo(capId, licCapId);
     copyASITablesWithRemove(capId, licCapId);
-    if(today > expDateObj)
-    {
+    if (today > expDateObj) {
         today.setFullYear(today.getFullYear() + 5);
-        var newDate = today.getMonth()+1+"/"+today.getDate()+"/"+today.getFullYear();
+        var newDate = today.getMonth() + 1 + "/" + today.getDate() + "/" + today.getFullYear();
         editAppSpecific("New Expiration Date", newDate);
         editAppSpecific("New Expiration Date", newDate, licCapId);
-        setLicExpirationDate(licCapId,"",newDate);
+        setLicExpirationDate(licCapId, "", newDate);
     }
-    else
-    {
+    else {
         expDateObj.setFullYear(today.getFullYear() + 5);
-        var newDate = expDateObj.getMonth()+1+"/"+expDateObj.getDate()+"/"+expDateObj.getFullYear();
+        var newDate = expDateObj.getMonth() + 1 + "/" + expDateObj.getDate() + "/" + expDateObj.getFullYear();
         editAppSpecific("New Expiration Date", newDate);
         editAppSpecific("New Expiration Date", newDate, licCapId);
-        setLicExpirationDate(licCapId,"",newDate);
+        setLicExpirationDate(licCapId, "", newDate);
     }
     editAppSpecific("Issued Date", sysDateMMDDYYYY);
-    editAppSpecific("Issued Date", sysDateMMDDYYYY,licCapId);
-    updateAppStatus("Active","Updating via Script",licCapId);
+    editAppSpecific("Issued Date", sysDateMMDDYYYY, licCapId);
+    updateAppStatus("Active", "Updating via Script", licCapId);
 
     var conName = "";
     var contactResult = aa.people.getCapContactByCapID(capId);
     if (contactResult.getSuccess()) {
         var capContacts = contactResult.getOutput();
         for (var i in capContacts) {
-            if(matches(capContacts[i].getPeople().getContactType(),"Applicant","Authorized Agent"))
-            {
+            if (matches(capContacts[i].getPeople().getContactType(), "Applicant", "Authorized Agent")) {
                 conName = getContactName(capContacts[i]);
                 var params = aa.util.newHashtable();
-                addParameter(params, "$$altID$$", capId.getCustomID()+"");
-                addParameter(params, "$$parentAltId$$", licCapId.getCustomID()+"");
-                addParameter(params, "$$capTypeAlias$$", aa.cap.getCap(licCapId).getOutput().getCapType().getAlias()+"");
+                addParameter(params, "$$altID$$", capId.getCustomID() + "");
+                addParameter(params, "$$parentAltId$$", licCapId.getCustomID() + "");
+                addParameter(params, "$$capTypeAlias$$", aa.cap.getCap(licCapId).getOutput().getCapType().getAlias() + "");
                 addParameter(params, "$$capName$$", capName);
-                addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptName"));
-                addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptPhone"));
-                addParameter(params, "$$deptHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptHours"));
-                addParameter(params, "$$deptEmail$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptEmail"));
-                addParameter(params, "$$deptFormalName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptFormalName"));
+                addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptName"));
+                addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptPhone"));
+                addParameter(params, "$$deptHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptHours"));
+                addParameter(params, "$$deptEmail$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptEmail"));
+                addParameter(params, "$$deptFormalName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptFormalName"));
                 addParameter(params, "$$contactname$$", conName);
                 addParameter(params, "$$date$$", sysDateMMDDYYYY);
                 addParameter(params, "$$contactEmail$$", capContacts[i].getPeople().getEmail() + "");
                 addParameter(params, "$$ACAUrl$$", String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0]);
                 addParameter(params, "$$ACAURL$$", String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0]);
-                if(hm[capContacts[i].getPeople().getEmail() + ""] != 1) {
+                if (hm[capContacts[i].getPeople().getEmail() + ""] != 1) {
                     sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail() + "", "", "CAN_ISSUANCE", params, null, capId);
                     hm[capContacts[i].getPeople().getEmail() + ""] = 1;
                 }
@@ -66,24 +61,23 @@ if(wfStatus == "Issued")
         }
     }
     //var licCapId = getParent();
-   /* var hm = new Array();
-    renewalCapProject = getRenewalCapByParentCapIDForIncomplete(parentCapId);
-    if (renewalCapProject != null) {
-        renewalCapProject.setStatus("Complete");
-        renewalCapProject.setRelationShip("R"); // move to related records
-        aa.cap.updateProject(renewalCapProject);
-    }*/
+    /* var hm = new Array();
+     renewalCapProject = getRenewalCapByParentCapIDForIncomplete(parentCapId);
+     if (renewalCapProject != null) {
+         renewalCapProject.setStatus("Complete");
+         renewalCapProject.setRelationShip("R"); // move to related records
+         aa.cap.updateProject(renewalCapProject);
+     }*/
     var capDetailObjResult = aa.cap.getCapDetail(capId); // Detail
     if (capDetailObjResult.getSuccess()) {
         capDetail = capDetailObjResult.getOutput();
         var balanceDue = capDetail.getBalance();
-        if(balanceDue <= 0)
-        {
+        if (balanceDue <= 0) {
             var today = new Date();
             today.setFullYear(today.getFullYear() + 5);
-            var newDate = today.getMonth()+1+"/"+today.getDate()+"/"+today.getFullYear();
+            var newDate = today.getMonth() + 1 + "/" + today.getDate() + "/" + today.getFullYear();
             var envParameters = aa.util.newHashMap();
-            envParameters.put("RecordID", licCapId.getCustomID()+"");
+            envParameters.put("RecordID", licCapId.getCustomID() + "");
             envParameters.put("IssueDT", sysDateMMDDYYYY);
             envParameters.put("ExpireDT", AInfo["New Expiration Date"]);
             aa.runAsyncScript("RUN_ASYNC_PERMIT_REPORT", envParameters);
@@ -93,12 +87,11 @@ if(wfStatus == "Issued")
             if (contactResult.getSuccess()) {
                 var capContacts = contactResult.getOutput();
                 for (var i in capContacts) {
-                    if(matches(capContacts[i].getPeople().getContactType(),"Applicant","Authorized Agent"))
-                    {
+                    if (matches(capContacts[i].getPeople().getContactType(), "Applicant", "Authorized Agent")) {
                         conName = getContactName(capContacts[i]);
                         var rParams = aa.util.newHashMap();
                         var rFiles = [];
-                        rParams.put("RecordID", licCapId.getCustomID()+"");
+                        rParams.put("RecordID", licCapId.getCustomID() + "");
 
                         var report = aa.reportManager.getReportInfoModelByName("Cannabis Permit Report");
                         report = report.getOutput();
@@ -107,38 +100,38 @@ if(wfStatus == "Issued")
                         report.setReportParameters(rParams);
                         report.getEDMSEntityIdModel().setAltId(licCapId.getCustomID());
 
-                        var permit = aa.reportManager.hasPermission("Cannabis Permit Report",currentUserID);
+                        var permit = aa.reportManager.hasPermission("Cannabis Permit Report", currentUserID);
 
                         if (permit.getOutput().booleanValue()) {
                             var reportResult = aa.reportManager.getReportResult(report);
-                            if(reportResult) {
+                            if (reportResult) {
                                 reportOutput = reportResult.getOutput();
-                                var reportFile=aa.reportManager.storeReportToDisk(reportOutput);
-                                reportFile=reportFile.getOutput();
+                                var reportFile = aa.reportManager.storeReportToDisk(reportOutput);
+                                reportFile = reportFile.getOutput();
                                 rFiles.push(reportFile);
                             }
                         }
 
                         var params = aa.util.newHashtable();
-                        addParameter(params, "$$altID$$", capId.getCustomID()+"");
-                        addParameter(params, "$$parentAltId$$", licCapId.getCustomID()+"");
-                        addParameter(params, "$$capTypeAlias$$", aa.cap.getCap(licCapId).getOutput().getCapType().getAlias()+"");
-                        addParameter(params, "$$capTypeAliasApplication$$", aa.cap.getCap(capId).getOutput().getCapType().getAlias()+"");
+                        addParameter(params, "$$altID$$", capId.getCustomID() + "");
+                        addParameter(params, "$$parentAltId$$", licCapId.getCustomID() + "");
+                        addParameter(params, "$$capTypeAlias$$", aa.cap.getCap(licCapId).getOutput().getCapType().getAlias() + "");
+                        addParameter(params, "$$capTypeAliasApplication$$", aa.cap.getCap(capId).getOutput().getCapType().getAlias() + "");
                         addParameter(params, "$$capName$$", capName);
                         addParameter(params, "$$contactName$$", conName);
-                        addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptName"));
-                        addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptPhone"));
-                        addParameter(params, "$$deptAddress$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptAddress"));
-                        addParameter(params, "$$deptHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptHours"));
-                        addParameter(params, "$$deptEmail$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptEmail"));
-                        addParameter(params, "$$deptEmail2$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptEmail2"));
-                        addParameter(params, "$$financeHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","financeHours"));
-                        addParameter(params, "$$deptFormalName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptFormalName"));
+                        addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptName"));
+                        addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptPhone"));
+                        addParameter(params, "$$deptAddress$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptAddress"));
+                        addParameter(params, "$$deptHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptHours"));
+                        addParameter(params, "$$deptEmail$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptEmail"));
+                        addParameter(params, "$$deptEmail2$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptEmail2"));
+                        addParameter(params, "$$financeHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "financeHours"));
+                        addParameter(params, "$$deptFormalName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptFormalName"));
                         addParameter(params, "$$date$$", sysDateMMDDYYYY);
                         addParameter(params, "$$contactEmail$$", capContacts[i].getPeople().getEmail() + "");
                         addParameter(params, "$$ACAUrl$$", String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0]);
                         addParameter(params, "$$ACAURL$$", String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0]);
-                        if(hm[capContacts[i].getPeople().getEmail() + ""] != 1) {
+                        if (hm[capContacts[i].getPeople().getEmail() + ""] != 1) {
                             sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail() + "", "", "CAN_PERMIT_ISSUANCE", params, rFiles, capId);
                             hm[capContacts[i].getPeople().getEmail() + ""] = 1;
                         }
@@ -151,7 +144,7 @@ if(wfStatus == "Issued")
 //CAMEND-194,223
 
 //CAMEND-304
-if(wfStatus == "Modification Required") {
+if (wfStatus == "Modification Required") {
     var hm = new Array();
     var conName = "";
     var licCapId = getParent();
@@ -159,25 +152,25 @@ if(wfStatus == "Modification Required") {
     if (contactResult.getSuccess()) {
         var capContacts = contactResult.getOutput();
         for (var i in capContacts) {
-            if(matches(capContacts[i].getPeople().getContactType(),"Applicant","Authorized Agent")) {
+            if (matches(capContacts[i].getPeople().getContactType(), "Applicant", "Authorized Agent")) {
                 conName = getContactName(capContacts[i]);
                 var params = aa.util.newHashtable();
-                addParameter(params, "$$altID$$", capId.getCustomID()+"");
-                addParameter(params, "$$capTypeAlias$$", aa.cap.getCap(licCapId).getOutput().getCapType().getAlias()+"");
+                addParameter(params, "$$altID$$", capId.getCustomID() + "");
+                addParameter(params, "$$capTypeAlias$$", aa.cap.getCap(licCapId).getOutput().getCapType().getAlias() + "");
                 addParameter(params, "$$capName$$", capName);
-                addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptName"));
-                addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptPhone"));
-                addParameter(params, "$$deptHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptHours"));
-                addParameter(params, "$$deptEmail$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptEmail"));
-                addParameter(params, "$$deptFormalName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptFormalName"));
+                addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptName"));
+                addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptPhone"));
+                addParameter(params, "$$deptHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptHours"));
+                addParameter(params, "$$deptEmail$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptEmail"));
+                addParameter(params, "$$deptFormalName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptFormalName"));
                 addParameter(params, "$$contactname$$", conName);
                 addParameter(params, "$$ACAUrl$$", String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0]);
                 addParameter(params, "$$ACAURL$$", String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0]);
-                if(wfComment!="" && wfComment!= null)
-                    addParameter(params, "$$wfComment$$", "Comments: "+ wfComment);
+                if (wfComment != "" && wfComment != null)
+                    addParameter(params, "$$wfComment$$", "Comments: " + wfComment);
                 else
                     addParameter(params, "$$wfComment$$", "");
-                if(hm[capContacts[i].getPeople().getEmail() + ""] != 1) {
+                if (hm[capContacts[i].getPeople().getEmail() + ""] != 1) {
                     sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail() + "", "", "CAN_MODIFICATION REQUIRED", params, null, capId);
                     hm[capContacts[i].getPeople().getEmail() + ""] = 1;
                 }
@@ -185,20 +178,18 @@ if(wfStatus == "Modification Required") {
         }
     }
     // taskCloseAllExcept(wfStatus,"Closing via script"); // CAMEND-657
-    updateAppStatus(wfStatus,"Updating via Script");
-    updateAppStatus(wfStatus,"Updating via Script",licCapId);
+    updateAppStatus(wfStatus, "Updating via Script");
+    updateAppStatus(wfStatus, "Updating via Script", licCapId);
 }
-if(wfTask == "Issuance" && wfStatus == "Denied")
-{
-    updateTask("Draft Decision","Issuance Denied","","");
+if (wfTask == "Issuance" && wfStatus == "Denied") {
+    updateTask("Draft Decision", "Issuance Denied", "", "");
     aa.workflow.adjustTask(capId, "Draft Decision", "N", "Y", null, null);
     var licCapId = getParent();
-    if(licCapId)
-    {
+    if (licCapId) {
         var VRFiles = new Array();
         var rParams = aa.util.newHashMap();
-        rParams.put("RecordID", capId.getCustomID()+"");
-        logDebug("Report parameter RecordID set to: "+ capId.getCustomID()+"");
+        rParams.put("RecordID", capId.getCustomID() + "");
+        logDebug("Report parameter RecordID set to: " + capId.getCustomID() + "");
         var report = aa.reportManager.getReportInfoModelByName("Cannabis Denial Decision Letter");
         report = report.getOutput();
         report.setModule("Cannabis");
@@ -207,44 +198,51 @@ if(wfTask == "Issuance" && wfStatus == "Denied")
         report.getEDMSEntityIdModel().setAltId(capId.getCustomID());
 
 
-        var permit = aa.reportManager.hasPermission("Cannabis Denial Decision Letter",currentUserID);
+        var permit = aa.reportManager.hasPermission("Cannabis Denial Decision Letter", currentUserID);
 
         if (permit.getOutput().booleanValue()) {
             logDebug("User has Permission to run the report....");
             var reportResult = aa.reportManager.getReportResult(report);
-            if(reportResult) {
+            if (reportResult) {
                 reportOutput = reportResult.getOutput();
-                var reportFile=aa.reportManager.storeReportToDisk(reportOutput);
-                logDebug("Report Run Successfull:"+ reportFile.getSuccess());
-                reportFile=reportFile.getOutput();
+                var reportFile = aa.reportManager.storeReportToDisk(reportOutput);
+                logDebug("Report Run Successfull:" + reportFile.getSuccess());
+                reportFile = reportFile.getOutput();
                 VRFiles.push(reportFile);
             }
         }
-        updateAppStatus("Termination Pending","Updating via Script",licCapId);
+        // CAMEND-661
+        var temp = capId;
+        capId = licCapId;
+        taskCloseAllExcept("Denied", "Closing via script");
+        capId = temp;
+        updateAppStatus("Denied", "Updating via Script", licCapId);
+        // updateAppStatus("Termination Pending","Updating via Script",licCapId);
         //updateTask("Permit Status","Termination Pending","","",licCapId);
-        moveWFTask("Permit Status","Termination Pending", " ", "", licCapId, null, sysDateMMDDYYYY);
+        // moveWFTask("Permit Status","Termination Pending", " ", "", licCapId, null, sysDateMMDDYYYY);
+
         var hm = new Array();
         var conName = "";
         var contactResult = aa.people.getCapContactByCapID(capId);
         if (contactResult.getSuccess()) {
             var capContacts = contactResult.getOutput();
             for (var i in capContacts) {
-                if(matches(capContacts[i].getPeople().getContactType(),"Applicant","Authorized Agent")) {
+                if (matches(capContacts[i].getPeople().getContactType(), "Applicant", "Authorized Agent")) {
                     conName = getContactName(capContacts[i]);
                     var params = aa.util.newHashtable();
-                    addParameter(params, "$$altID$$", capId.getCustomID()+"");
-                    addParameter(params, "$$capTypeAlias$$", aa.cap.getCap(capId).getOutput().getCapType().getAlias()+"");
+                    addParameter(params, "$$altID$$", capId.getCustomID() + "");
+                    addParameter(params, "$$capTypeAlias$$", aa.cap.getCap(capId).getOutput().getCapType().getAlias() + "");
                     addParameter(params, "$$capName$$", capName);
-                    addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptName"));
-                    addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptPhone"));
-                    addParameter(params, "$$deptHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptHours"));
-                    addParameter(params, "$$deptEmail$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptEmail"));
-                    addParameter(params, "$$deptFormalName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptFormalName"));
+                    addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptName"));
+                    addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptPhone"));
+                    addParameter(params, "$$deptHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptHours"));
+                    addParameter(params, "$$deptEmail$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptEmail"));
+                    addParameter(params, "$$deptFormalName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptFormalName"));
                     addParameter(params, "$$contactname$$", conName);
                     addParameter(params, "$$ACAUrl$$", String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0]);
                     addParameter(params, "$$ACAURL$$", String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0]);
-                    if(hm[capContacts[i].getPeople().getEmail() + ""] != 1){
-                        sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail()+"", "", "GLOBAL_DENIED", params, null, capId);
+                    if (hm[capContacts[i].getPeople().getEmail() + ""] != 1) {
+                        sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail() + "", "", "GLOBAL_DENIED", params, null, capId);
                         hm[capContacts[i].getPeople().getEmail() + ""] = 1;
                     }
                 }
@@ -255,13 +253,12 @@ if(wfTask == "Issuance" && wfStatus == "Denied")
 }
 //CAMEND-304
 //CAMEND-303, CAMEND-507
-if(wfTask == "Draft Decision" && wfStatus == "Denied")
-{
+if (wfTask == "Draft Decision" && wfStatus == "Denied") {
     var VRFiles = new Array();
     var licCapId = getParent();
     var rParams = aa.util.newHashMap();
-    rParams.put("RecordID", capId.getCustomID()+"");
-    logDebug("Report parameter RecordID set to: "+ capId.getCustomID()+"");
+    rParams.put("RecordID", capId.getCustomID() + "");
+    logDebug("Report parameter RecordID set to: " + capId.getCustomID() + "");
     var report = aa.reportManager.getReportInfoModelByName("Cannabis Denial Decision Letter");
     report = report.getOutput();
     report.setModule("Cannabis");
@@ -270,42 +267,42 @@ if(wfTask == "Draft Decision" && wfStatus == "Denied")
     report.getEDMSEntityIdModel().setAltId(capId.getCustomID());
 
 
-    var permit = aa.reportManager.hasPermission("Cannabis Denial Decision Letter",currentUserID);
+    var permit = aa.reportManager.hasPermission("Cannabis Denial Decision Letter", currentUserID);
 
     if (permit.getOutput().booleanValue()) {
         logDebug("User has Permission to run the report....");
         var reportResult = aa.reportManager.getReportResult(report);
-        if(reportResult) {
+        if (reportResult) {
             reportOutput = reportResult.getOutput();
-            var reportFile=aa.reportManager.storeReportToDisk(reportOutput);
-            logDebug("Report Run Successfull:"+ reportFile.getSuccess());
-            reportFile=reportFile.getOutput();
+            var reportFile = aa.reportManager.storeReportToDisk(reportOutput);
+            logDebug("Report Run Successfull:" + reportFile.getSuccess());
+            reportFile = reportFile.getOutput();
             VRFiles.push(reportFile);
         }
     }
-    updateAppStatus("Termination Pending","Updating via Script",licCapId);
+    updateAppStatus("Termination Pending", "Updating via Script", licCapId);
     var hm = new Array();
     var conName = "";
     var contactResult = aa.people.getCapContactByCapID(capId);
     if (contactResult.getSuccess()) {
         var capContacts = contactResult.getOutput();
         for (var i in capContacts) {
-            if(matches(capContacts[i].getPeople().getContactType(),"Applicant","Authorized Agent")) {
+            if (matches(capContacts[i].getPeople().getContactType(), "Applicant", "Authorized Agent")) {
                 conName = getContactName(capContacts[i]);
                 var params = aa.util.newHashtable();
-                addParameter(params, "$$altID$$", capId.getCustomID()+"");
-                addParameter(params, "$$capTypeAlias$$", aa.cap.getCap(licCapId).getOutput().getCapType().getAlias()+"");
+                addParameter(params, "$$altID$$", capId.getCustomID() + "");
+                addParameter(params, "$$capTypeAlias$$", aa.cap.getCap(licCapId).getOutput().getCapType().getAlias() + "");
                 addParameter(params, "$$capName$$", capName);
-                addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptName"));
-                addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptPhone"));
-                addParameter(params, "$$deptHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptHours"));
-                addParameter(params, "$$deptEmail$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptEmail"));
-                addParameter(params, "$$deptFormalName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptFormalName"));
+                addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptName"));
+                addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptPhone"));
+                addParameter(params, "$$deptHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptHours"));
+                addParameter(params, "$$deptEmail$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptEmail"));
+                addParameter(params, "$$deptFormalName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptFormalName"));
                 addParameter(params, "$$contactname$$", conName);
                 addParameter(params, "$$ACAUrl$$", String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0]);
                 addParameter(params, "$$ACAURL$$", String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0]);
-                if(hm[capContacts[i].getPeople().getEmail() + ""] != 1){
-                    sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail()+"", "", "GLOBAL_DENIED", params, VRFiles, capId);
+                if (hm[capContacts[i].getPeople().getEmail() + ""] != 1) {
+                    sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail() + "", "", "GLOBAL_DENIED", params, VRFiles, capId);
                     hm[capContacts[i].getPeople().getEmail() + ""] = 1;
                 }
             }
@@ -355,12 +352,11 @@ if(wfTask == "Draft Decision" && wfStatus == "Denied")
 //     }
 // }
 
-if(wfStatus == "Deficiency")
-{
+if (wfStatus == "Deficiency") {
     editPriority("Low");
     //if(wfTask == "Supervisor Review"){
     var c = new Date();
-    var newDate = c.getMonth()+1+"/"+c.getDate()+"/"+c.getFullYear();
+    var newDate = c.getMonth() + 1 + "/" + c.getDate() + "/" + c.getFullYear();
     editTaskDueDate(wfTask, dateAdd(newDate, 15));
     // }
 
@@ -368,34 +364,33 @@ if(wfStatus == "Deficiency")
 
 
 // CAMEND-392, CAMEND-507
-if ((wfTask == "Inspection" || wfTask == 'Draft Decision') && wfStatus == 'Deficiency')
-{
+if ((wfTask == "Inspection" || wfTask == 'Draft Decision') && wfStatus == 'Deficiency') {
     //var date = getCapFileDate(capId);
     //if(isDateInRangeToOct(date) || isDateInRangeToFeb(date) || isDateInRangeCurr(date)) {
     var rFiles1 = new Array();
-    logDebug("Deficiency: "+ rFiles1);
+    logDebug("Deficiency: " + rFiles1);
     var hm = new Array();
     var conName = "";
     var rParams = aa.util.newHashMap();
-    rParams.put("RecordID", capId.getCustomID()+"");
-    logDebug("Report parameter RecordID set to: "+ capId.getCustomID()+"");
+    rParams.put("RecordID", capId.getCustomID() + "");
+    logDebug("Report parameter RecordID set to: " + capId.getCustomID() + "");
     var report = aa.reportManager.getReportInfoModelByName("Cannabis Deficiency Denial Pending Letter");
     report = report.getOutput();
     report.setModule("Cannabis");
     report.setCapId(capId.getID1() + "-" + capId.getID2() + "-" + capId.getID3());
     report.setReportParameters(rParams);
     report.getEDMSEntityIdModel().setAltId(capId.getCustomID());
-    logDebug("Deficiency: "+ rFiles1);
+    logDebug("Deficiency: " + rFiles1);
 
-    var permit = aa.reportManager.hasPermission("Cannabis Deficiency Denial Pending Letter",currentUserID);
+    var permit = aa.reportManager.hasPermission("Cannabis Deficiency Denial Pending Letter", currentUserID);
     if (permit.getOutput().booleanValue()) {
         logDebug("User has Permission to run the report....");
         var reportResult = aa.reportManager.getReportResult(report);
-        if(reportResult) {
+        if (reportResult) {
             reportOutput = reportResult.getOutput();
-            var reportFile=aa.reportManager.storeReportToDisk(reportOutput);
-            logDebug("Report Run Successfull:"+ reportFile.getSuccess());
-            reportFile=reportFile.getOutput();
+            var reportFile = aa.reportManager.storeReportToDisk(reportOutput);
+            logDebug("Report Run Successfull:" + reportFile.getSuccess());
+            reportFile = reportFile.getOutput();
             rFiles1.push(reportFile);
         }
     }
@@ -403,24 +398,23 @@ if ((wfTask == "Inspection" || wfTask == 'Draft Decision') && wfStatus == 'Defic
     if (contactResult.getSuccess()) {
         var capContacts = contactResult.getOutput();
         for (var i in capContacts) {
-            if(matches(capContacts[i].getPeople().getContactType(),"Applicant","Authorized Agent","Property Owner"))
-            {
+            if (matches(capContacts[i].getPeople().getContactType(), "Applicant", "Authorized Agent", "Property Owner")) {
                 conName = getContactName(capContacts[i]);
                 var params = aa.util.newHashtable();
-                addParameter(params, "$$altID$$", capId.getCustomID()+"");
-                addParameter(params, "$$capTypeAlias$$", aa.cap.getCap(capId).getOutput().getCapType().getAlias()+"");
+                addParameter(params, "$$altID$$", capId.getCustomID() + "");
+                addParameter(params, "$$capTypeAlias$$", aa.cap.getCap(capId).getOutput().getCapType().getAlias() + "");
                 addParameter(params, "$$capName$$", capName);
-                addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptName"));
-                addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptPhone"));
-                addParameter(params, "$$deptHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptHours"));
-                addParameter(params, "$$deptEmail$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptEmail"));
-                addParameter(params, "$$deptFormalName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptFormalName"));
+                addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptName"));
+                addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptPhone"));
+                addParameter(params, "$$deptHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptHours"));
+                addParameter(params, "$$deptEmail$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptEmail"));
+                addParameter(params, "$$deptFormalName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptFormalName"));
                 addParameter(params, "$$contactname$$", conName);
                 addParameter(params, "$$date$$", sysDateMMDDYYYY);
                 addParameter(params, "$$contactEmail$$", capContacts[i].getPeople().getEmail() + "");
                 addParameter(params, "$$ACAUrl$$", String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0]);
                 addParameter(params, "$$ACAURL$$", String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0]);
-                if(hm[capContacts[i].getPeople().getEmail() + ""] != 1) {
+                if (hm[capContacts[i].getPeople().getEmail() + ""] != 1) {
 
                     sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail() + "", "", "CAN_DEFICIENCY", params, rFiles1, capId);
                     hm[capContacts[i].getPeople().getEmail() + ""] = 1;
@@ -438,18 +432,18 @@ if ((wfTask == "Inspection" || wfTask == 'Draft Decision') && wfStatus == 'Defic
 
 
 //CAMEND-383
-if(wfTask == "Draft Decision" && wfStatus == "Modification Required") {
+if (wfTask == "Draft Decision" && wfStatus == "Modification Required") {
     var licCapId = getParent();
-    if(licCapId)
-        updateAppStatus("Modification Required","",licCapId);
+    if (licCapId)
+        updateAppStatus("Modification Required", "", licCapId);
     var conName = "";
     var contactResult = aa.people.getCapContactByCapID(tmpID);
     if (contactResult.getSuccess()) {
         var capContacts = contactResult.getOutput();
         for (var i in capContacts) {
             conName = getContactName(capContacts[i]);
-            if(capContacts[i].getPeople().getEmail() != null) {
-                sendEmailwAttchmnt('no-reply@mendocinocounty.org', capContacts[i].getPeople().getEmail(), '','Cannabis Renewal Corrections Letter', conName + "" + 'The attachment contains information about corrections for your renewal.', 'Cannabis Renewal Corrections Letter', 'RecordID', 'RecordID');
+            if (capContacts[i].getPeople().getEmail() != null) {
+                sendEmailwAttchmnt('no-reply@mendocinocounty.org', capContacts[i].getPeople().getEmail(), '', 'Cannabis Renewal Corrections Letter', conName + "" + 'The attachment contains information about corrections for your renewal.', 'Cannabis Renewal Corrections Letter', 'RecordID', 'RecordID');
             }
         }
     }
@@ -555,11 +549,10 @@ function copyASITablesWithRemove(pFromCapId, pToCapId) {
         logDebug("ASI Table Array : " + tn + " (" + numrows + " Rows)");
     }
 }
-function moveWFTask(ipTask,ipStatus,ipComment,ipNote) // Optional CapID, Process, StatusDate
+function moveWFTask(ipTask, ipStatus, ipComment, ipNote) // Optional CapID, Process, StatusDate
 {
     var vCapId = capId;
-    if (arguments.length > 4 && arguments[4] != null)
-    {
+    if (arguments.length > 4 && arguments[4] != null) {
         var vCapId = arguments[4];
     }
 
@@ -568,8 +561,7 @@ function moveWFTask(ipTask,ipStatus,ipComment,ipNote) // Optional CapID, Process
 
     var vUseProcess = false;
     var vProcessName = "";
-    if (arguments.length > 5 && arguments[5] != null && arguments[5] != "")
-    {
+    if (arguments.length > 5 && arguments[5] != null && arguments[5] != "") {
         vProcessName = arguments[5]; // subprocess
         vUseProcess = true;
     }
@@ -577,17 +569,15 @@ function moveWFTask(ipTask,ipStatus,ipComment,ipNote) // Optional CapID, Process
     var vUseStatusDate = false;
     var vStatusDate = null;
     var vToday = new Date();
-    if (arguments.length > 6 && arguments[6] != null && arguments[6] != "")
-    {
+    if (arguments.length > 6 && arguments[6] != null && arguments[6] != "") {
         vStatusDate = new Date(arguments[6]);
         vUseStatusDate = true;
     }
 
-    var vWFResult = aa.workflow.getTaskItems(vCapId,ipTask,vProcessName,null,null,null);
+    var vWFResult = aa.workflow.getTaskItems(vCapId, ipTask, vProcessName, null, null, null);
     if (vWFResult.getSuccess())
         var vWFObj = vWFResult.getOutput();
-    else
-    {
+    else {
         logMessage("**ERROR: Failed to get workflow object: " + vWFResult.getErrorMessage());
         return false;
     }
@@ -599,38 +589,34 @@ function moveWFTask(ipTask,ipStatus,ipComment,ipNote) // Optional CapID, Process
         return false;
 
     var vMoved = false;
-    for (var vCounter in vWFObj)
-    {
+    for (var vCounter in vWFObj) {
         var vTaskObj = vWFObj[vCounter];
-        if (vTaskObj.getTaskDescription().toUpperCase().equals(ipTask.toUpperCase())  && (!vUseProcess || vTaskObj.getProcessCode().equals(vProcessName)))
-        {
-            var vTaskStatusObj = aa.workflow.getTaskStatus(vTaskObj,ipStatus).getOutput();
+        if (vTaskObj.getTaskDescription().toUpperCase().equals(ipTask.toUpperCase()) && (!vUseProcess || vTaskObj.getProcessCode().equals(vProcessName))) {
+            var vTaskStatusObj = aa.workflow.getTaskStatus(vTaskObj, ipStatus).getOutput();
             if (!vTaskStatusObj)
                 continue;
-            if (vUseStatusDate)
-            {
+            if (vUseStatusDate) {
                 var vTaskModel = vTaskObj.getTaskItem();
                 vTaskModel.setStatusDate(vStatusDate);
                 vTaskModel.setDisposition(ipStatus);
                 vTaskModel.setDispositionNote(ipNote);
                 vTaskModel.setDispositionComment(ipComment);
                 vTaskModel.setDispositionDate(vToday);
-                aa.workflow.handleDisposition(vTaskModel,vCapId);
+                aa.workflow.handleDisposition(vTaskModel, vCapId);
                 vMoved = true;
                 logMessage("Moved Workflow Task: " + ipTask + " with status " + ipStatus);
                 logDebug("Moved Workflow Task: " + ipTask + " with status " + ipStatus);
             }
-            else
-            {
+            else {
                 var vResultAction = vTaskStatusObj.resultAction;
                 var vStepNumber = vTaskObj.getStepNumber();
                 var vProcessID = vTaskObj.getProcessID();
                 var vDispositionDate = aa.date.getCurrentDate();
 
                 if (vUseProcess)
-                    aa.workflow.handleDisposition(vCapId,vStepNumber,vProcessID,ipStatus,vDispositionDate,ipNote,ipComment,systemUserObj,vResultAction);
+                    aa.workflow.handleDisposition(vCapId, vStepNumber, vProcessID, ipStatus, vDispositionDate, ipNote, ipComment, systemUserObj, vResultAction);
                 else
-                    aa.workflow.handleDisposition(vCapId,vStepNumber,ipStatus,vDispositionDate,ipNote,ipComment,systemUserObj,vResultAction);
+                    aa.workflow.handleDisposition(vCapId, vStepNumber, ipStatus, vDispositionDate, ipNote, ipComment, systemUserObj, vResultAction);
 
                 vMoved = true;
                 logMessage("Moved Workflow Task: " + ipTask + " with status " + ipStatus);
