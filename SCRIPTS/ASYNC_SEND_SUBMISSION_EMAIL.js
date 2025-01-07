@@ -6,12 +6,12 @@ appTypeString = appTypeResult.toString();
 appTypeArray = appTypeString.split("/");
 
 try {
-    var isAppeal = appMatch("Cannabis/Amendment/Appeal/NA",capId);
-    var isAssignment = appMatch("Cannabis/Amendment/Assignment/NA",capId);
-    var isNOF = appMatch("Cannabis/Amendment/Notice of Fallowing/NA",capId);
-    var isNOFAffidavit = appMatch("Cannabis/Amendment/Notice of Fallowing/Affidavit",capId);
-    var isNOFRevocation = appMatch("Cannabis/Amendment/Notice of Fallowing/Revocation",capId);
-    var isTaxAppeal = appMatch("Cannabis/Amendment/Tax Appeal/NA",capId);
+    var isAppeal = appMatch("Cannabis/Amendment/Appeal/NA", capId);
+    var isAssignment = appMatch("Cannabis/Amendment/Assignment/NA", capId);
+    var isNOF = appMatch("Cannabis/Amendment/Notice of Fallowing/NA", capId);
+    var isNOFAffidavit = appMatch("Cannabis/Amendment/Notice of Fallowing/Affidavit", capId);
+    var isNOFRevocation = appMatch("Cannabis/Amendment/Notice of Fallowing/Revocation", capId);
+    var isTaxAppeal = appMatch("Cannabis/Amendment/Tax Appeal/NA", capId);
 
     var hm = new Array();
     var conName = "";
@@ -145,29 +145,64 @@ try {
             }
         }
     }
+
+    // CAMEND-527
+    if (appMatch("Cannabis/*/Renewal/NA")) {
+        if (AInfo["Permit Type Change"] == "Yes") {
+            var pCapId = getParent();
+            var conName = "";
+            var contactResult = aa.people.getCapContactByCapID(pCapId);
+            if (contactResult.getSuccess()) {
+                var capContacts = contactResult.getOutput();
+                for (var i in capContacts) {
+                    conName = getContactName(capContacts[i]);
+                    var params = aa.util.newHashtable();
+                    addParameter(params, "$$altID$$", pCapId.getCustomID() + "");
+                    addParameter(params, "$$year$$", String(aa.date.getCurrentDate().getYear()));
+                    addParameter(params, "$$date$$", sysDateMMDDYYYY);
+                    addParameter(params, "$$parentAltId$$", pCapId.getCustomID() + "");
+                    addParameter(params, "$$contactname$$", conName);
+                    addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptName"));
+                    addParameter(params, "$$phoneHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "phoneHours"));
+                    addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptPhone"));
+                    addParameter(params, "$$officeHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "officeHours"));
+                    addParameter(params, "$$deptHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptHours"));
+                    addParameter(params, "$$deptEmail$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptEmail"));
+                    addParameter(params, "$$deptAddress$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptAddress"));
+                    addParameter(params, "$$deptFormalName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptFormalName"));
+                    addParameter(params, "$$FullNameBusName$$", conName);
+                    addParameter(params, "$$capAlias$$", aa.cap.getCap(capId).getOutput().getCapType().getAlias() + "");
+                    addParameter(params, "$$parentCapId$$", pCapId.getCustomID());
+                    addParameter(params, "$$Amendment$$", aa.cap.getCap(capId).getOutput().getCapType().getAlias() + "");
+                    addParameter(params, "$$Location$$", getAddressInALine());
+                    if (wfComment != "" && wfComment != null)
+                        addParameter(params, "$$wfComment$$", "Comments: " + wfComment);
+                    else
+                        addParameter(params, "$$wfComment$$", "");
+                    sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail() + "", "", "CAN_MODIFICATION REQUIRED", params, null, capId);
+                }
+            }
+        }
+    }
 }
 catch (err) {
     aa.sendMail("no-reply@mendocinocounty.gov", "sshiralikar@trustvip.com", "", "Error on Issuance Email ASYNC", err);
 }
-function getParent()
-{
+function getParent() {
     // returns the capId object of the parent.  Assumes only one parent!
     //
-    getCapResult = aa.cap.getProjectParents(capId,1);
-    if (getCapResult.getSuccess())
-    {
+    getCapResult = aa.cap.getProjectParents(capId, 1);
+    if (getCapResult.getSuccess()) {
         parentArray = getCapResult.getOutput();
         if (parentArray.length)
             return parentArray[0].getCapID();
-        else
-        {
-            logDebug( "**WARNING: GetParent found no project parent for this application");
+        else {
+            logDebug("**WARNING: GetParent found no project parent for this application");
             return false;
         }
     }
-    else
-    {
-        logDebug( "**WARNING: getting project parents:  " + getCapResult.getErrorMessage());
+    else {
+        logDebug("**WARNING: getting project parents:  " + getCapResult.getErrorMessage());
         return false;
     }
 }
