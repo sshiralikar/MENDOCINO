@@ -215,14 +215,14 @@ function mainProcess() {
                     if(inspCount > 0)
                         inspCancelAll();
                     if(balance <= 0){
-                        resultWorkflowTask("Permit Status", "Expired", "Updated by batch " + ".", "Updated by batch ")
+                        resultWorkflowTask("Permit Status", "Non Renewal", "Updated by batch " + ".", "Updated by batch ")
                         deactivateTask("Permit Status");
-                        updateAppStatus("Expired", "Updated by batch ", capId);
+                        updateAppStatus("Non Renewal", "Updated by batch ", capId);
                     }
                     if(balance > 0)
                     {
                         inspCancelAll();
-                        resultWorkflowTask("Permit Status", "Expired", "Updated by batch " + ".", "Updated by batch ")
+                        resultWorkflowTask("Permit Status", "Non Renewal", "Updated by batch " + ".", "Updated by batch ")
                         deactivateTask("Permit Status");
                         updateAppStatus("Expired - Balance Due", "Updated by batch ", capId);
                         addLicenseCondition("Balance","Applied","Out of Program Balance Due","Out of Program Balance Due","Notice");

@@ -31,7 +31,7 @@ if(wfTask == "Permit Status" && wfStatus == "Terminated")
 }
 
 // CAMEND-690
-if (wfStatus == "Terminated" || wfStatus == "Withdrawn" || wfStatus == "Expired") {
+if (wfStatus == "Terminated" || wfStatus == "Withdrawn" || wfStatus == "Expired" || wfStatus == "Non Renewal") {
     var conName = "";
     var contactResult = aa.people.getCapContactByCapID(capId);
     if (contactResult.getSuccess()) {

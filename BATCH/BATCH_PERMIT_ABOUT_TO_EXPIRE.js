@@ -210,7 +210,8 @@ function mainProcess() {
                     && appStatus!="Expired"
                     && appStatus!="Denied"
                     && appStatus!="Denied - Appeal"
-                    && appStatus!="Terminated")
+                    && appStatus!="Terminated"
+                    && appStatus!="Non Renewal")
                 {
                     logMessage(capIDString);
                     var thisCapModel = cap.getCapModel();
@@ -229,7 +230,7 @@ function mainProcess() {
                     }
                     else if(appStatus != "Modification Under Review")
                     {*/
-                        updateAppStatus("About to Expire","",capId);
+                        updateAppStatus("Pending Non Renewal","",capId);
                         setLicExpirationDate(capId,"",dateCalc,"About to Expire");
                     //}
                     var contactResult = aa.people.getCapContactByCapID(capId);
@@ -305,7 +306,7 @@ function mainProcess() {
                     }
                     else if(appStatus != "Modification Under Review")
                     {
-                        updateAppStatus("About to Expire","",capId);
+                        updateAppStatus("Pending Non Renewal","",capId);
                         setLicExpirationDate(capId,"",dateCalc,"About to Expire");
                     }
                     var contactResult = aa.people.getCapContactByCapID(capId);
@@ -363,7 +364,7 @@ function mainProcess() {
                 {
                     var thisCapModel = cap.getCapModel();
                     var thisTypeResult = cap.getCapType();
-                    updateAppStatus("About to Expire","",capId);
+                    updateAppStatus("Pending Non Renewal","",capId);
                     setLicExpirationDate(capId,"",dateCalc,"About to Expire");
                     var contactResult = aa.people.getCapContactByCapID(capId);
                     if (contactResult.getSuccess()) {
@@ -423,7 +424,7 @@ function mainProcess() {
                 {
                     var thisCapModel = cap.getCapModel();
                     var thisTypeResult = cap.getCapType();
-                    updateAppStatus("About to Expire","",capId);
+                    updateAppStatus("Pending Non Renewal","",capId);
                     setLicExpirationDate(capId,"",dateCalc,"About to Expire");
                     var contactResult = aa.people.getCapContactByCapID(capId);
                     if (contactResult.getSuccess()) {
@@ -482,7 +483,7 @@ function mainProcess() {
                 {
                     var thisCapModel = cap.getCapModel();
                     var thisTypeResult = cap.getCapType();
-                    updateAppStatus("About to Expire","",capId);
+                    updateAppStatus("Pending Non Renewal","",capId);
                     setLicExpirationDate(capId,"",dateCalc,"About to Expire");
                     var contactResult = aa.people.getCapContactByCapID(capId);
                     if (contactResult.getSuccess()) {
@@ -543,7 +544,7 @@ function mainProcess() {
                 {
                     var thisCapModel = cap.getCapModel();
                     var thisTypeResult = cap.getCapType();
-                    updateAppStatus("About to Expire","",capId);
+                    updateAppStatus("Pending Non Renewal","",capId);
                     setLicExpirationDate(capId,"",dateCalc,"About to Expire");
                     var contactResult = aa.people.getCapContactByCapID(capId);
                     if (contactResult.getSuccess()) {

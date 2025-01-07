@@ -194,7 +194,7 @@ function mainProcess()
         capTypeModel.setSubType("Permit");
         //capTypeModel.setCategory(appTypeArray[3]);
         capModel.setCapType(capTypeModel);
-        capModel.setCapStatus("About to Expire");
+        capModel.setCapStatus("Pending Non Renewal");
         var recordListResult = aa.cap.getCapIDListByCapModel(capModel);
         if (!recordListResult.getSuccess())
         {

@@ -227,7 +227,8 @@ function copy() {
                     || appStatus == "Revocation"
                     || appStatus == "Revocation Pending"
                     || appStatus == "Appeal Pending"
-                    || appStatus == "Appeal Submitted")
+                    || appStatus == "Appeal Submitted"
+                    || appStatus == "Non Renewal")
                 {
                     showMessage = true;
                     comment("Notice of Fallowing cannot be submitted as the permit status is <b>"+appStatus+"</b><style>#ctl00_PlaceHolderMain_actionBarBottom_btnContinue{display:none !important}</style>");
