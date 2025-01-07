@@ -149,14 +149,17 @@ try {
     // CAMEND-527
     if (appMatch("Cannabis/*/Renewal/NA")) {
         if (AInfo["Permit Type Change"] == "Yes") {
+            var hm = new Array();
             var pCapId = getParent();
-            var conName = "";
-            var contactResult = aa.people.getCapContactByCapID(pCapId);
-            if (contactResult.getSuccess()) {
-                var capContacts = contactResult.getOutput();
-                for (var i in capContacts) {
-                    conName = getContactName(capContacts[i]);
-                    var params = aa.util.newHashtable();
+            var capDetailObjResult = aa.cap.getCapDetail(pCapId); // Detail
+            if (capDetailObjResult.getSuccess()) {
+                var conName = "";
+                var contactResult = aa.people.getCapContactByCapID(pCapId);
+                if (contactResult.getSuccess()) {
+                    var capContacts = contactResult.getOutput();
+                    for (var i in capContacts) {
+                        conName = getContactName(capContacts[i]);
+                        var params = aa.util.newHashtable();
                     addParameter(params, "$$altID$$", pCapId.getCustomID() + "");
                     addParameter(params, "$$year$$", String(aa.date.getCurrentDate().getYear()));
                     addParameter(params, "$$date$$", sysDateMMDDYYYY);
