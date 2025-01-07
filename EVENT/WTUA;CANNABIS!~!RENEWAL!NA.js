@@ -182,8 +182,8 @@ if (wfStatus == "Modification Required") {
     updateAppStatus(wfStatus, "Updating via Script", licCapId);
 }
 if (wfTask == "Issuance" && wfStatus == "Denied") {
-    updateTask("Draft Decision", "Issuance Denied", "", "");
-    aa.workflow.adjustTask(capId, "Draft Decision", "N", "Y", null, null);
+    // updateTask("Draft Decision", "Issuance Denied", "", "");
+    // aa.workflow.adjustTask(capId, "Draft Decision", "N", "Y", null, null);
     var licCapId = getParent();
     if (licCapId) {
         var VRFiles = new Array();
