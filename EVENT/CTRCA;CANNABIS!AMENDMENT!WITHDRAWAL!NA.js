@@ -38,9 +38,9 @@ try
                             addParameter(params, "$$deptEmail$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptEmail"));
                             addParameter(params, "$$deptFormalName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptFormalName"));
                             addParameter(params, "$$contactname$$", conName);
-                            if(hm[applicantEmail+""] != 1) {
+                            if(hm[capContacts[i].getPeople().getEmail()+""] != 1) {
                                 sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail() + "", "", "CAN_WITHDRAWAL APPROVED", params, null, capId);
-                                hm[applicantEmail + ""] = 1;
+                                hm[capContacts[i].getPeople().getEmail() + ""] = 1;
                             }
                         }
                     }
