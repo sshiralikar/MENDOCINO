@@ -11,6 +11,7 @@ if (wfStatus == "Approved") {
     }
     else
     {
+        var hm = new Array();
         var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
         var firstDate = new Date().setHours(0,0,0,0);
         var secondDate = new Date(getAppSpecific("New Expiration Date",pCapId)).setHours(0,0,0,0);
