@@ -449,15 +449,15 @@ if (wfTask == "Draft Decision" && wfStatus == "Approved") {
     }
     var hm = new Array();
     var parent = getParent();
-    var parentCap = aa.cap.getCap(parentCapId).getOutput();
-    parentAppTypeResult = parentCap.getCapType();
-    parentAppTypeString = parentAppTypeResult.toString();
-    parentAppTypeArray = parentAppTypeString.split("/");
+    // var parentCap = aa.cap.getCap(parentCapId).getOutput();
+    // parentAppTypeResult = parentCap.getCapType();
+    // parentAppTypeString = parentAppTypeResult.toString();
+    // parentAppTypeArray = parentAppTypeString.split("/");
     var totalSF = 0;
-    if (parentAppTypeArray[1] == "Cultivation") {
-        totalSF = getAppSpecific("Total SF", parent);
-    } else if (parentAppTypeArray[1] == "Nursery") {
-        totalSF = getAppSpecific("Total Nursery SF", parent);
+    if (appTypeArray[1] == "Cultivation") {
+        totalSF = getAppSpecific("Total SF", capId);
+    } else if (appTypeArray[1] == "Nursery") {
+        totalSF = getAppSpecific("Total Nursery SF", capId);
     }
     var capStatus = aa.cap.getCap(capId).getOutput();
     var thisCapStatus = capStatus.getCapStatus();
