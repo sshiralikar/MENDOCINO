@@ -462,7 +462,7 @@ if (wfTask == "Draft Decision" && wfStatus == "Approved") {
     var capStatus = aa.cap.getCap(capId).getOutput();
     var thisCapStatus = capStatus.getCapStatus();
     var params = aa.util.newHashtable();
-    addParameter(params, "$$altID$$", parent.getCustomID() + "");
+    addParameter(params, "$$altID$$", capId.getCustomID() + "");
     addParameter(params, "$$year$$", String(aa.date.getCurrentDate().getYear()));
     addParameter(params, "$$date$$", sysDateMMDDYYYY);
     addParameter(params, "$$capStatus$$", thisCapStatus);
