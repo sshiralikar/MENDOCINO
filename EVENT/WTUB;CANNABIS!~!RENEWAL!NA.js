@@ -13,7 +13,7 @@ if(wfTask == "Issuance" && (wfStatus == "Issued" || wfStatus == "Denied" || wfSt
                 var vCap = aa.cap.getCap(cChildren[c]).getOutput();
                 if(vCap.isCompleteCap())
                 {
-                    if(vCap.getCapStatus() == "Approved" || vCap.getCapStatus() == "Denied" || vCap.getCapStatus() == "Withdrawn")
+                    if(vCap.getCapStatus() == "Issued" || vCap.getCapStatus() == "Approved" || vCap.getCapStatus() == "Denied" || vCap.getCapStatus() == "Withdrawn")
                     {
                         validCount ++;
                     }
