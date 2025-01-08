@@ -448,7 +448,7 @@ if (wfTask == "Draft Decision" && wfStatus == "Approved") {
         }
     }
     var hm = new Array();
-    var parent = getParent();
+    // var parent = getParent();
     // var parentCap = aa.cap.getCap(parentCapId).getOutput();
     // parentAppTypeResult = parentCap.getCapType();
     // parentAppTypeString = parentAppTypeResult.toString();
