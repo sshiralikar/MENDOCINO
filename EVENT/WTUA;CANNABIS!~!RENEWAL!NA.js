@@ -185,6 +185,12 @@ if (wfTask == "Issuance" && wfStatus == "Denied") {
     // updateTask("Draft Decision", "Issuance Denied", "", "");
     // aa.workflow.adjustTask(capId, "Draft Decision", "N", "Y", null, null);
     var licCapId = getParent();
+    // CAMEND-661
+    var temp = capId;
+    capId = licCapId;
+    taskCloseAllExcept("Denied", "Closing via script");
+    capId = temp;
+    updateAppStatus("Denied", "Updating via Script", licCapId);
     if (licCapId) {
         var VRFiles = new Array();
         var rParams = aa.util.newHashMap();
@@ -211,12 +217,7 @@ if (wfTask == "Issuance" && wfStatus == "Denied") {
                 VRFiles.push(reportFile);
             }
         }
-        // CAMEND-661
-        var temp = capId;
-        capId = licCapId;
-        taskCloseAllExcept("Denied", "Closing via script");
-        capId = temp;
-        updateAppStatus("Denied", "Updating via Script", licCapId);
+
         // updateAppStatus("Termination Pending","Updating via Script",licCapId);
         //updateTask("Permit Status","Termination Pending","","",licCapId);
         // moveWFTask("Permit Status","Termination Pending", " ", "", licCapId, null, sysDateMMDDYYYY);
