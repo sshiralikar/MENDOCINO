@@ -224,7 +224,93 @@ function mainProcess() {
                         inspCancelAll();
                         resultWorkflowTask("Permit Status", "Non Renewal", "Updated by batch " + ".", "Updated by batch ")
                         deactivateTask("Permit Status");
-                        updateAppStatus("Expired - Balance Due", "Updated by batch ", capId);
+                        updateAppStatus("Non Renewal - Balance Due", "Updated by batch ", capId);
+                        addLicenseCondition("Balance","Applied","Out of Program Balance Due","Out of Program Balance Due","Notice");
+                    }
+                    var test = true;
+                    var contactResult = aa.people.getCapContactByCapID(capId);
+                    if (contactResult.getSuccess()) {
+                        var capContacts = contactResult.getOutput();
+                        var capIDScriptModel = aa.cap.createCapIDScriptModel(capId.getID1(), capId.getID2(), capId.getID3());
+                        for (var i in capContacts) {
+                            if(capContacts[i].getPeople().getContactType() != 'test');
+                            {
+                                var conName = getContactName(capContacts[i]);
+                                var applicantEmail = capContacts[i].getPeople().getEmail()+"";
+                                var params = aa.util.newHashtable();
+                                addParameter(params, "$$altID$$", capId.getCustomID()+"");
+                                addParameter(params, "$$FullNameBusName$$", conName);addParameter(params, "$$capAlias$$", aa.cap.getCap(capId).getOutput().getCapType().getAlias()+"");
+                                addParameter(params, "$$expirDate$$", getAppSpecific("New Expiration Date",capId));
+                                addParameter(params, "$$deptHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptHours"));
+                                addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptName"));
+                                addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptPhone"));
+                                addParameter(params, "$$deptEmail$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptEmail"));
+                                addParameter(params, "$$deptFormalName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptFormalName"));
+                                addParameter(params, "$$capName$$", cap.getSpecialText()+"");
+                                var acaUrl = String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0];
+                                addParameter(params, "$$acaRecordUrl$$", acaUrl);
+                                if(applicantEmail != null){
+                                    sendEmail("no-reply@mendocinocounty.org", applicantEmail, "", "GLOBAL_EXPIRATION", params, null, capId);
+                                    //hm[applicantEmail+""] = 1;
+                                    //sendNotificationResult = aa.document.sendEmailAndSaveAsDocument("no-reply@mendocinocounty.org", //applicantEmail, "", "GLOBAL EXPIRATION", params, capIDScriptModel, null);
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+
+        }
+        logMessage("EXPIRED PERMIT....");
+        var numberOfDays = 0;
+        var hm = new Array();
+        var dateCalc = dateAdd(todayDate, numberOfDays);
+        aa.print(dateCalc);
+        var addZero = dateCalc;
+        //dateCalc = ('0' + dateCalc.getDate()).slice(-2) + '/'
+        //+ ('0' + (dateCalc.getMonth()+1)).slice(-2) + '/'
+        //+ dateCalc.getFullYear();
+        logMessage("Now getting records with Expiration date of " + addZero);
+        //dateCalc = aa.date.parseDate(dateCalc);
+        //var recordListResult = aa.cap.getCapIDsByAppSpecificInfoDateRange("PERMIT DETAILS", "Expiration Date", dateCalc, dateCalc);
+        var recordListResult = aa.cap.getCapIDsByAppSpecificInfoField("New Expiration Date", String(addZero));
+        if (!recordListResult.getSuccess())
+            logMessage("**ERROR: Failed to get capId List : " + recordListResult.getErrorMessage());
+        else {
+            var recArray = recordListResult.getOutput();
+            logMessage("Looping through " + recArray.length + " records");
+            for (var j in recArray) {
+                capId = aa.cap.getCapID(recArray[j].getID1(), recArray[j].getID2(), recArray[j].getID3()).getOutput();
+                capIDString = capId.getCustomID();
+
+                cap = aa.cap.getCap(capId).getOutput();
+                var appStatus = getAppStatus(capId);
+                targetAppType = cap.getCapType();     //create CapTypeModel object
+                targetAppTypeString = targetAppType.toString();
+                if(targetAppTypeString.split("/")[2] == "Permit" && appStatus!="Terminated")
+                {
+                    logMessage(capIDString);
+                    var thisCapModel = cap.getCapModel();
+                    var thisTypeResult = cap.getCapType();
+
+                    var capDetail = aa.cap.getCapDetail(capId);
+                    capDetail = capDetail.getOutput();
+                    var balance = capDetail.getBalance();
+                    var inspCount = getInspectionCount();
+                    if(inspCount > 0)
+                        inspCancelAll();
+                    if(balance <= 0){
+                        resultWorkflowTask("Permit Status", "Non Renewal", "Updated by batch " + ".", "Updated by batch ")
+                        deactivateTask("Permit Status");
+                        updateAppStatus("Non Renewal", "Updated by batch ", capId);
+                    }
+                    if(balance > 0)
+                    {
+                        inspCancelAll();
+                        resultWorkflowTask("Permit Status", "Non Renewal", "Updated by batch " + ".", "Updated by batch ")
+                        deactivateTask("Permit Status");
+                        updateAppStatus("Non Renewal - Balance Due", "Updated by batch ", capId);
                         addLicenseCondition("Balance","Applied","Out of Program Balance Due","Out of Program Balance Due","Notice");
                     }
                     var test = true;
