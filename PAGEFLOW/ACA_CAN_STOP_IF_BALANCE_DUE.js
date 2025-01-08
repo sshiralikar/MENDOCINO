@@ -168,6 +168,8 @@ try {
         showMessage = true;
         comment("You either have an existing balance due on a previous application or have record of being terminated from the Mendocino Cannabis Program. Please contact the department for any inquiries. Thank you.");
     }
+    showDebug = true;
+    cancel = true;
 } catch (err) {
     logDebug(err)
 }
