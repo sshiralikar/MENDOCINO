@@ -141,8 +141,10 @@ logDebug("balanceDue = " + balanceDue);
 // page flow custom code begin
 
 try {
-    var records = "";
-    var pSeq = String(currentUserID).split("PUBLICUSER")[1];
+    var records = false;
+    var balRecords = "";
+    var terRecords = "";
+    var pSeq = String(aa.env.getValue("CurrentUserID")).split("PUBLICUSER")[1];
     var vAssociatedCaps = aa.cap.getAssociatedCapsByOnlineUser(parseInt(pSeq)).getOutput();
     for (vAssociatedCap in vAssociatedCaps) {
         var vCapIDObj = vAssociatedCaps[vAssociatedCap].capID;
@@ -150,26 +152,30 @@ try {
         var vCap = aa.cap.getCap(vCapID).getOutput();
         if(vCap.isCompleteCap() && (vCapID+"" != capId+""))
         {
+            //records += vCapID.customID+"; "
             var capDetailObjResult = aa.cap.getCapDetail(vCapID); // Detail
             if (capDetailObjResult.getSuccess()) {
                 capDetail = capDetailObjResult.getOutput();
                 var balanceDue = capDetail.getBalance();
                 if (balanceDue > 0) {
-                    records += vCapID.customID+"; "
+                    records = true;
+                    balRecords += "<p>"+vCapID.customID+"; </p>";
                 }
             }
-            if(vCap.getCapStatus() == "Terminated")
-                records += vCapID.customID+"; "
+            if(vCap.getCapStatus() == "Terminated"){
+                records = true;
+                terRecords += "<p>"+vCapID.customID+"; </p>";
+            }
         }
     }
-    if (records != "" )
+    if (records)
     {
         cancel = true;
         showMessage = true;
-        comment("You either have an existing balance due on a previous application or have record of being terminated from the Mendocino Cannabis Program. Please contact the department for any inquiries. Thank you.");
+        message+="You either have an existing balance due on a previous application or have record of being terminated from the Mendocino Cannabis Program. Please contact the department for any inquiries. Thank you.<p></p><hr>";
+        message+="Records with balance due: "+ balRecords;
+        message+="Terminated Records : "+ terRecords;
     }
-    showDebug = true;
-    cancel = true;
 } catch (err) {
     logDebug(err)
 }
