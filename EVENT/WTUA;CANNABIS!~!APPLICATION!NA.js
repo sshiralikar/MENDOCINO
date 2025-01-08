@@ -90,6 +90,49 @@ if(wfTask == "Issuance" && wfStatus == "Issued")
             }
         }
     }
+
+    // CAMEND-692
+    var conName = "";
+    var contactResult = aa.people.getCapContactByCapID(capId);
+    if (contactResult.getSuccess()) {
+        var capContacts = contactResult.getOutput();
+        for (c in capContacts) {
+            if (capContacts[c].getCapContactModel().getPrimaryFlag() == "Y") {
+                logDebug("Primary Contact: " + getContactName(capContacts[c]));
+                conName = getContactName(capContacts[c]);
+            }
+        }
+    }
+    var hm = new Array();
+    var totalSF = 0;
+    if (appTypeArray[1] == "Cultivation") {
+        totalSF = getAppSpecific("Total SF", capId);
+    } else if (appTypeArray[1] == "Nursery") {
+        totalSF = getAppSpecific("Total Nursery SF", capId);
+    }
+    var capStatus = aa.cap.getCap(capId).getOutput();
+    var thisCapStatus = capStatus.getCapStatus();
+    var params = aa.util.newHashtable();
+    addParameter(params, "$$altID$$", capId.getCustomID() + "");
+    addParameter(params, "$$year$$", String(aa.date.getCurrentDate().getYear()));
+    addParameter(params, "$$date$$", sysDateMMDDYYYY);
+    addParameter(params, "$$capStatus$$", thisCapStatus);
+    addParameter(params, "$$totalSF$$", totalSF);
+    addParameter(params, "$$contactName$$", conName);
+    addParameter(params, "$$parentAltId$$", newAltId+"");
+    addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptName"));
+    addParameter(params, "$$phoneHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "phoneHours"));
+    addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptPhone"));
+    addParameter(params, "$$officeHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "officeHours"));
+    addParameter(params, "$$deptHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptHours"));
+    addParameter(params, "$$deptEmail$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptEmail"));
+    addParameter(params, "$$deptAddress$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptAddress"));
+    addParameter(params, "$$deptFormalName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptFormalName"));
+    addParameter(params, "$$FullNameBusName$$", conName);
+    addParameter(params, "$$capAlias$$", aa.cap.getCap(capId).getOutput().getCapType().getAlias() + "");
+    addParameter(params, "$$Amendment$$", aa.cap.getCap(capId).getOutput().getCapType().getAlias() + "");
+    addParameter(params, "$$Location$$", getAddressInALine());
+    sendEmail("no-reply@mendocinocounty.org", String(lookup("CAN_TREASURER_TAX_COLLECTOR", "TTC_Email")), "", "CAN_TTC_APPLICATION_STATUS", params, null, capId);
 /*}
 //CAMEND-194, 223
 if(wfTask == "Issuance" && wfStatus == "Issued")
@@ -435,53 +478,48 @@ if(wfTask == "Supervisor Review" && wfStatus == "Deficiency")
 }
 
 // CAMEND-692
-if (wfTask == "Draft Decision" && wfStatus == "Approved") {
-    var conName = "";
-    var contactResult = aa.people.getCapContactByCapID(capId);
-    if (contactResult.getSuccess()) {
-        var capContacts = contactResult.getOutput();
-        for (c in capContacts) {
-            if (capContacts[c].getCapContactModel().getPrimaryFlag() == "Y") {
-                logDebug("Primary Contact: " + getContactName(capContacts[c]));
-                conName = getContactName(capContacts[c]);
-            }
-        }
-    }
-    var hm = new Array();
-    // var parent = getParent();
-    // var parentCap = aa.cap.getCap(parentCapId).getOutput();
-    // parentAppTypeResult = parentCap.getCapType();
-    // parentAppTypeString = parentAppTypeResult.toString();
-    // parentAppTypeArray = parentAppTypeString.split("/");
-    var totalSF = 0;
-    if (appTypeArray[1] == "Cultivation") {
-        totalSF = getAppSpecific("Total SF", capId);
-    } else if (appTypeArray[1] == "Nursery") {
-        totalSF = getAppSpecific("Total Nursery SF", capId);
-    }
-    var capStatus = aa.cap.getCap(capId).getOutput();
-    var thisCapStatus = capStatus.getCapStatus();
-    var params = aa.util.newHashtable();
-    addParameter(params, "$$altID$$", capId.getCustomID() + "");
-    addParameter(params, "$$year$$", String(aa.date.getCurrentDate().getYear()));
-    addParameter(params, "$$date$$", sysDateMMDDYYYY);
-    addParameter(params, "$$capStatus$$", thisCapStatus);
-    addParameter(params, "$$totalSF$$", totalSF);
-    addParameter(params, "$$contactName$$", conName);
-    addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptName"));
-    addParameter(params, "$$phoneHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "phoneHours"));
-    addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptPhone"));
-    addParameter(params, "$$officeHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "officeHours"));
-    addParameter(params, "$$deptHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptHours"));
-    addParameter(params, "$$deptEmail$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptEmail"));
-    addParameter(params, "$$deptAddress$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptAddress"));
-    addParameter(params, "$$deptFormalName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptFormalName"));
-    addParameter(params, "$$FullNameBusName$$", conName);
-    addParameter(params, "$$capAlias$$", aa.cap.getCap(capId).getOutput().getCapType().getAlias() + "");
-    addParameter(params, "$$Amendment$$", aa.cap.getCap(capId).getOutput().getCapType().getAlias() + "");
-    addParameter(params, "$$Location$$", getAddressInALine());
-    sendEmail("no-reply@mendocinocounty.org", String(lookup("CAN_TREASURER_TAX_COLLECTOR", "TTC_Email")), "", "CAN_TTC_APPLICATION_STATUS", params, null, capId);
-}
+// if (wfTask == "Draft Decision" && wfStatus == "Approved") {
+//     var conName = "";
+//     var contactResult = aa.people.getCapContactByCapID(capId);
+//     if (contactResult.getSuccess()) {
+//         var capContacts = contactResult.getOutput();
+//         for (c in capContacts) {
+//             if (capContacts[c].getCapContactModel().getPrimaryFlag() == "Y") {
+//                 logDebug("Primary Contact: " + getContactName(capContacts[c]));
+//                 conName = getContactName(capContacts[c]);
+//             }
+//         }
+//     }
+//     var hm = new Array();
+//     var totalSF = 0;
+//     if (appTypeArray[1] == "Cultivation") {
+//         totalSF = getAppSpecific("Total SF", capId);
+//     } else if (appTypeArray[1] == "Nursery") {
+//         totalSF = getAppSpecific("Total Nursery SF", capId);
+//     }
+//     var capStatus = aa.cap.getCap(capId).getOutput();
+//     var thisCapStatus = capStatus.getCapStatus();
+//     var params = aa.util.newHashtable();
+//     addParameter(params, "$$altID$$", capId.getCustomID() + "");
+//     addParameter(params, "$$year$$", String(aa.date.getCurrentDate().getYear()));
+//     addParameter(params, "$$date$$", sysDateMMDDYYYY);
+//     addParameter(params, "$$capStatus$$", thisCapStatus);
+//     addParameter(params, "$$totalSF$$", totalSF);
+//     addParameter(params, "$$contactName$$", conName);
+//     addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptName"));
+//     addParameter(params, "$$phoneHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "phoneHours"));
+//     addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptPhone"));
+//     addParameter(params, "$$officeHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "officeHours"));
+//     addParameter(params, "$$deptHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptHours"));
+//     addParameter(params, "$$deptEmail$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptEmail"));
+//     addParameter(params, "$$deptAddress$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptAddress"));
+//     addParameter(params, "$$deptFormalName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptFormalName"));
+//     addParameter(params, "$$FullNameBusName$$", conName);
+//     addParameter(params, "$$capAlias$$", aa.cap.getCap(capId).getOutput().getCapType().getAlias() + "");
+//     addParameter(params, "$$Amendment$$", aa.cap.getCap(capId).getOutput().getCapType().getAlias() + "");
+//     addParameter(params, "$$Location$$", getAddressInALine());
+//     sendEmail("no-reply@mendocinocounty.org", String(lookup("CAN_TREASURER_TAX_COLLECTOR", "TTC_Email")), "", "CAN_TTC_APPLICATION_STATUS", params, null, capId);
+// }
 
 function createRefLicProfFromLicProfX()
 {
