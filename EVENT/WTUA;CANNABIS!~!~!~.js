@@ -131,6 +131,11 @@ if(wfStatus == "Withdrawn" && (appMatch("Cannabis/Cultivation/*/*") || appMatch(
                 var vCap = aa.cap.getCap(vCapId).getOutput();
                 if(vCap.isCompleteCap() && vCapId+""!=capId+"")
                 {
+                    updateAppStatus("Withdrawn","Updated via script",vCapId);
+                    var temp = capId;
+                    capId = vCapId;
+                    taskCloseAllExcept("Withdrawn","Closing via script");
+                    capId = temp;
                     var capDetailObjResult = aa.cap.getCapDetail(vCapId); // Detail
                     if (capDetailObjResult.getSuccess()) {
                         capDetail = capDetailObjResult.getOutput();
@@ -139,10 +144,8 @@ if(wfStatus == "Withdrawn" && (appMatch("Cannabis/Cultivation/*/*") || appMatch(
                             inspCancelAll();
                             var temp = capId;
                             capId = vCapId;
-                            taskCloseAllExcept("Withdrawn","Closing via script");
                             addLicenseCondition("Balance","Applied","Out of Program Balance Due","Out of Program Balance Due","Notice");
                             capId = temp;
-                            updateAppStatus("Withdrawn","Updated via script",vCapId);
                         }
                     }
                 }
