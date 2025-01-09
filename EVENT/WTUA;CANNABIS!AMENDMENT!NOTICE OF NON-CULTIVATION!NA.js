@@ -8,6 +8,8 @@ if (wfStatus == "Approved") {
             if (capContacts[c].getCapContactModel().getPrimaryFlag() == "Y") {
                 logDebug("Primary Contact: " + getContactName(capContacts[c]));
                 conName = getContactName(capContacts[c]);
+            } else {
+                conName = "Applicant";
             }
         }
     }
