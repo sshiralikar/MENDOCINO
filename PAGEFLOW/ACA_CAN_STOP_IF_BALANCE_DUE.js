@@ -152,15 +152,10 @@ try {
         var vCap = aa.cap.getCap(vCapID).getOutput();
         if(vCap.isCompleteCap() && (vCapID+"" != capId+""))
         {
-            //records += vCapID.customID+"; "
-            var capDetailObjResult = aa.cap.getCapDetail(vCapID); // Detail
-            if (capDetailObjResult.getSuccess()) {
-                capDetail = capDetailObjResult.getOutput();
-                var balanceDue = capDetail.getBalance();
-                if (balanceDue > 0) {
-                    records = true;
-                    balRecords += "<p>"+vCapID.customID+"; </p>";
-                }
+            var balanceDue = getBalanceDue(vCapID,0);
+            if (balanceDue > 0) {
+                records = true;
+                balRecords += "<p>"+vCapID.customID+"; </p>";
             }
             if(vCap.getCapStatus() == "Terminated" && String(vCap.getCapType()).indexOf("Permit")!=-1){
                 records = true;
@@ -201,4 +196,18 @@ if (debug.indexOf("**ERROR") > 0) {
         if (showDebug)
             aa.env.setValue("ErrorMessage", debug);
     }
+}
+function getBalanceDue(targetCapId,total)
+{
+    var balance = total;
+    var invArray = aa.finance.getInvoiceByCapID(targetCapId, null).getOutput();
+    if(invArray && invArray.length>0)
+        balance = 0;
+    for (var invCount in invArray)
+    {
+        var thisInvoice = invArray[invCount];
+        var balDue = thisInvoice.getInvoiceModel().getBalanceDue();
+        balance+=parseInt(balDue);
+    }
+    return balance;
 }

@@ -89,3 +89,67 @@ if(wfStatus == "Ready for Inspection")
         }
     }
 }
+if(wfStatus == "Withdrawn" && (appMatch("Cannabis/Cultivation/*/*") || appMatch("Cannabis/Nursery/*/*")))
+{
+    var pCapId = capId;
+    if(pCapId)
+    {
+        var capDetailObjResult = aa.cap.getCapDetail(pCapId); // Detail
+        if (capDetailObjResult.getSuccess()) {
+            capDetail = capDetailObjResult.getOutput();
+            var balanceDue = capDetail.getBalance();
+            if(balanceDue <= 0)
+            {
+                taskCloseAllExcept("Withdrawn","Closing via script");
+                updateAppStatus("Withdrawn","Updated via script",pCapId);
+                var conName = "";
+                var contactResult = aa.people.getCapContactByCapID(pCapId);
+                if (contactResult.getSuccess()) {
+                    var capContacts = contactResult.getOutput();
+                    for (var i in capContacts) {
+                        if(matches(capContacts[i].getPeople().getContactType(),"Applicant","Authorized Agent")) {
+                            conName = getContactName(capContacts[i]);
+                            var params = aa.util.newHashtable();
+                            addParameter(params, "$$altID$$", pCapId.getCustomID()+"");
+                            addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptName"));
+                            addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptPhone"));
+                            addParameter(params, "$$deptHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptHours"));
+                            addParameter(params, "$$deptEmail$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptEmail"));
+                            addParameter(params, "$$deptFormalName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptFormalName"));
+                            addParameter(params, "$$contactname$$", conName);
+                            sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail()+"", "", "CAN_WITHDRAWAL APPROVED", params, null, capId);
+                        }
+                    }
+                }
+            }
+        }
+        //CAMEND-603
+        var cChildren = getChildren("Cannabis/*/*/*", pCapId);
+        if (cChildren != null) {
+            for (var c in cChildren) {
+                var vCapId = cChildren[c];
+                var vCap = aa.cap.getCap(vCapId).getOutput();
+                if(vCap.isCompleteCap() && vCapId+""!=capId+"")
+                {
+                    updateAppStatus("Withdrawn","Updated via script",vCapId);
+                    var temp = capId;
+                    capId = vCapId;
+                    taskCloseAllExcept("Withdrawn","Closing via script");
+                    capId = temp;
+                    var capDetailObjResult = aa.cap.getCapDetail(vCapId); // Detail
+                    if (capDetailObjResult.getSuccess()) {
+                        capDetail = capDetailObjResult.getOutput();
+                        var balanceDue = capDetail.getBalance();
+                        if (balanceDue > 0) {
+                            inspCancelAll();
+                            var temp = capId;
+                            capId = vCapId;
+                            addLicenseCondition("Balance","Applied","Out of Program Balance Due","Out of Program Balance Due","Notice");
+                            capId = temp;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
