@@ -1,6 +1,6 @@
 // CAMEND-563
 if (wfStatus == "Approved") {
-    var conName = "";
+var conName = "";
     var contactResult = aa.people.getCapContactByCapID(capId);
     if (contactResult.getSuccess()) {
         var capContacts = contactResult.getOutput();
@@ -8,8 +8,8 @@ if (wfStatus == "Approved") {
             if (capContacts[c].getCapContactModel().getPrimaryFlag() == "Y") {
                 logDebug("Primary Contact: " + getContactName(capContacts[c]));
                 conName = getContactName(capContacts[c]);
-            } else {
-                conName = "Applicant";
+            } else if (capContacts[i].getPeople().getContactType() == "Applicant") {
+                conName = getContactName(capContacts[i]);
             }
         }
     }
