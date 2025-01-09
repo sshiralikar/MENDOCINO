@@ -82,6 +82,14 @@ function setRecordAltID(vCapID) {
             // CAMEND-541
             else if (vCapType == "Cannabis/Amendment/Appeal/NA")
                 newAltId = lastAltId + "-APPL-" + amendNbr;
+            // CAMEND-693
+            else if (vCapType == "Cannabis/Amendment/Notice of Fallowing/NA") {
+                if (wfTask == "Amendment Review" && wfStatus == "Approved") {
+                    if (AInfo["NOF Intent Partial"] == "Yes") {
+                        newAltId = lastAltId + "-NOFP-" + amendNbr;
+                    }
+                }
+            }
 
             var updateResult = aa.cap.updateCapAltID(vCapID, newAltId);
             if (!updateResult.getSuccess()) {
