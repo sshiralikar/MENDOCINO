@@ -218,6 +218,7 @@ function mainProcess() {
                         resultWorkflowTask("Permit Status", "Non Renewal", "Updated by batch " + ".", "Updated by batch ")
                         deactivateTask("Permit Status");
                         updateAppStatus("Non Renewal", "Updated by batch ", capId);
+                        setLicExpirationDate(capId,"",addZero,"Expired");
                     }
                     if(balance > 0)
                     {
@@ -304,6 +305,7 @@ function mainProcess() {
                         resultWorkflowTask("Permit Status", "Non Renewal", "Updated by batch " + ".", "Updated by batch ")
                         deactivateTask("Permit Status");
                         updateAppStatus("Non Renewal", "Updated by batch ", capId);
+                        setLicExpirationDate(capId,"",addZero,"Expired");
                     }
                     if(balance > 0)
                     {
