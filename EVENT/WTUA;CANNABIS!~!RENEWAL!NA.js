@@ -184,15 +184,12 @@ if (wfStatus == "Modification Required") {
 if (wfTask == "Issuance" && wfStatus == "Denied") {
     // updateTask("Draft Decision", "Issuance Denied", "", "");
     // aa.workflow.adjustTask(capId, "Draft Decision", "N", "Y", null, null);
-    var licCapId = getParent();
 
     // CAMEND-661
-    // If "Issuance" = "Denied" the parent will update the workflow status and application status to Denied and close out workflow/record
-    var temp = capId;
-    capId = licCapId;
-    taskCloseAllExcept("Denied", "Closing via script");
-    capId = temp;
-    updateAppStatus("Denied", "Updating via Script", licCapId);
+    // If "Issuance" = "Denied" the parent will update the workflow status and application status and due date to 35 days
+    var licCapId = getParent();
+    updateAppStatus("Denial Pending", "Updating via Script", licCapId);
+    moveWFTask("Permit Status", "Denial Pending", " ", "", licCapId, null, dateAdd(newDate, 35));
 
     if (licCapId) {
         var VRFiles = new Array();
