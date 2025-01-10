@@ -154,6 +154,7 @@ function mainProcess()
 
                     if((today == first) || (today == second) || (today == third))
                     {
+                        logDebugBatch("Picked - "+capId.getCustomID() +" Sending Reminder");
                         var hm = new Array();
                         var conName = "";
                         var contactResult = aa.people.getCapContactByCapID(capId);
@@ -203,7 +204,7 @@ function mainProcess()
         else
         {
             var recArray = recordListResult.getOutput();
-            logDebugBatch("Looping through " + recArray.length + " Records for status About to Expire");
+            logDebugBatch("Looping through " + recArray.length + " Records for status Pending Non Renewal");
             for (var j in recArray)
             {
                 capId = aa.cap.getCapID(recArray[j].getID1(), recArray[j].getID2(), recArray[j].getID3()).getOutput();
@@ -226,6 +227,7 @@ function mainProcess()
 
                     if((today == first) || (today == second) || (today == third))
                     {
+                        logDebugBatch("Picked - "+capId.getCustomID() +" Sending Reminder");
                         var hm = new Array();
                         var conName = "";
                         var contactResult = aa.people.getCapContactByCapID(capId);
@@ -292,7 +294,10 @@ function mainProcess()
                     //aa.print("today: "+ today);
                     //aa.print("nofDate: "+ nofDate);
                     if(nofDate == today)
+                    {
+                        logDebugBatch("Picked - "+capId.getCustomID() +" Changing status to Active");
                         updateAppStatus("Active","updated by batch as NOF Exp date is past expiration",capId);
+                    }
                 }
             }
         }
