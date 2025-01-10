@@ -84,7 +84,7 @@ function createRefLicProfFromLicProfX()
     newLic.setWcExempt(licProfScriptModel.getWorkCompExempt());
     newLic.setZip(licProfScriptModel.getZip());
     //logDebug("licProfScriptModel.getLicenseExpirationDate(): "+ licProfScriptModel.getLicenseExpirationDate());
-    //newLic.setLicenseExpirationDate(licProfScriptModel.getLicenseExpirDate());
+    newLic.setLicenseExpirationDate(licProfScriptModel.getLicenseExpirDate());
     newLic.setLicenseExpirationDate(licProfScriptModel.getLastUpdateDate());
     //newLic.setLicenseProfessionalModel(licProfScriptModel.getLicenseProfessionalModel);
     if (updating)

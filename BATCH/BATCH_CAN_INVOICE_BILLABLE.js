@@ -240,6 +240,7 @@ function mainProcess() {
                     if((table[i]["Invoice Number"].fieldValue == null || table[i]["Invoice Number"].fieldValue == "")
                         && table[i]["Exempt"].fieldValue !="CHECKED")
                     {
+
                         var feeSeq = addFee("CANHOUR01", "CAN_CULT", "FINAL", parseInt(table[i]["Billable Hours"].fieldValue), "Y");
                         var invoiceNbr = null;
                         var invoiceResult = aa.finance.getFeeItemInvoiceByFeeNbr(capId, feeSeq, null);
@@ -255,6 +256,7 @@ function mainProcess() {
                         }
                         if(invoiceNbr)
                         {
+                            logMessage("Picked a row in " + capId.getCustomID() + " Record, and invoiced "+ invoiceNbr);
                             var vRow = new Array();
                             vRow["Meeting Type"] = new asiTableValObj("Meeting Type", table[i]["Meeting Type"].fieldValue, "N");
                             vRow["Meeting Date"] = new asiTableValObj("Meeting Date", table[i]["Meeting Date"].fieldValue, "N");

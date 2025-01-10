@@ -1,8 +1,8 @@
 if (wfStatus == "Approved") {
     // CAMEND-695
     var pCapId = getParent();
-    var gParent = getParent(pCapId);
-    if (gParent)
+    var gParent = getParentByCapId(pCapId);
+    if(gParent)
         pCapId = gParent;
     editAppSpecific("Appeal Decision Date", sysDateMMDDYYYY, pCapId);
     //CAMEND-663
