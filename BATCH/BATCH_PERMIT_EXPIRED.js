@@ -342,6 +342,33 @@ function mainProcess() {
                         updateAppStatus("Non Renewal - Balance Due", "Updated by batch ", capId);
                         addLicenseCondition("Balance","Applied","Out of Program Balance Due","Out of Program Balance Due","Notice");
                     }
+                    var cChildren = getChildren("Cannabis/*/*/*", capId);
+                    if (cChildren != null) {
+                        for (var c in cChildren) {
+                            var vCapId = cChildren[c];
+                            var vCap = aa.cap.getCap(vCapId).getOutput();
+                            if(vCap.isCompleteCap())
+                            {
+                                updateAppStatus("Expired","Updated via script",vCapId);
+                                var temp = capId;
+                                capId = vCapId;
+                                taskCloseAllExcept("Expired","Closing via script");
+                                capId = temp;
+                                var capDetailObjResult = aa.cap.getCapDetail(vCapId); // Detail
+                                if (capDetailObjResult.getSuccess()) {
+                                    capDetail = capDetailObjResult.getOutput();
+                                    var balanceDue = capDetail.getBalance();
+                                    if (balanceDue > 0) {
+                                        inspCancelAll();
+                                        var temp = capId;
+                                        capId = vCapId;
+                                        addLicenseCondition("Balance","Applied","Out of Program Balance Due","Out of Program Balance Due","Notice");
+                                        capId = temp;
+                                    }
+                                }
+                            }
+                        }
+                    }
                     var test = true;
                     var contactResult = aa.people.getCapContactByCapID(capId);
                     if (contactResult.getSuccess()) {
