@@ -202,6 +202,9 @@ function getRequiredDocumentsForCanCult() {
             requirementArray.push(courtLettersTestamentary);
         }
         // CAMEND-757
+
+        // CAMEND-804
+        requirementArray.push(ccblAffidavit);
     }
     else if (isAppeal) {
 
