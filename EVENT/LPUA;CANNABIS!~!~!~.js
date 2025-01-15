@@ -83,9 +83,10 @@ function createRefLicProfFromLicProfX()
     newLic.setSuffixName(licProfScriptModel.getSuffixName());
     newLic.setWcExempt(licProfScriptModel.getWorkCompExempt());
     newLic.setZip(licProfScriptModel.getZip());
+    newLic.setLicenseExpirationDate(licProfScriptModel.getBirthDate())
     //logDebug("licProfScriptModel.getLicenseExpirationDate(): "+ licProfScriptModel.getLicenseExpirationDate());
-    newLic.setLicenseExpirationDate(licProfScriptModel.getLicenseExpirDate());
-    newLic.setLicenseExpirationDate(licProfScriptModel.getLastUpdateDate());
+    //newLic.setLicenseExpirationDate(licProfScriptModel.getLicenseExpirDate());
+    //newLic.setLicenseExpirationDate(licProfScriptModel.getLastUpdateDate());
     //newLic.setLicenseProfessionalModel(licProfScriptModel.getLicenseProfessionalModel);
     if (updating)
         myResult = aa.licenseScript.editRefLicenseProf(newLic);
