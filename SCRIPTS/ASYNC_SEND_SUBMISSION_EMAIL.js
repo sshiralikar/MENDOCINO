@@ -147,7 +147,7 @@ try {
     }
 
     // CAMEND-527
-    // if (appMatch("Cannabis/*/Renewal/NA")) {
+    // if (appTypeArray[2] == "Renewal") {
     //     if (AInfo["Permit Type Change"] == "Yes") {
     //         var hm = new Array();
     //         var pCapId = getParent();
@@ -178,10 +178,6 @@ try {
     //                     addParameter(params, "$$parentCapId$$", pCapId.getCustomID());
     //                     addParameter(params, "$$Amendment$$", aa.cap.getCap(capId).getOutput().getCapType().getAlias() + "");
     //                     addParameter(params, "$$Location$$", getAddressInALine());
-    //                     if (wfComment != "" && wfComment != null)
-    //                         addParameter(params, "$$wfComment$$", "Comments: " + wfComment);
-    //                     else
-    //                         addParameter(params, "$$wfComment$$", "");
     //                     sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail() + "", "", "CAN_MODIFICATION REQUIRED", params, null, capId);
     //                 }
     //             }

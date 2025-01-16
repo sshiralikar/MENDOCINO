@@ -76,7 +76,7 @@ try {
     {
         for(var i in table)
         {
-            if(table[i]["Type of Power"] == "Generator" && table[i]["Primary Power Type"] == "CHECKED")
+            if(table[i]["Type of Power"] == "Generator")
                 flag = true
         }
     }
