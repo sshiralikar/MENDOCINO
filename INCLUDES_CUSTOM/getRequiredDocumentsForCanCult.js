@@ -403,9 +403,6 @@ function getRequiredDocumentsForCanCult() {
                 requirementArray.push(WellPermit);
                 requirementArray.push(WellLog);
             }
-            if (waterSource[x]["Water Source Type"] == "Small Irrigation") {
-                requirementArray.push(SmallIrrigationUseRegistration);
-            }
         }
         var SensitiveSpeciesHabitatReview = {
             condition: "Sensitive Species Habitat Review, Generator / Machinery Noise Management Plan",
