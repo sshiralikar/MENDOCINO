@@ -66,6 +66,12 @@ function getRequiredDocumentsForCanCult() {
         document: "Court Provided Letters Testamentary"
     }
 
+    //CAMEND-804
+    var compliancePlan = {
+        condition: "Compliance Plan",
+        document: "Compliance Plan",
+    };
+
     // CAMEND-703
     var suppDocs = {
         condition: "Supporting Documentation",
@@ -205,6 +211,43 @@ function getRequiredDocumentsForCanCult() {
 
         // CAMEND-804
         requirementArray.push(ccblAffidavit);
+
+        // CAMEND-804
+        var licCapId = getParent();
+        var cChildren = getChildren("Cannabis/*/Application/NA", licCapId);
+        if (cChildren != null) {
+            for (var c in cChildren) {
+                var childCapId = cChildren[c];
+                logDebug(childCapId)
+                var capDocResult = aa.document.getDocumentListByEntity(childCapId, "CAP");
+                if (capDocResult.getSuccess()) {
+                    if (capDocResult.getOutput().size() > 0) {
+                        for (docInx = 0; docInx < capDocResult.getOutput().size(); docInx++) {
+                            var documentObject = capDocResult.getOutput().get(docInx);
+                            var docCat = "" + documentObject.getDocCategory();
+                            // logDebug("Document " + [docInx + 1] + ": " + docCat);
+                            if (docCat === "Compliance Plan") {
+                                requirementArray.push(compliancePlan);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        var capDocResult = aa.document.getDocumentListByEntity(licCapId, "CAP");
+        if (capDocResult.getSuccess()) {
+            if (capDocResult.getOutput().size() > 0) {
+                for (docInx = 0; docInx < capDocResult.getOutput().size(); docInx++) {
+                    var documentObject = capDocResult.getOutput().get(docInx);
+                    var docCat = "" + documentObject.getDocCategory();
+                    // logDebug("Document " + [docInx + 1] + ": " + docCat);
+                    if (docCat === "Compliance Plan") {
+                        requirementArray.push(compliancePlan);
+                    }
+                }
+            }
+        }
     }
     else if (isAppeal) {
 
