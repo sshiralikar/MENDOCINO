@@ -214,20 +214,47 @@ function getRequiredDocumentsForCanCult() {
 
         // CAMEND-804
         var licCapId = getParent();
-        var cChildren = getChildren("Cannabis/*/Application/NA", licCapId);
-        if (cChildren != null) {
-            for (var c in cChildren) {
-                var childCapId = cChildren[c];
-                logDebug(childCapId)
-                var capDocResult = aa.document.getDocumentListByEntity(childCapId, "CAP");
-                if (capDocResult.getSuccess()) {
-                    if (capDocResult.getOutput().size() > 0) {
-                        for (docInx = 0; docInx < capDocResult.getOutput().size(); docInx++) {
-                            var documentObject = capDocResult.getOutput().get(docInx);
-                            var docCat = "" + documentObject.getDocCategory();
-                            // logDebug("Document " + [docInx + 1] + ": " + docCat);
-                            if (docCat === "Compliance Plan") {
-                                requirementArray.push(compliancePlan);
+        var grandCapId = getParentLicenseCapID(licCapId);
+
+        if (grandCapId) {
+            var cChildren = getChildren("Cannabis/*/Application/NA", grandCapId);
+            if (cChildren != null) {
+                for (var c in cChildren) {
+                    var childCapId = cChildren[c];
+                    logDebug(childCapId)
+                    var capDocResult = aa.document.getDocumentListByEntity(childCapId, "CAP");
+                    if (capDocResult.getSuccess()) {
+                        if (capDocResult.getOutput().size() > 0) {
+                            for (docInx = 0; docInx < capDocResult.getOutput().size(); docInx++) {
+                                var documentObject = capDocResult.getOutput().get(docInx);
+                                var docCat = "" + documentObject.getDocCategory();
+                                // logDebug("Document " + [docInx + 1] + ": " + docCat);
+                                if (docCat === "Compliance Plan") {
+                                    requirementArray.push(compliancePlan);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        if (licCapId) {
+            var cChildren = getChildren("Cannabis/*/Application/NA", licCapId);
+            if (cChildren != null) {
+                for (var c in cChildren) {
+                    var childCapId = cChildren[c];
+                    logDebug(childCapId)
+                    var capDocResult = aa.document.getDocumentListByEntity(childCapId, "CAP");
+                    if (capDocResult.getSuccess()) {
+                        if (capDocResult.getOutput().size() > 0) {
+                            for (docInx = 0; docInx < capDocResult.getOutput().size(); docInx++) {
+                                var documentObject = capDocResult.getOutput().get(docInx);
+                                var docCat = "" + documentObject.getDocCategory();
+                                // logDebug("Document " + [docInx + 1] + ": " + docCat);
+                                if (docCat === "Compliance Plan") {
+                                    requirementArray.push(compliancePlan);
+                                }
                             }
                         }
                     }
