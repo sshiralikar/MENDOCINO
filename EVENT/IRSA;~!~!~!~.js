@@ -15,7 +15,7 @@ if (contactResult.getSuccess()) {
                 inspectorName = "Inspector";
 
             var rParams = aa.util.newHashMap();
-            rParams.put("inspectionid", inspId);
+            rParams.put("inspectionid", inspId+"");
             var report = aa.reportManager.getReportInfoModelByName("Cannabis Inspection Report");
             report = report.getOutput();
             report.setModule("Cannabis");
@@ -34,7 +34,7 @@ if (contactResult.getSuccess()) {
                 }
             }
             var rParams = aa.util.newHashMap();
-            rParams.put("inspectionid", inspId);
+            rParams.put("inspectionid", inspId+"");
             rParams.put("MobileInd", "1");
             var report = aa.reportManager.getReportInfoModelByName("Cannabis Inspection Mobile Report");
             report = report.getOutput();
