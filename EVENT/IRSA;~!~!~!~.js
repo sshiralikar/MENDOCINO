@@ -16,6 +16,7 @@ if (contactResult.getSuccess()) {
 
             var rParams = aa.util.newHashMap();
             rParams.put("inspectionid", inspId+"");
+            rParams.put("MobileInd", "0");
             var report = aa.reportManager.getReportInfoModelByName("Cannabis Inspection Report");
             report = report.getOutput();
             report.setModule("Cannabis");
