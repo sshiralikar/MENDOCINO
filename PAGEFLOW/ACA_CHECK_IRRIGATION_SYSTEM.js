@@ -126,8 +126,10 @@ try {
 
     var waterOnsite = AInfo["Water onsite"];
     var waterSource = AInfo["Water source"];
+    // CAMEND-831
+    var irrigationSystem = AInfo["Irrigation system"];
     logDebug("Water onsite value is: " + waterOnsite);
-    if (waterOnsite == "Yes" || waterSource == "Yes") {
+    if (waterOnsite == "Yes" || waterSource == "Yes" || irrigationSystem == "Yes") {
         var table = loadASITable_ACA("WATER SOURCE");
         logDebug("WATERSOURCE: "+ table);
         if(!table)
