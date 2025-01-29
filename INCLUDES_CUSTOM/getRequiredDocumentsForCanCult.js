@@ -20,6 +20,8 @@ function getRequiredDocumentsForCanCult() {
     var isNOFAffidavit = appMatch("Cannabis/Amendment/Notice of Fallowing/Affidavit");
     var isNOFRevocation = appMatch("Cannabis/Amendment/Notice of Fallowing/Revocation");
     var isTaxAppeal = appMatch("Cannabis/Amendment/Tax Appeal/NA");
+    var isContactChange = appMatch("Cannabis/Amendment/Contact Change/NA");
+
 
     var ccblAffidavit = {
         condition: "CCBL Affidavit",
@@ -293,6 +295,10 @@ function getRequiredDocumentsForCanCult() {
         if (AInfo["Received Tax Invoice"] == "Yes") {
             requirementArray.push(annualTrueUpInvoice);
         }
+    }
+    // CAMEND-468
+    else if (isContactChange) {
+
     }
     else {
         //CAMEND-153
