@@ -128,7 +128,9 @@ var isNOF = appMatch("Cannabis/Amendment/Notice of Fallowing/NA");
 var isNOFAffidavit = appMatch("Cannabis/Amendment/Notice of Fallowing/Affidavit");
 var isNOFRevocation = appMatch("Cannabis/Amendment/Notice of Fallowing/Revocation");
 var isTaxAppeal = appMatch("Cannabis/Amendment/Tax Appeal/NA");
-if (!isAppeal && !isAssignment && !isNOF && !isNOFAffidavit && !isNOFRevocation && !isTaxAppeal)
+// CAMEND-468
+var isContactChange = appMatch("Cannabis/Amendment/Contact Change/NA");
+if (!isAppeal && !isAssignment && !isNOF && !isNOFAffidavit && !isNOFRevocation && !isTaxAppeal && !isContactChange)
     loadASITables4ACA();
 
 logDebug("<B>EMSE Script Results for " + capIDString + "</B>");
