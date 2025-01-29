@@ -2,6 +2,8 @@
 if (wfStatus == "Void" || wfStatus == "Withdrawn") {
     taskCloseAllExcept(wfStatus, "Closing via script");
     updateAppStatus(wfStatus, "Updating via Script");
+    var licCapId = getParent();
+    updateAppStatus("Withdrawn", "Updating via Script", licCapId);
 }
 //CAMEND-305, CAMEND-507
 if (wfStatus == "Issued") {
@@ -190,6 +192,7 @@ if (wfTask == "Issuance" && wfStatus == "Denied") {
     var licCapId = getParent();
     updateAppStatus("Denial Pending", "Updating via Script", licCapId);
     moveWFTask("Permit Status", "Denial Pending", " ", "", licCapId, null, dateAdd(newDate, 35));
+    updateAppStatus("Pending Non Renewal","Denial Pending",licCapId);
 
     if (licCapId) {
         var VRFiles = new Array();
