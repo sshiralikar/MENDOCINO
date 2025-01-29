@@ -82,6 +82,9 @@ function setRecordAltID(vCapID) {
             // CAMEND-541
             else if (vCapType == "Cannabis/Amendment/Appeal/NA")
                 newAltId = lastAltId + "-APPL-" + amendNbr;
+            // CAMEND-468
+            else if (vCapType == "Cannabis/Amendment/Appeal/NA")
+                newAltId = lastAltId + "-CONT-" + amendNbr;
 
             var updateResult = aa.cap.updateCapAltID(vCapID, newAltId);
             if (!updateResult.getSuccess()) {
