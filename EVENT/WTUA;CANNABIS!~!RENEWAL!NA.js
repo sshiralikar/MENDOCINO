@@ -2,6 +2,8 @@
 if (wfStatus == "Void" || wfStatus == "Withdrawn") {
     taskCloseAllExcept(wfStatus, "Closing via script");
     updateAppStatus(wfStatus, "Updating via Script");
+    var licCapId = getParent();
+    updateAppStatus("Withdrawn", "Updating via Script", licCapId);
 }
 //CAMEND-305, CAMEND-507
 if (wfStatus == "Issued") {
