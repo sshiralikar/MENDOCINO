@@ -79,6 +79,18 @@ if (wfStatus == "Approved") {
     newTableToAdd["Date of Expiration"] = newDate;
 
     addRowToASITable("NOTICE OF FALLOWING", newTableToAdd, pCapId);
+
+    //CAMEND-693
+    if(AInfo["NOF Intent Partial"] == "Yes")
+    {
+        var altId = capId.getCustomID()+"";
+        if(altId.indexOf("NOFP") == -1)
+        {
+            var idArr = altId.split("-NOF-");
+            var newId = idArr[0]+"-NOFP-"+idArr[1];
+            aa.cap.updateCapAltID(capId, newId);
+        }
+    }
 }
 
 // CAMEND-561
