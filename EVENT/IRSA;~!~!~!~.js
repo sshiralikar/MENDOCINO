@@ -1,39 +1,58 @@
 var hm = new Array();
+var reportUser = "ADMIN";
+var rFiles = [];
+var VRFiles = null;
+var rParams = aa.util.newHashMap();
+rParams.put("inspectionid", inspId+"");
+rParams.put("MobileInd", "0");
+var report = aa.reportManager.getReportInfoModelByName("Cannabis Inspection Report");
+report = report.getOutput();
+report.setModule("Cannabis");
+report.setCapId(capId.getID1() + "-" + capId.getID2() + "-" + capId.getID3());
+report.setReportParameters(rParams);
+report.getEDMSEntityIdModel().setAltId(capId.getCustomID());
+var permit = aa.reportManager.hasPermission("Cannabis Inspection Report",reportUser);
 
+if (permit.getOutput().booleanValue()) {
+    var reportResult = aa.reportManager.getReportResult(report);
+    if(reportResult) {
+        reportOutput = reportResult.getOutput();
+        var reportFile=aa.reportManager.storeReportToDisk(reportOutput);
+        reportFile=reportFile.getOutput();
+        rFiles.push(reportFile);
+    }
+}
+var rParams = aa.util.newHashMap();
+rParams.put("inspectionid", inspId+"");
+rParams.put("MobileInd", "1");
+var report = aa.reportManager.getReportInfoModelByName("Cannabis Inspection Mobile Report");
+report = report.getOutput();
+report.setModule("Cannabis");
+report.setCapId(capId.getID1() + "-" + capId.getID2() + "-" + capId.getID3());
+report.setReportParameters(rParams);
+report.getEDMSEntityIdModel().setAltId(capId.getCustomID());
+var permit = aa.reportManager.hasPermission("Cannabis Inspection Mobile Report",reportUser);
+
+if (permit.getOutput().booleanValue()) {
+    var reportResult = aa.reportManager.getReportResult(report);
+    if(reportResult) {
+        reportOutput = reportResult.getOutput();
+        var reportFile=aa.reportManager.storeReportToDisk(reportOutput);
+        reportFile=reportFile.getOutput();
+        rFiles.push(reportFile);
+    }
+}
+VRFiles = rFiles;
 var contactResult = aa.people.getCapContactByCapID(capId);
 if (contactResult.getSuccess()) {
     var capContacts = contactResult.getOutput();
     for (var i in capContacts) {
         if(matches(capContacts[i].getPeople().getContactType(),"Applicant","Authorized Agent")) {
-            var reportUser = "ADMIN";
-            var rFiles = [];
-            var VRFiles = null;
             var conName = getContactName(capContacts[i]);
             var applicantEmail = capContacts[i].getPeople().getEmail()+"";
             var inspectorName = getInspectorName(inspId);
             if(!inspectorName)
                 inspectorName = "Inspector";
-
-            var rParams = aa.util.newHashMap();
-            rParams.put("inspectionid", inspId);
-            var report = aa.reportManager.getReportInfoModelByName("Cannabis Inspection Report");
-            report = report.getOutput();
-            report.setModule("Cannabis");
-            report.setCapId(capId.getID1() + "-" + capId.getID2() + "-" + capId.getID3());
-            report.setReportParameters(rParams);
-            report.getEDMSEntityIdModel().setAltId(capId.getCustomID());
-            var permit = aa.reportManager.hasPermission("Cannabis Inspection Report",reportUser);
-
-            if (permit.getOutput().booleanValue()) {
-                var reportResult = aa.reportManager.getReportResult(report);
-                if(reportResult) {
-                    reportOutput = reportResult.getOutput();
-                    var reportFile=aa.reportManager.storeReportToDisk(reportOutput);
-                    reportFile=reportFile.getOutput();
-                    rFiles.push(reportFile);
-                }
-            }
-            VRFiles = rFiles;
             var params = aa.util.newHashtable();
             addParameter(params, "$$InspectorOfRecord1$$", inspectorName);
             addParameter(params, "$$InspectorOfRecord2$$", inspectorName);
@@ -44,6 +63,14 @@ if (contactResult.getSuccess()) {
             addParameter(params, "$$FullNameBusName$$", conName);
             addParameter(params, "$$InspectionType$$", inspType);
             addParameter(params, "$$InspectionResultComment$$", inspComment);
+            var startDate = new Date();
+            var todayDate = (startDate.getMonth() + 1) + "/" + startDate.getDate() + "/" + startDate.getFullYear();
+            addParameter(params, "$$date$$", todayDate);
+            var parent = getParent();
+            if(parent)
+                addParameter(params, "$$parentAltId$$", parent.getCustomID()+"");
+            else
+                addParameter(params, "$$parentAltId$$", capId.getCustomID()+"");
             addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptName"));
             addParameter(params, "$$phoneHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","phoneHours"));
             addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptPhone"));
