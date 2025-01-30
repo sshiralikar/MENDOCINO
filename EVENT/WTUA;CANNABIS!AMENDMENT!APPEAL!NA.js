@@ -59,12 +59,12 @@ if (wfStatus == "Approved") {
 
     // CAMEND-661
     var licCapId = getParent();
-    var expDate = getAppSpecific("New Expiration Date", licCapId);
+    var expDate = getAppSpecific("Expiration Date", licCapId);
     var today = new Date();
     var expDateObj = new Date(expDate);
 
     if (today > expDateObj) {
-        expDateObj.setFullYear(today.getFullYear() + 5);
+        today.setFullYear(today.getFullYear() + 5);
         var newDate = today.getMonth() + 1 + "/" + today.getDate() + "/" + today.getFullYear();
         editAppSpecific("New Expiration Date", newDate);
         editAppSpecific("New Expiration Date", newDate, licCapId);
