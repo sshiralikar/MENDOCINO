@@ -193,7 +193,7 @@ if (wfTask == "Issuance" && wfStatus == "Denied") {
     var c = new Date();
     var newDate = c.getMonth()+1+"/"+c.getDate()+"/"+c.getFullYear();
     updateAppStatus("Denial Pending", "Updating via Script", licCapId);
-    moveWFTask("Permit Status", "Denial Pending", " ", "", licCapId, null, dateAdd(newDate, 35));
+    moveWFTask("Permit Status", "Denial Pending", " ", "", licCapId, null, sysDateMMDDYYYY);
     updateAppStatus("Pending Non Renewal","Denial Pending",licCapId);
 
     if (licCapId) {
