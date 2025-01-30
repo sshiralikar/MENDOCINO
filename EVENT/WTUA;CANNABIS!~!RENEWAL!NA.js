@@ -190,6 +190,8 @@ if (wfTask == "Issuance" && wfStatus == "Denied") {
     // CAMEND-661
     // If "Issuance" = "Denied" the parent will update the workflow status and application status and due date to 35 days
     var licCapId = getParent();
+    var c = new Date();
+    var newDate = c.getMonth()+1+"/"+c.getDate()+"/"+c.getFullYear();
     updateAppStatus("Denial Pending", "Updating via Script", licCapId);
     moveWFTask("Permit Status", "Denial Pending", " ", "", licCapId, null, dateAdd(newDate, 35));
     updateAppStatus("Pending Non Renewal","Denial Pending",licCapId);
