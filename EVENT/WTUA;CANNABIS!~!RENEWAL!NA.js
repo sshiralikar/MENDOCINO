@@ -194,6 +194,7 @@ if (wfTask == "Issuance" && wfStatus == "Denied") {
     var newDate = c.getMonth()+1+"/"+c.getDate()+"/"+c.getFullYear();
     updateAppStatus("Denial Pending", "Updating via Script", licCapId);
     moveWFTask("Permit Status", "Denial Pending", " ", "", licCapId, null, sysDateMMDDYYYY);
+    updateTaskDueDate("Permit Status", dateAdd(newDate, 35), licCapId);
     updateAppStatus("Pending Non Renewal","Denial Pending",licCapId);
 
     if (licCapId) {
@@ -631,4 +632,24 @@ function moveWFTask(ipTask, ipStatus, ipComment, ipNote) // Optional CapID, Proc
         }
     }
     return vMoved;
+}
+
+function updateTaskDueDate(taskName, dueDate, vCapId) {
+    var workflowResult = aa.workflow.getTasks(vCapId);
+    if (workflowResult.getSuccess()) {
+        var wfObj = workflowResult.getOutput();
+        for (i in wfObj) {
+            if (wfObj[i].getTaskDescription() == taskName) {
+                wfObj[i].setDueDate(aa.date.parseDate(dueDate));
+                var tResult = aa.workflow.adjustTaskWithNoAudit(wfObj[i].getTaskItem());
+                if (tResult.getSuccess()) {
+                    logDebug("Set Workflow task: " + taskName + " due date to " + dueDate);
+                }
+                else {
+                    logDebug("**ERROR: Failed to update comment on workflow task: " + tResult.getErrorMessage());
+                    return false;
+                }
+            }
+        }
+    }
 }
