@@ -125,6 +125,18 @@ if(wfTask == "Draft Decision" && wfStatus == "Approved")
 }
 //CAMEND-194,223
 
+// CAMEND-784
+if (wfTask == "Draft Decision" && wfStatus == "Approved" && AInfo["Modification Conversion"] == "Yes") {
+    var parent = getParent();
+    var parentCap = aa.cap.getCap(parentCapId).getOutput();
+    parentAppTypeResult = parentCap.getCapType();
+    parentAppTypeString = parentAppTypeResult.toString();
+    parentAppTypeArray = parentAppTypeString.split("/");
+    if (parentAppTypeArray[2] == "Permit") {
+        updateAppStatus("Approved for Conversion","Updating via Script", parent);
+    }
+}
+
 // CAMEND-770
 if (wfTask == "Draft Decision" && wfStatus == "Approved" && AInfo["Permit Type Change"] == "Yes") {
     var conName = "";
