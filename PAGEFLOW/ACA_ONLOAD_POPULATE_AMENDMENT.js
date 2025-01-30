@@ -135,14 +135,12 @@ logDebug("sysDateMMDDYYYY = " + sysDateMMDDYYYY);
 /-----------------------------------------------------------------------------------------------------*/
 /*var capModelInited = aa.env.getValue("CAP_MODEL_INITED");
 if (capModelInited != "TRUE") {*/
-try
-{
+try {
     copy();
 }
-catch(err)
-{
+catch (err) {
     showMessage = true;
-    comment("Err: "+ err);
+    comment("Err: " + err);
     aa.sendMail("noreply@mendocinocounty.gov", "sshiralikar@trustvip.com", "", "ACA_ONLOAD_POPULATE_AMENDMENT", err);
 }
 
@@ -180,11 +178,9 @@ function copy() {
         copyAddress(parentCapId, targetCapId);
         copyParcel(parentCapId, targetCapId);
         copyPeople(parentCapId, targetCapId);
-        try
-        {
+        try {
             var isAssignment = appMatch("Cannabis/Amendment/Assignment/NA");
-            if(isAssignment)
-            {
+            if (isAssignment) {
                 var cons = aa.people.getCapContactByCapID(targetCapId).getOutput();
                 for (thisCon in cons) {
                     if (cons[thisCon].getCapContactModel().getPeople().getContactType() == "Applicant") {
@@ -198,25 +194,23 @@ function copy() {
                 }
             }
             var isNOF = appMatch("Cannabis/Amendment/Notice of Fallowing/NA");
-            if(isNOF)
-            {
-                var open = new Date(lookup("CAN_NOF_CONTROLS", "NOF Window Open Date")+"").setHours(0,0,0,0);
-                var close = new Date(lookup("CAN_NOF_CONTROLS", "NOF Window Close Date")+"").setHours(0,0,0,0);
-                var t = lookup("CAN_NOF_CONTROLS", "Today Date")+"";
+            if (isNOF) {
+                var open = new Date(lookup("CAN_NOF_CONTROLS", "NOF Window Open Date") + "").setHours(0, 0, 0, 0);
+                var close = new Date(lookup("CAN_NOF_CONTROLS", "NOF Window Close Date") + "").setHours(0, 0, 0, 0);
+                var t = lookup("CAN_NOF_CONTROLS", "Today Date") + "";
 
                 var today = null;
-                if(t == "SYSTEM")
-                    today = new Date().setHours(0,0,0,0);
+                if (t == "SYSTEM")
+                    today = new Date().setHours(0, 0, 0, 0);
                 else
-                    today = new Date(t).setHours(0,0,0,0);
+                    today = new Date(t).setHours(0, 0, 0, 0);
 
-                if((today < open) || (today > close))
-                {
+                if ((today < open) || (today > close)) {
                     showMessage = true;
-                    comment("Notice of Fallowing can only be submitted from "+lookup("CAN_NOF_CONTROLS", "NOF Window Open Date")+" to "+lookup("CAN_NOF_CONTROLS", "NOF Window Close Date")+"<style>#ctl00_PlaceHolderMain_actionBarBottom_btnContinue{display:none !important}</style>");
+                    comment("Notice of Fallowing can only be submitted from " + lookup("CAN_NOF_CONTROLS", "NOF Window Open Date") + " to " + lookup("CAN_NOF_CONTROLS", "NOF Window Close Date") + "<style>#ctl00_PlaceHolderMain_actionBarBottom_btnContinue{display:none !important}</style>");
                 }
                 var appStatus = getAppStatusX(parentCapId);
-                if(appStatus == "Notice of Fallowing"
+                if (appStatus == "Notice of Fallowing"
                     || appStatus == "Denied"
                     || appStatus == "Expired"
                     || appStatus == "Void"
@@ -228,71 +222,68 @@ function copy() {
                     || appStatus == "Revocation Pending"
                     || appStatus == "Appeal Pending"
                     || appStatus == "Appeal Submitted"
-                    || appStatus == "Non Renewal")
-                {
+                    || appStatus == "Non Renewal") {
                     showMessage = true;
-                    comment("Notice of Fallowing cannot be submitted as the permit status is <b>"+appStatus+"</b><style>#ctl00_PlaceHolderMain_actionBarBottom_btnContinue{display:none !important}</style>");
+                    comment("Notice of Fallowing cannot be submitted as the permit status is <b>" + appStatus + "</b><style>#ctl00_PlaceHolderMain_actionBarBottom_btnContinue{display:none !important}</style>");
                 }
             }
             var isNOFAffidavit = appMatch("Cannabis/Amendment/Notice of Fallowing/Affidavit");
-            if(isNOFAffidavit)
-            {
-                var open = new Date(lookup("CAN_NOF_CONTROLS", "NOF Affidavit Window Open Date")+"").setHours(0,0,0,0);
-                var close = new Date(lookup("CAN_NOF_CONTROLS", "NOF Affidavit Window Close Date")+"").setHours(0,0,0,0);
-                var t = lookup("CAN_NOF_CONTROLS", "Today Date")+"";
+            if (isNOFAffidavit) {
+                var open = new Date(lookup("CAN_NOF_CONTROLS", "NOF Affidavit Window Open Date") + "").setHours(0, 0, 0, 0);
+                var close = new Date(lookup("CAN_NOF_CONTROLS", "NOF Affidavit Window Close Date") + "").setHours(0, 0, 0, 0);
+                var t = lookup("CAN_NOF_CONTROLS", "Today Date") + "";
 
                 var today;
-                if(t == "SYSTEM")
-                    today = new Date().setHours(0,0,0,0);
+                if (t == "SYSTEM")
+                    today = new Date().setHours(0, 0, 0, 0);
                 else
-                    today = new Date(t).setHours(0,0,0,0);
+                    today = new Date(t).setHours(0, 0, 0, 0);
 
-                if((today < open) || (today > close))
-                {
+                if ((today < open) || (today > close)) {
                     showMessage = true;
-                    comment("Fallowing Affidavit can only be submitted from "+lookup("CAN_NOF_CONTROLS", "NOF Affidavit Window Open Date")+" to "+lookup("CAN_NOF_CONTROLS", "NOF Affidavit Window Close Date")+"<style>#ctl00_PlaceHolderMain_actionBarBottom_btnContinue{display:none !important}</style>");
+                    comment("Fallowing Affidavit can only be submitted from " + lookup("CAN_NOF_CONTROLS", "NOF Affidavit Window Open Date") + " to " + lookup("CAN_NOF_CONTROLS", "NOF Affidavit Window Close Date") + "<style>#ctl00_PlaceHolderMain_actionBarBottom_btnContinue{display:none !important}</style>");
                 }
                 var appStatus = getAppStatusX(parentCapId);
-                if(appStatus != "Notice of Fallowing")
-                {
+                if (appStatus != "Notice of Fallowing") {
                     showMessage = true;
-                    comment("Fallowing Affidavit cannot be submitted if the permit status is <b>"+appStatus+"</b><style>#ctl00_PlaceHolderMain_actionBarBottom_btnContinue{display:none !important}</style>");
+                    comment("Fallowing Affidavit cannot be submitted if the permit status is <b>" + appStatus + "</b><style>#ctl00_PlaceHolderMain_actionBarBottom_btnContinue{display:none !important}</style>");
                 }
             }
             //CAMEND-677
             var TxApp = appMatch("Cannabis/Amendment/Tax Appeal/NA");
-            if(TxApp)
-            {
-                var open = new Date(lookup("CAN_TAXAPP_CONTROLS", "Tax Appeal Window Open Date")+"").setHours(0,0,0,0);
-                var close = new Date(lookup("CAN_TAXAPP_CONTROLS", "Tax Appeal Window Close Date")+"").setHours(0,0,0,0);
-                var t = lookup("CAN_TAXAPP_CONTROLS", "Today Date")+"";
+            if (TxApp) {
+                var open = new Date(lookup("CAN_TAXAPP_CONTROLS", "Tax Appeal Window Open Date") + "").setHours(0, 0, 0, 0);
+                var close = new Date(lookup("CAN_TAXAPP_CONTROLS", "Tax Appeal Window Close Date") + "").setHours(0, 0, 0, 0);
+                var t = lookup("CAN_TAXAPP_CONTROLS", "Today Date") + "";
 
                 var today = null;
-                if(t == "SYSTEM")
-                    today = new Date().setHours(0,0,0,0);
+                if (t == "SYSTEM")
+                    today = new Date().setHours(0, 0, 0, 0);
                 else
-                    today = new Date(t).setHours(0,0,0,0);
+                    today = new Date(t).setHours(0, 0, 0, 0);
 
-                if((today < open) || (today > close))
-                {
+                if ((today < open) || (today > close)) {
                     showMessage = true;
-                    comment("Tax Appeal can only be submitted from "+lookup("CAN_TAXAPP_CONTROLS", "Tax Appeal Window Open Date")+" to "+lookup("CAN_TAXAPP_CONTROLS", "Tax Appeal Window Close Date")+"<style>#ctl00_PlaceHolderMain_actionBarBottom_btnContinue{display:none !important}</style>");
+                    comment("Tax Appeal can only be submitted from " + lookup("CAN_TAXAPP_CONTROLS", "Tax Appeal Window Open Date") + " to " + lookup("CAN_TAXAPP_CONTROLS", "Tax Appeal Window Close Date") + "<style>#ctl00_PlaceHolderMain_actionBarBottom_btnContinue{display:none !important}</style>");
                 }
             }
         }
-        catch(err)
-        {
+        catch (err) {
             showMessage = true;
-            comment("Err: "+ err);
+            comment("Err: " + err);
             aa.sendMail("noreply@mendocinocounty.gov", "sshiralikar@trustvip.com", "", "ACA_ONLOAD_POPULATE_AMENDMENT", err);
         }
 
         copyOwner(parentCapId, targetCapId);
-        copyCapCondition(parentCapId, targetCapId);
+        // CAMEND-820
+        var isWithdrawal = appMatch("Cannabis/Amendment/Withdrawal/NA");
+        if (!isWithdrawal) {
+            copyCapCondition(parentCapId, targetCapId);
+        }
         copyAdditionalInfo(parentCapId, targetCapId);
         copyCapDetailInfo(parentCapId, targetCapId);
         copyCapWorkDesInfo(parentCapId, targetCapId);
-        editAppName(getAppName(parentCapId),targetCapId);
+        editAppName(getAppName(parentCapId), targetCapId);
 
         var amendCapModel = aa.cap.getCapViewBySingle4ACA(targetCapId);
         amendCapModel.getCapType().setSpecInfoCode(capModel.getCapType().getSpecInfoCode());
@@ -393,34 +384,30 @@ function getAppName() {
 
     capResult = aa.cap.getCap(itemCap)
 
-    if (!capResult.getSuccess())
-    { logDebug("**WARNING: error getting cap : " + capResult.getErrorMessage()); return false }
+    if (!capResult.getSuccess()) { logDebug("**WARNING: error getting cap : " + capResult.getErrorMessage()); return false }
 
     capModel = capResult.getOutput().getCapModel()
 
     return capModel.getSpecialText()
 }
 function copyAppSpecific4ACA(capFrom, capTo) { // copy all App Specific info into new Cap
-    var i= capFrom.getAppSpecificInfoGroups().iterator();
+    var i = capFrom.getAppSpecificInfoGroups().iterator();
     var ignoreSubgroup = "";
     if (arguments[1])
         ignoreSubgroup = arguments[1];
-    while (i.hasNext())
-    {
+    while (i.hasNext()) {
         var group = i.next();
         var fields = group.getFields();
-        if (fields != null)
-        {
+        if (fields != null) {
             var iteFields = fields.iterator();
-            while (iteFields.hasNext())
-            {
+            while (iteFields.hasNext()) {
                 var field = iteFields.next();
                 if (ignoreSubgroup.equals(field.getCheckboxType()))
                     continue;
                 if (useAppSpecificGroupName)
-                    editAppSpecific4ACAX(field.getCheckboxType() + "." + field.getCheckboxDesc(),field.getChecklistComment(), capTo);
+                    editAppSpecific4ACAX(field.getCheckboxType() + "." + field.getCheckboxDesc(), field.getChecklistComment(), capTo);
                 else
-                    editAppSpecific4ACAX(field.getCheckboxDesc(),field.getChecklistComment(), capTo);
+                    editAppSpecific4ACAX(field.getCheckboxDesc(), field.getChecklistComment(), capTo);
             }
         }
     }
@@ -448,25 +435,20 @@ function copyLicenseProfessionalX(srcCapId, targetCapId) {
         aa.licenseProfessional.createLicensedProfessional(sourcelicProfModel);
     }
 }
-function copyLPFromParent4ACA(currentRecordCapModel, parentCapId)
-{
+function copyLPFromParent4ACA(currentRecordCapModel, parentCapId) {
 
-    if (currentRecordCapModel.getLicenseProfessionalList() == null)
-    {
+    if (currentRecordCapModel.getLicenseProfessionalList() == null) {
         currentRecordCapModel.setLicenseProfessionalList(aa.util.newArrayList());
     }
-    if (currentRecordCapModel.getLicenseProfessionalList().size() > 0)
-    {
+    if (currentRecordCapModel.getLicenseProfessionalList().size() > 0) {
         return;
     }
 
     var t = aa.licenseProfessional.getLicenseProf(parentCapId);
-    if (t.getSuccess())
-    {
+    if (t.getSuccess()) {
         t = t.getOutput();
 
-        for (lp in t)
-        {
+        for (lp in t) {
             var newLicenseModel = t[lp].getLicenseProfessionalModel();
             newLicenseModel.setComponentName(null);
             newLicenseModel.setCapID(null);
@@ -605,7 +587,7 @@ function asiTableValObj(columnName, fieldValue, readOnly) {
     this.columnName = columnName;
     this.fieldValue = fieldValue;
     this.readOnly = readOnly;
-    asiTableValObj.prototype.toString = function() {
+    asiTableValObj.prototype.toString = function () {
         return this.fieldValue
     }
 };
@@ -629,7 +611,7 @@ function addASITable(tableName, tableValueArray) // optional capId
         var coli = col.iterator();
         while (coli.hasNext()) {
             var colname = coli.next();
-            if (typeof(tableValueArray[thisrow][colname.getColumnName()]) == "object") // we are passed an asiTablVal Obj
+            if (typeof (tableValueArray[thisrow][colname.getColumnName()]) == "object") // we are passed an asiTablVal Obj
             {
                 fld.add(tableValueArray[thisrow][colname.getColumnName()].fieldValue);
                 fld_readonly.add(tableValueArray[thisrow][colname.getColumnName()].readOnly);
@@ -1268,7 +1250,7 @@ function arrayContainsValue(ary, value) {
 
         //if not array, convert to array
         if (!Array.isArray(ary)) {
-            ary = [ ary ];
+            ary = [ary];
         }
 
         for (t in ary) {
