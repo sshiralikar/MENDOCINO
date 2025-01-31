@@ -1,4 +1,5 @@
 showDebug = false;
+var parentCapId = getParent();
 var cChildren = getChildren("Cannabis/Amendment/Notice of Non-Cultivation/NA", parentCapId);
 var count = 0;
 if (cChildren != null) {

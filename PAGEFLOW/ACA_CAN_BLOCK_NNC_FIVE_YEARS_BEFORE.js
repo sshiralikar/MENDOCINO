@@ -140,7 +140,9 @@ logDebug("balanceDue = " + balanceDue);
 // page flow custom code begin
 
 try {
+
     // CAMEND-826
+    var parentCapId = getParent();
     var cChildren = getChildren("Cannabis/Amendment/Notice of Non-Cultivation/NA", parentCapId);
     var count = 0;
     if (cChildren != null) {
@@ -151,14 +153,19 @@ try {
         }
     }
     if (count > 0) {
+        logDebug("Child > 0");
         var reqDate = new Date(getAppSpecific("NONC Requested Expiration Date", parentCapId));
+        logDebug("reqDate: " + reqDate);
         var today = new Date(sysDateMMDDYYYY);
+        logDebug("today: " + today);
         if (reqDate >= today) {
+            logDebug("reqDate >= today");
             cancel = true;
             showMessage = true;
             comment("Only one Notice of Non-Cultivation can be submitted every five years");
         }
     }
+
 
 } catch (err) {
 
