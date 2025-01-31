@@ -152,7 +152,7 @@ function getRequiredDocumentsForCanCult() {
 
     // CAMEND-602 & CAMEND-711
     if (appMatch("Cannabis/*/Application/NA")) {
-        requirementArray.push(ccblAffidavit);
+        // requirementArray.push(ccblAffidavit); // CAMEND-780
         requirementArray.push(cannabisProgramTaxImposed);
         requirementArray.push(commercialBusinessTaxForm);
     }
