@@ -80,7 +80,7 @@ if (contactResult.getSuccess()) {
             addParameter(params, "$$InspectorEmail$$", getInspectorEmail(inspId));
             addParameter(params, "$$altId$$", capId.getCustomID()+"");
             addParameter(params, "$$InspectionStatus$$", inspResult);
-            addParameter(params, "$$FullNameBusName$$", conName);
+            addParameter(params, "$$contactName$$", conName);
             addParameter(params, "$$InspectionType$$", inspType);
             addParameter(params, "$$InspectionResultComment$$", inspComment);
             var startDate = new Date();
@@ -99,6 +99,7 @@ if (contactResult.getSuccess()) {
             addParameter(params, "$$deptEmail$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptEmail"));
             addParameter(params, "$$deptEmail2$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptEmail2"));
             addParameter(params, "$$deptFormalName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptFormalName"));
+            addParameter(params, "$$deptAddress$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptAddress"));
             var COAs = "";
             var condResult = aa.capCondition.getCapConditions(capId);
             if (condResult.getSuccess()) {
