@@ -1,3 +1,8 @@
+cap = aa.cap.getCap(capId).getOutput();
+appTypeResult = cap.getCapType();
+appTypeString = appTypeResult.toString();
+appTypeArray = appTypeString.split("/");
+
 var isMobile = false;
 var capDocResult = aa.document.getDocumentListByEntity(capId + "-" + inspId, null);
 if (capDocResult.getSuccess()) {
