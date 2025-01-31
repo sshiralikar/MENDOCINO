@@ -128,3 +128,15 @@ if (wfTask == "Amendment Review" && wfStatus == "Approved") {
     }
 }
 // CAMEND-641
+
+
+// CAMEND-780
+if (wfTask == "Draft Decision" && (wfStatus == "Approved" || wfStatus == "Denied" || wfStatus == "Appeal Approved" || wfStatus == "Appeal Denied")) {
+    if (appMatch("Cannabis/*/Application/NA") || appMatch("Cannabis/*/Renewal/NA")) {
+        if (appHasCondition("Cannabis Required Document", "Applied", "CCBL Affidavit", "Notice")) {
+            cancel = true;
+            showMessage = true;
+            comment("Condition 'CCBL Affidavit' needs to be marked 'Met' before this workflow step can be resulted.");
+        }
+    }
+}
