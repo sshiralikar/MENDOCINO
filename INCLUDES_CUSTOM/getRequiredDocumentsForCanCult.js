@@ -231,7 +231,7 @@ function getRequiredDocumentsForCanCult() {
                                 var documentObject = capDocResult.getOutput().get(docInx);
                                 var docCat = "" + documentObject.getDocCategory();
                                 // logDebug("Document " + [docInx + 1] + ": " + docCat);
-                                if (docCat === "Compliance Plan") {
+                                if (docCat == "Compliance Plan") {
                                     requirementArray.push(compliancePlan);
                                 }
                             }
@@ -254,7 +254,7 @@ function getRequiredDocumentsForCanCult() {
                                 var documentObject = capDocResult.getOutput().get(docInx);
                                 var docCat = "" + documentObject.getDocCategory();
                                 // logDebug("Document " + [docInx + 1] + ": " + docCat);
-                                if (docCat === "Compliance Plan") {
+                                if (docCat == "Compliance Plan") {
                                     requirementArray.push(compliancePlan);
                                 }
                             }
@@ -271,7 +271,7 @@ function getRequiredDocumentsForCanCult() {
                     var documentObject = capDocResult.getOutput().get(docInx);
                     var docCat = "" + documentObject.getDocCategory();
                     // logDebug("Document " + [docInx + 1] + ": " + docCat);
-                    if (docCat === "Compliance Plan") {
+                    if (docCat == "Compliance Plan") {
                         requirementArray.push(compliancePlan);
                     }
                 }
