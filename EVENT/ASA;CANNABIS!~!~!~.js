@@ -58,14 +58,16 @@ if (!publicUser) {
         }
     }
     if (appTypeArray[2] == "Renewal") {
-        // Updated email for CAMEND-478 to use Async script so Renewal in back office (clone) pulls new Alt Id
-        var envParameters = aa.util.newHashMap();
-        logDebug("capIdStr: " + newAltId + "");
-        if (newAltId != "")
-            envParameters.put("capIdStr", newAltId + "");
-        else
-            envParameters.put("capIdStr", capId.getCustomID() + "");
-        aa.runAsyncScript("ASYNC_SEND_SUBMISSION_EMAIL", envParameters);
+        if (AInfo["Permit Type Change"] == "Yes") {
+            // Updated email for CAMEND-478 to use Async script so Renewal in back office (clone) pulls new Alt Id
+            var envParameters = aa.util.newHashMap();
+            logDebug("capIdStr: " + newAltId + "");
+            if (newAltId != "")
+                envParameters.put("capIdStr", newAltId + "");
+            else
+                envParameters.put("capIdStr", capId.getCustomID() + "");
+            aa.runAsyncScript("ASYNC_SEND_SUBMISSION_EMAIL", envParameters);
+        }
     }
     // CAMEND-566
     if (isNOF) {
