@@ -148,7 +148,7 @@ try {
 
     // CAMEND-527
     if (appTypeArray[2] == "Renewal") {
-        // if (AInfo["Permit Type Change"] == "Yes") {
+        if (AInfo["Permit Type Change"] == "Yes") {
             var hm = new Array();
             var pCapId = getParent();
             var capDetailObjResult = aa.cap.getCapDetail(pCapId); // Detail
@@ -182,7 +182,7 @@ try {
                     }
                 }
             }
-        // }
+        }
     }
 }
 catch (err) {
