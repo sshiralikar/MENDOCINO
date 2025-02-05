@@ -59,21 +59,37 @@ if (wfStatus == "Approved") {
 
     // CAMEND-661
     var licCapId = getParent();
+    var newExpDate = getAppSpecific("New Expiration Date", licCapId);
     var expDate = getAppSpecific("Expiration Date", licCapId);
     var today = new Date();
     var expDateObj = new Date(expDate);
 
-    if (today > expDateObj) {
-        today.setFullYear(today.getFullYear() + 5);
-        var newDate = today.getMonth() + 1 + "/" + today.getDate() + "/" + today.getFullYear();
-        editAppSpecific("New Expiration Date", newDate);
-        editAppSpecific("New Expiration Date", newDate, licCapId);
-    }
-    else {
-        expDateObj.setFullYear(expDateObj.getFullYear() + 5);
-        var newDate = expDateObj.getMonth() + 1 + "/" + expDateObj.getDate() + "/" + expDateObj.getFullYear();
-        editAppSpecific("New Expiration Date", newDate);
-        editAppSpecific("New Expiration Date", newDate, licCapId);
+    if (newExpDate != null) {
+        if (today > newExpDate) {
+            today.setFullYear(today.getFullYear() + 5);
+            var newDate = today.getMonth() + 1 + "/" + today.getDate() + "/" + today.getFullYear();
+            editAppSpecific("New Expiration Date", newDate);
+            editAppSpecific("New Expiration Date", newDate, licCapId);
+        }
+        else {
+            newExpDate.setFullYear(newExpDate.getFullYear() + 5);
+            var newDate = newExpDate.getMonth() + 1 + "/" + newExpDate.getDate() + "/" + newExpDate.getFullYear();
+            editAppSpecific("New Expiration Date", newDate);
+            editAppSpecific("New Expiration Date", newDate, licCapId);
+        }
+    } else {
+        if (today > expDateObj) {
+            today.setFullYear(today.getFullYear() + 5);
+            var newDate = today.getMonth() + 1 + "/" + today.getDate() + "/" + today.getFullYear();
+            editAppSpecific("New Expiration Date", newDate);
+            editAppSpecific("New Expiration Date", newDate, licCapId);
+        }
+        else {
+            expDateObj.setFullYear(expDateObj.getFullYear() + 5);
+            var newDate = expDateObj.getMonth() + 1 + "/" + expDateObj.getDate() + "/" + expDateObj.getFullYear();
+            editAppSpecific("New Expiration Date", newDate);
+            editAppSpecific("New Expiration Date", newDate, licCapId);
+        }
     }
 }
 
