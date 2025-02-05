@@ -17,7 +17,7 @@ try {
     var conName = "";
     var contactResult = aa.people.getCapContactByCapID(capId);
 
-    if (!isAppeal && isAssignment && isNOF && isNOFAffidavit && isNOFRevocation && isTaxAppeal) {
+    if (!isAppeal && !isAssignment && !isNOF && !isNOFAffidavit && !isNOFRevocation && !isTaxAppeal) {
         if (contactResult.getSuccess()) {
             var capContacts = contactResult.getOutput();
             for (var i in capContacts) {

@@ -25,7 +25,7 @@ if (!publicUser) {
     var isNOFRevocation = appMatch("Cannabis/Amendment/Notice of Fallowing/Revocation");
     var isTaxAppeal = appMatch("Cannabis/Amendment/Tax Appeal/NA");
 
-    if (!isAppeal && isAssignment && isNOF && isNOFAffidavit && isNOFRevocation && isTaxAppeal) {
+    if (!isAppeal && !isAssignment && !isNOF && !isNOFAffidavit && !isNOFRevocation && !isTaxAppeal) {
         if (appTypeArray[1] == "Amendment" || appTypeArray[2] == "Application") {
             var hm = new Array();
             var conName = "";
