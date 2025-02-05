@@ -44,8 +44,22 @@ if(wfTask == "Draft Decision" && wfStatus == "Approved")
         setLicExpirationDate(licCapId,"",newDate);
     }
 
-    updateAppStatus("Active","Updating via Script",licCapId);
 
+    var cChildren = getChildren("Cannabis/*/Renewal/NA", licCapId);
+    var count = 0;
+    var invalidCount = 0;
+    var validCount = 0;
+    if (cChildren != null) {
+        for (var c in cChildren) {
+            count ++;
+        }
+    }
+    if(count > 0)
+    {
+        updateAppStatus("Renewal Under Review","Updating via Script",licCapId);
+    }
+    else
+        updateAppStatus("Active","Updating via Script",licCapId);
     /*renewalCapProject = getRenewalCapByParentCapIDForIncomplete(parentCapId);
     if (renewalCapProject != null) {
         renewalCapProject.setStatus("Complete");
