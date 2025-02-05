@@ -89,7 +89,7 @@ if(wfStatus == "Ready for Inspection")
         }
     }
 }
-if(wfStatus == "Withdrawn" && (appMatch("Cannabis/Cultivation/*/*") || appMatch("Cannabis/Nursery/*/*")))
+if(wfStatus == "Withdrawn" && (appMatch("Cannabis/*/*/*")))
 {
     var pCapId = capId;
     if(pCapId)
