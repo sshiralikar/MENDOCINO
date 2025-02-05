@@ -74,7 +74,7 @@ if (wfStatus == "Approved") {
     updateTask("Permit Status","Notice of Fallowing","","",pCapId);
     // CAMEND-633
     var newTableToAdd = [];
-    newTableToAdd["Total SF/Total Nursery SF"] = parseInt(AInfo["Total SF/Total Nursery SF"]);
+    newTableToAdd["Total SF/Total Nursery SF"] = String(AInfo["Total SF/Total Nursery SF"]);
     newTableToAdd["Date of Approval"] = wfDateMMDDYYYY;
     newTableToAdd["Date of Expiration"] = newDate;
 
