@@ -16,7 +16,7 @@ if(wfTask == "Issuance" && wfStatus == "Issued")
     copyLicensedProf(capId, licCapId);
     copyConditions(capId, licCapId);
     // CAMEND-843
-    copyCapWorkDesInfo(capId, licCapId);
+    // copyCapWorkDesInfo(capId, licCapId);
     //copyDocuments(capId, licCapId);
     try
     {
