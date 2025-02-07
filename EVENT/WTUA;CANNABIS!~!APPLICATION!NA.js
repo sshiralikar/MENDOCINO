@@ -16,7 +16,7 @@ if(wfTask == "Issuance" && wfStatus == "Issued")
     copyLicensedProf(capId, licCapId);
     copyConditions(capId, licCapId);
     // CAMEND-843
-    aa.cap.copyCapWorkDesInfo(capId, licCapId);
+    copyCapWorkDesInfo(capId, licCapId);
     //copyDocuments(capId, licCapId);
     try
     {
@@ -606,5 +606,6 @@ function createRefLicProfFromLicProfX()
     { logDebug("**ERROR: can't create ref lic prof: " + myResult.getErrorMessage()); }
 }
 
-
-
+function copyCapWorkDesInfo(srcCapId, targetCapId) {
+    aa.cap.copyCapWorkDesInfo(srcCapId, targetCapId);
+}
