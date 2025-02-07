@@ -195,7 +195,7 @@ if (wfTask == "Issuance" && wfStatus == "Denied") {
     updateAppStatus("Denial Pending", "Updating via Script", licCapId);
     moveWFTask("Permit Status", "Denial Pending", " ", "", licCapId, null, sysDateMMDDYYYY);
     updateTaskDueDate("Permit Status", dateAdd(newDate, 35), licCapId);
-    updateAppStatus("Pending Non Renewal","Denial Pending",licCapId);
+    // updateAppStatus("Pending Non Renewal","Denial Pending",licCapId);
 
     if (licCapId) {
         var VRFiles = new Array();
