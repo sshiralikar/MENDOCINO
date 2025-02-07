@@ -63,6 +63,7 @@ if (wfStatus == "Approved") {
     var expDate = getAppSpecific("Expiration Date", licCapId);
     var today = new Date();
     var expDateObj = new Date(expDate);
+    newExpDate = new Date(newExpDate);
 
     if (newExpDate != null) {
         if (today > newExpDate) {
