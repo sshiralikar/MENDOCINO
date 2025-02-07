@@ -4,8 +4,8 @@ if (inspType == "Cultivation - Site Inspection" || inspType == "Cultivation - Sp
     if (inspResult == "Pass" || inspResult == "Fail") {
         addStdConditionX("Cannabis Required Document", "CCBL Affidavit");
         // updateAppStatus("Closed","Closed automatically via Script", capId);
-        updateTask("Site Inspection", "Pass", "", "");
-        aa.workflow.adjustTask(capId, "Site Inspection", "N", "Y", null, null);
-        aa.workflow.adjustTask(capId, "Draft Decision", "Y", "N", null, null);
+        updateTask("Inspection", "Pass", "", "");
+        aa.workflow.adjustTask(capId, "Inspection", "N", "Y", null, null);
+        aa.workflow.adjustTask(capId, "Issuance", "Y", "N", null, null);
     }
 }
