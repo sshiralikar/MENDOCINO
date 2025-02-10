@@ -2,7 +2,7 @@ try {
 
     updateAppStatus("Amendment Review","Approved");
     updateTask("Amendment Review","Approved","","");
-    aa.workflow.adjustTask(capId, "Amendment Review", "Y", "N", null, null);
+    aa.workflow.adjustTask(capId, "Amendment Review", "N", "Y", null, null);
 
     if(parentCapId)
     {
