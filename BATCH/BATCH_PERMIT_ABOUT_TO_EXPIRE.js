@@ -211,8 +211,7 @@ function mainProcess() {
                     && appStatus!="Denied"
                     && appStatus!="Denied - Appeal"
                     && appStatus!="Terminated"
-                    && appStatus!="Non Renewal"
-                    && appStatus!="Approved for Conversion")
+                    && appStatus!="Non Renewal")
                 {
                     logMessage(capIDString);
                     var thisCapModel = cap.getCapModel();
