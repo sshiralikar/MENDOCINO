@@ -14,7 +14,7 @@ if(wfTask == "Issuance" && wfStatus == "Issued")
     if(pCapId)
     {
         licCapId = pCapId;
-        updateAppStatus("Converted","Updating via Script",licCapId);
+        //updateAppStatus("Converted","Updating via Script",licCapId);
     }
     else
     {
@@ -68,7 +68,11 @@ if(wfTask == "Issuance" && wfStatus == "Issued")
 
     updateAppStatus("Active","Updating via Script",licCapId);
     updateAppStatus("Issued","Updating via Script",capId);
-
+    if(pCapId)
+    {
+        //licCapId = pCapId;
+        updateAppStatus("Converted","Updating via Script",licCapId);
+    }
     var hm = new Array();
     var conName = "";
     var contactResult = aa.people.getCapContactByCapID(capId);
