@@ -323,74 +323,76 @@ function mainProcess()
                         for (var i in wfObj)
                         {
                             var fTask = wfObj[i];
-                            //logDebugBatch(capIDString+ " - "+ fTask.getTaskDescription()+ " - "+ getTaskDueDateX(fTask.getTaskDescription()) +" ===> "+ todayDate);
-                            if (fTask.getTaskDescription() && (fTask.getTaskDescription().equals("AQMD Review")
-                                    || fTask.getTaskDescription().equals("Vegetation Review")
-                                    || fTask.getTaskDescription().equals("CDFW Review")
-                                    || fTask.getTaskDescription().equals("Building Review") )
-                                && (getTaskDueDateX(fTask.getTaskDescription()+"") == todayDate
-                                    || getTaskDueDateX(fTask.getTaskDescription()+"") == todayDateX) && fTask.getActiveFlag().equals("Y"))
+                            if(getAppStatus(capId)!="Approved for Conversion")
                             {
-                                logDebugBatch("No response on the referral, closing task with no response: "+ capIDString);
-                                updateTask(fTask.getTaskDescription(),"No Response","","");
-                                aa.workflow.adjustTask(capId, fTask.getTaskDescription(), "N", "Y", null, null);
-                                aa.workflow.adjustTask(capId, "Plans Coordination", "Y", "N", null, null);
-                            }
-
-                            var tenDayDate = new Date();
-                            tenDayDate.setDate(tenDayDate.getDate() + 10);
-                            var tenDayDateStr = (tenDayDate.getMonth() + 1) + "/" + tenDayDate.getDate() + "/" + tenDayDate.getFullYear();
-                            var tenDayDateStrX = ('0' + (tenDayDate.getMonth()+1)).slice(-2) + '/'
-                                + ('0' + tenDayDate.getDate()).slice(-2) + '/'
-                                + tenDayDate.getFullYear();
-                            if (fTask.getTaskDescription() && fTask.getTaskDescription().equals("Appeal")
-                                && (getTaskDueDateX(fTask.getTaskDescription()+"") == tenDayDateStr
-                                    || getTaskDueDateX(fTask.getTaskDescription()+"") == tenDayDateStrX) && fTask.getActiveFlag().equals("Y"))
-                            {
-                                logDebugBatch("New Appeal with date : "+ tenDayDateStrX+" -> "+capIDString);
-                                var pCapId = getParent(capId);
-                                if(pCapId)
+                                if (fTask.getTaskDescription() && (fTask.getTaskDescription().equals("AQMD Review")
+                                        || fTask.getTaskDescription().equals("Vegetation Review")
+                                        || fTask.getTaskDescription().equals("CDFW Review")
+                                        || fTask.getTaskDescription().equals("Building Review") )
+                                    && (getTaskDueDateX(fTask.getTaskDescription()+"") == todayDate
+                                        || getTaskDueDateX(fTask.getTaskDescription()+"") == todayDateX) && fTask.getActiveFlag().equals("Y"))
                                 {
-                                    updateAppStatus("Revocation Pending","Updating via Script", pCapId);
+                                    logDebugBatch("No response on the referral, closing task with no response: "+ capIDString);
+                                    updateTask(fTask.getTaskDescription(),"No Response","","");
+                                    aa.workflow.adjustTask(capId, fTask.getTaskDescription(), "N", "Y", null, null);
+                                    aa.workflow.adjustTask(capId, "Plans Coordination", "Y", "N", null, null);
                                 }
-                                updateAppStatus("Appeal Pending","Updating via Script", capId);
-                            }
-                            if (fTask.getTaskDescription() && fTask.getTaskDescription().equals("Appeal")
-                                && (getTaskDueDateX(fTask.getTaskDescription()+"") == todayDate
-                                    || getTaskDueDateX(fTask.getTaskDescription()+"") == todayDateX) && fTask.getActiveFlag().equals("Y"))
-                            {
-                                logDebugBatch("No appeal recieved - Denied Appeal: "+ capIDString);
-                                updateAppStatus("Denied","Updating via Script");
-                                updateTask("Appeal","Denied","","");
-                                aa.workflow.adjustTask(capId, "Appeal", "N", "Y", null, null);
-                                updateTask("Issuance","Denied","","");
-                                aa.workflow.adjustTask(capId, "Issuance", "N", "Y", null, null);
-                                var pCapId = getParent(capId);
-                                if(pCapId)
+
+                                var tenDayDate = new Date();
+                                tenDayDate.setDate(tenDayDate.getDate() + 10);
+                                var tenDayDateStr = (tenDayDate.getMonth() + 1) + "/" + tenDayDate.getDate() + "/" + tenDayDate.getFullYear();
+                                var tenDayDateStrX = ('0' + (tenDayDate.getMonth()+1)).slice(-2) + '/'
+                                    + ('0' + tenDayDate.getDate()).slice(-2) + '/'
+                                    + tenDayDate.getFullYear();
+                                if (fTask.getTaskDescription() && fTask.getTaskDescription().equals("Appeal")
+                                    && (getTaskDueDateX(fTask.getTaskDescription()+"") == tenDayDateStr
+                                        || getTaskDueDateX(fTask.getTaskDescription()+"") == tenDayDateStrX) && fTask.getActiveFlag().equals("Y"))
                                 {
-                                    var tmp = capId;
-                                    capId = pCapId;
-                                    taskCloseAllExcept("Denied - Appeal","Closing via script");
-                                    capId = tmp;
-                                    updateAppStatus("Revocation","Updating via Script",pCapId);
-                                    setLicExpirationDate(pCapId,"",todayDateX);
-                                    editAppSpecific("New Expiration Date",todayDateX, pCapId);
-                                    editAppSpecific("New Expiration Date",todayDateX, capId);
-                                    var capDetailObjResult = aa.cap.getCapDetail(pCapId); // Detail
+                                    logDebugBatch("New Appeal with date : "+ tenDayDateStrX+" -> "+capIDString);
+                                    var pCapId = getParent(capId);
+                                    if(pCapId)
+                                    {
+                                        updateAppStatus("Revocation Pending","Updating via Script", pCapId);
+                                    }
+                                    updateAppStatus("Appeal Pending","Updating via Script", capId);
+                                }
+                                if (fTask.getTaskDescription() && fTask.getTaskDescription().equals("Appeal")
+                                    && (getTaskDueDateX(fTask.getTaskDescription()+"") == todayDate
+                                        || getTaskDueDateX(fTask.getTaskDescription()+"") == todayDateX) && fTask.getActiveFlag().equals("Y"))
+                                {
+                                    logDebugBatch("No appeal recieved - Denied Appeal: "+ capIDString);
+                                    updateAppStatus("Denied","Updating via Script");
+                                    updateTask("Appeal","Denied","","");
+                                    aa.workflow.adjustTask(capId, "Appeal", "N", "Y", null, null);
+                                    updateTask("Issuance","Denied","","");
+                                    aa.workflow.adjustTask(capId, "Issuance", "N", "Y", null, null);
+                                    var pCapId = getParent(capId);
+                                    if(pCapId)
+                                    {
+                                        var tmp = capId;
+                                        capId = pCapId;
+                                        taskCloseAllExcept("Denied - Appeal","Closing via script");
+                                        capId = tmp;
+                                        updateAppStatus("Revocation","Updating via Script",pCapId);
+                                        setLicExpirationDate(pCapId,"",todayDateX);
+                                        editAppSpecific("New Expiration Date",todayDateX, pCapId);
+                                        editAppSpecific("New Expiration Date",todayDateX, capId);
+                                        var capDetailObjResult = aa.cap.getCapDetail(pCapId); // Detail
+                                        if (capDetailObjResult.getSuccess()) {
+                                            var capDetail = capDetailObjResult.getOutput();
+                                            var balanceDue = capDetail.getBalance();
+                                            if (balanceDue > 0) {
+                                                addStdConditionX("Balance", "Denied with Balance Due", pCapId);
+                                            }
+                                        }
+                                    }
+                                    var capDetailObjResult = aa.cap.getCapDetail(capId); // Detail
                                     if (capDetailObjResult.getSuccess()) {
                                         var capDetail = capDetailObjResult.getOutput();
                                         var balanceDue = capDetail.getBalance();
                                         if (balanceDue > 0) {
-                                            addStdConditionX("Balance", "Denied with Balance Due", pCapId);
+                                            addStdConditionX("Balance", "Denied with Balance Due", capId);
                                         }
-                                    }
-                                }
-                                var capDetailObjResult = aa.cap.getCapDetail(capId); // Detail
-                                if (capDetailObjResult.getSuccess()) {
-                                    var capDetail = capDetailObjResult.getOutput();
-                                    var balanceDue = capDetail.getBalance();
-                                    if (balanceDue > 0) {
-                                        addStdConditionX("Balance", "Denied with Balance Due", capId);
                                     }
                                 }
                             }
@@ -413,7 +415,22 @@ function elapsed()
     var thisTime = thisDate.getTime();
     return ((thisTime - startTime) / 1000)
 }
+function getAppStatus() {
+    var itemCap = capId;
+    if (arguments.length == 1) itemCap = arguments[0]; // use cap ID specified in args
 
+    var appStatus = null;
+    var capResult = aa.cap.getCap(itemCap);
+    if (capResult.getSuccess()) {
+        licCap = capResult.getOutput();
+        if (licCap != null) {
+            appStatus = "" + licCap.getCapStatus();
+        }
+    } else {
+        logDebug("ERROR: Failed to get app status: " + capResult.getErrorMessage());
+    }
+    return appStatus;
+}
 function closeTaskLOCAL(wfstr, wfstat, wfcomment, wfnote) // optional process name
 {
     var useProcess = false;
