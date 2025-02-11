@@ -9,8 +9,19 @@ if(wfTask == "Issuance" && wfStatus == "Issued")
 {
     var hm = new Array();
     var myId = "";
-    var licCapId = createRecord("Cannabis",appTypeArray[1],"Permit",appTypeArray[3],capName);
-    aa.cap.createAppHierarchy(licCapId, capId);
+    var licCapId = null;
+    var pCapId = getParent();
+    if(pCapId)
+    {
+        licCapId = pCapId;
+        updateAppStatus("Converted","Updating via Script",licCapId);
+    }
+    else
+    {
+        licCapId = createRecord("Cannabis",appTypeArray[1],"Permit",appTypeArray[3],capName);
+        aa.cap.createAppHierarchy(licCapId, capId);
+    }
+
     copyASIFields(capId,licCapId);
     copyASITables(capId, licCapId);
     copyLicensedProf(capId, licCapId);

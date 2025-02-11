@@ -60,6 +60,13 @@ if(wfTask == "Draft Decision" && wfStatus == "Approved")
     }
     else
         updateAppStatus("Active","Updating via Script",licCapId);
+
+    //CAMEND=794
+    if(AInfo["Convert License Type"] == "Yes")
+    {
+        updateAppStatus("Approved for Conversion","Updating via Script",licCapId);
+    }
+
     /*renewalCapProject = getRenewalCapByParentCapIDForIncomplete(parentCapId);
     if (renewalCapProject != null) {
         renewalCapProject.setStatus("Complete");
