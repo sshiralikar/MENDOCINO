@@ -68,6 +68,11 @@ function getRequiredDocumentsForCanCult() {
         document: "Court Provided Letters Testamentary"
     }
 
+    var agentConsentForm = {
+        condition: "Agent Consent Form",
+        document: "Agent Consent Form",
+    };
+
     //CAMEND-804
     var compliancePlan = {
         condition: "Compliance Plan",
@@ -298,7 +303,12 @@ function getRequiredDocumentsForCanCult() {
     }
     // CAMEND-468
     else if (isContactChange) {
-
+        if (AInfo["Change Property Owner"] == "Yes") {
+            requirementArray.push(propertyOwnerConsent);
+        }
+        if (AInfo["Change Authorized Agent"] == "Yes") {
+            requirementArray.push(agentConsentForm);
+        }
     }
     else {
         //CAMEND-153
