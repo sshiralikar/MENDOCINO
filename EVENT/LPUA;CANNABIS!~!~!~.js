@@ -98,6 +98,4 @@ function createRefLicProfFromLicProfX()
         logDebug("Successfully added/updated License ID : " + rlpId)
         return rlpId;
     }
-    else
-    { logDebug("**ERROR: can't create ref lic prof: " + myResult.getErrorMessage()); }
 }
