@@ -11,10 +11,11 @@ if(wfTask == "Issuance" && wfStatus == "Issued")
     var myId = "";
     var licCapId = null;
     var pCapId = getParent();
+    var flag = false;
     if(pCapId)
     {
         licCapId = pCapId;
-        //updateAppStatus("Converted","Updating via Script",licCapId);
+        flag =  true;
     }
     else
     {
@@ -66,7 +67,7 @@ if(wfTask == "Issuance" && wfStatus == "Issued")
 
     updateAppStatus("Active","Updating via Script",licCapId);
     updateAppStatus("Issued","Updating via Script",capId);
-    if(pCapId)
+    if(flag)
     {
         //licCapId = pCapId;
         updateAppStatus("Converted","Updating via Script",licCapId);
