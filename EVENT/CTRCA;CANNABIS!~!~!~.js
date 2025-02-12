@@ -19,10 +19,15 @@ catch (err) {
 }
 if (appTypeArray[1] == "Amendment" || appTypeArray[2] == "Application" || appTypeArray[2] == "Renewal") {
     var envParameters = aa.util.newHashMap();
-    if (newAltId != "")
+    if (newAltId != "") {
         envParameters.put("capIdStr", newAltId + "");
-    else
+        // CAMEND-527
+        envParameters.put("permitChange",AInfo["Permit Type Change"]+"");
+    } else {
         envParameters.put("capIdStr", capId.getCustomID() + "");
+        // CAMEND-527
+        envParameters.put("permitChange",AInfo["Permit Type Change"]+"");
+    }
     aa.runAsyncScript("ASYNC_SEND_SUBMISSION_EMAIL", envParameters);
 }
 //Populate Geographic Information
