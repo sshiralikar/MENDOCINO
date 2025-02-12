@@ -27,6 +27,8 @@ if(wfTask == "Issuance" && wfStatus == "Issued")
     copyASITables(capId, licCapId);
     copyLicensedProf(capId, licCapId);
     copyConditions(capId, licCapId);
+    // CAMEND-843
+    aa.cap.copyCapWorkDesInfo(capId, licCapId);
 
     try
     {

@@ -19,6 +19,8 @@ if(wfTask == "Draft Decision" && wfStatus == "Approved")
     copyAppSpecificInfo(capId,licCapId);
     copyASITablesWithRemove(capId, licCapId);
     copyLicensedProf(capId, licCapId);
+    // CAMEND-843
+    aa.cap.copyCapWorkDesInfo(capId, licCapId);
     //copyParcels(capId, licCapId);
     //copyAddresses(capId, licCapId);
     //copyOwner(capId, licCapId);

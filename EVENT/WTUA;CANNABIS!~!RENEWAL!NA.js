@@ -15,6 +15,8 @@ if (wfStatus == "Issued") {
     var expDateObj = new Date(expDate);
     copyAppSpecificInfo(capId, licCapId);
     copyASITablesWithRemove(capId, licCapId);
+    // CAMEND-843
+    aa.cap.copyCapWorkDesInfo(capId, licCapId);
     if (today > expDateObj) {
         today.setFullYear(today.getFullYear() + 5);
         var newDate = today.getMonth() + 1 + "/" + today.getDate() + "/" + today.getFullYear();
