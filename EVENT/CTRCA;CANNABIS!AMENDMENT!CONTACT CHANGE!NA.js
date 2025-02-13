@@ -3,11 +3,10 @@ updateTask("Amendment Review", "Approved", "", "");
 aa.workflow.adjustTask(capId, "Amendment Review", "N", "Y", null, null);
 updateAppStatus("Approved","",capId);
 
-//var licCapId = getParent();
-//copyContactsFromContTypeToContType(capId, parentCapId, "Authorized Agent", "Authorized Agent");
-//copyContactsFromContTypeToContType(capId, licCapId, "Property Owner", "Property Owner");
-removeContacts(parentCapId);
-copyContacts(capId, parentCapId);
+var licCapId = getParent();
+copyContactsByType(capId, licCapId, "Authorized Agent")
+copyContactsByType(capId, licCapId, "Property Owner")
+
 var capCondResult = aa.capCondition.getCapConditions(capId);
 if (capCondResult.getSuccess()) {
     var coArray = capCondResult.getOutput();
@@ -20,53 +19,57 @@ if (capCondResult.getSuccess()) {
     }
 }
 
-function copyContactsFromContTypeToContType(srcCapId, targetCapId, pContactType, pToContactType) {
-    try {
-        logDebug("copyContactsFromContTypeToContType() started");
-        var capPeoples = getPeople(srcCapId);
-        if (capPeoples == null || capPeoples.length == 0) {
-            return;
-        } copyContactsFromContTypeToContType
-        var targetPeople = getPeople(targetCapId);
-        for (loopk in capPeoples) {
-            var sourcePeopleModel = capPeoples[loopk];
-            sourcePeopleModel.getCapContactModel().setCapID(targetCapId);
-            var targetPeopleModel = null;
-            var doSkip = true;
-            var vContactTypeTemp = sourcePeopleModel.getCapContactModel().getContactType();
-            logDebug("vContactTypeTemp:" + vContactTypeTemp);
-            if (pContactType != null && pContactType == vContactTypeTemp) {
-                if (pToContactType != null) {
-                    sourcePeopleModel.getCapContactModel().setContactType(pToContactType);
-                }
-                doSkip = false;
-            }
-            if (!doSkip) {
-                if (targetPeople != null && targetPeople.length > 0) {
-                    for (loop2 in targetPeople) {
-                        if (isMatchPeople(sourcePeopleModel, targetPeople[loop2])) {
-                            targetPeopleModel = targetPeople[loop2];
-                            break;
-                        }
-                    }
-                }
-                if (targetPeopleModel != null) {
-                    aa.people.copyCapContactModel(sourcePeopleModel.getCapContactModel(), targetPeopleModel.getCapContactModel());
-                    if (targetPeopleModel.getCapContactModel().getPeople() != null && sourcePeopleModel.getCapContactModel().getPeople()) {
-                        targetPeopleModel.getCapContactModel().getPeople().setContactAddressList(sourcePeopleModel.getCapContactModel().getPeople().getContactAddressList());
-                    }
-                    aa.people.editCapContactWithAttribute(targetPeopleModel.getCapContactModel());
-                } else {
-                    aa.people.createCapContactWithAttribute(sourcePeopleModel.getCapContactModel());
-                }
-            }
-        }
-    } catch (err) {
-        logDebug("**Error: copyContactsFromContTypeToContType()" + err.message);
-    }
+function copyContactsByType(srcCapId, targetCapId, ContactTypeArr) {
+	//1. Get people with source CAPID.
+	var capPeoples = getPeople3_0(srcCapId);
+	if (capPeoples == null || capPeoples.length == 0) {
+		return;
+	}
+	//2. Get people with target CAPID.
+	var targetPeople = getPeople3_0(targetCapId);
+	//3. Check to see which people is matched in both source and target.
+	for (loopk in capPeoples) {
+		sourcePeopleModel = capPeoples[loopk];
+		//Check if contact type should be ignored
+		doCopy = false;
+		for (kk in ContactTypeArr) {
+			if (ContactTypeArr[kk] == sourcePeopleModel.getCapContactModel().getContactType())
+				doCopy = true;
+		}
+		if (doCopy) {
+			//3.1 Set target CAPID to source people.
+			sourcePeopleModel.getCapContactModel().setCapID(targetCapId);
+			targetPeopleModel = null;
+			//3.2 Check to see if sourcePeople exist.
+			if (targetPeople != null && targetPeople.length > 0) {
+				for (loop2 in targetPeople) {
+					if (isMatchPeople3_0(sourcePeopleModel, targetPeople[loop2])) {
+						targetPeopleModel = targetPeople[loop2];
+						break;
+					}
+				}
+			}
+			//3.3 It is a matched people model.
+			if (targetPeopleModel != null) {
+				//3.3.1 Copy information from source to target.
+				aa.people.copyCapContactModel(sourcePeopleModel.getCapContactModel(), targetPeopleModel.getCapContactModel());
+				//3.3.2 Copy contact address from source to target.
+				if (targetPeopleModel.getCapContactModel().getPeople() != null && sourcePeopleModel.getCapContactModel().getPeople()) {
+					targetPeopleModel.getCapContactModel().getPeople().setContactAddressList(sourcePeopleModel.getCapContactModel().getPeople().getContactAddressList());
+				}
+				//3.3.3 Edit People with source People information.
+				aa.people.editCapContactWithAttribute(targetPeopleModel.getCapContactModel());
+			}
+			//3.4 It is new People model.
+			else {
+				//3.4.1 Create new people.
+				aa.people.createCapContactWithAttribute(sourcePeopleModel.getCapContactModel());
+			}
+		}
+	}
 }
 
-function getPeople(capId) {
+function getPeople3_0(capId) {
     capPeopleArr = null;
     var s_result = aa.people.getCapContactByCapID(capId);
     if (s_result.getSuccess()) {
@@ -82,14 +85,12 @@ function getPeople(capId) {
                     peopleModel.setContactAddressList(contactAddressModelArr);
                 }
             }
-        }
-        else {
-            aa.print("WARNING: no People on this CAP:" + capId);
+        } else {
+            logDebug("WARNING: no People on this CAP:" + capId);
             capPeopleArr = null;
         }
-    }
-    else {
-        aa.print("ERROR: Failed to People: " + s_result.getErrorMessage());
+    } else {
+        logDebug("ERROR: Failed to People: " + s_result.getErrorMessage());
         capPeopleArr = null;
     }
     return capPeopleArr;
