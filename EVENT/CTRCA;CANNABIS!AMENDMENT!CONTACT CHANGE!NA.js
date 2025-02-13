@@ -4,9 +4,9 @@ aa.workflow.adjustTask(capId, "Amendment Review", "N", "Y", null, null);
 updateAppStatus("Approved","",capId);
 
 //var licCapId = getParent();
-copyContactsFromContTypeToContType(capId, parentCapId, "Authorized Agent", "Authorized Agent");
+//copyContactsFromContTypeToContType(capId, parentCapId, "Authorized Agent", "Authorized Agent");
 //copyContactsFromContTypeToContType(capId, licCapId, "Property Owner", "Property Owner");
-
+copyContacts(capId, parentCapId);
 var capCondResult = aa.capCondition.getCapConditions(capId);
 if (capCondResult.getSuccess()) {
     var coArray = capCondResult.getOutput();
