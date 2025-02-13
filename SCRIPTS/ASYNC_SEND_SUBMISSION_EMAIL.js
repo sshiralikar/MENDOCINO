@@ -12,12 +12,13 @@ try {
     var isNOFAffidavit = appMatch("Cannabis/Amendment/Notice of Fallowing/Affidavit", capId);
     var isNOFRevocation = appMatch("Cannabis/Amendment/Notice of Fallowing/Revocation", capId);
     var isTaxAppeal = appMatch("Cannabis/Amendment/Tax Appeal/NA", capId);
+    var isContactChange = appMatch("Cannabis/Amendment/Contact Change/NA", capId);
 
     var hm = new Array();
     var conName = "";
     var contactResult = aa.people.getCapContactByCapID(capId);
 
-    if (!isAppeal && !isAssignment && !isNOF && !isNOFAffidavit && !isNOFRevocation && !isTaxAppeal) {
+    if (!isAppeal && !isAssignment && !isNOF && !isNOFAffidavit && !isNOFRevocation && !isTaxAppeal && !isContactChange) {
         if (contactResult.getSuccess()) {
             var capContacts = contactResult.getOutput();
             for (var i in capContacts) {
