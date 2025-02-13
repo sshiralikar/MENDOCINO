@@ -3,9 +3,18 @@ updateTask("Amendment Review", "Approved", "", "");
 aa.workflow.adjustTask(capId, "Amendment Review", "N", "Y", null, null);
 updateAppStatus("Approved","",capId);
 
-var licCapId = getParent();
-copyContactsByType(capId, licCapId, "Authorized Agent")
-copyContactsByType(capId, licCapId, "Property Owner")
+//var licCapId = getParent();
+var cons = aa.people.getCapContactByCapID(parentCapId).getOutput();
+for (var x in cons)
+{
+	var conSeqNum = cons[x].getPeople().getContactSeqNumber();
+	if (conSeqNum && (cons[x].getPeople().getContactType() == "Property Owner" || cons[x].getPeople().getContactType() == "Authorized Agent"))
+	{
+		aa.people.removeCapContact(parentCapId, conSeqNum);
+	}
+}
+copyContactsByType(capId, parentCapId, "Authorized Agent");
+copyContactsByType(capId, parentCapId, "Property Owner");
 
 var capCondResult = aa.capCondition.getCapConditions(capId);
 if (capCondResult.getSuccess()) {
