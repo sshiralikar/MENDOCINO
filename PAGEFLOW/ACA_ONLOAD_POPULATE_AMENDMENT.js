@@ -166,6 +166,13 @@ function copy() {
         //end();
         return;
     }
+    if(cap.getContactsGroup().toArray().length > 0)
+    {
+        message += "Already loaded";
+        errorCode = -1;
+        //end();
+        return;
+    }
     try {
         logDebug("parentCapId: " + parentCapId);
         logDebug("targetCapId: " + targetCapId);
