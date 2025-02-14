@@ -157,7 +157,7 @@ try {
                 records = true;
                 balRecords += "<p>"+vCapID.customID+"; </p>";
             }
-            if(vCap.getCapStatus() == "Terminated" && String(vCap.getCapType()).indexOf("Permit")!=-1){
+            if((vCap.getCapStatus() == "Terminated" || vCap.getCapStatus() == "Terminated - No Apply") && String(vCap.getCapType()).indexOf("Permit")!=-1){
                 records = true;
                 terRecords += "<p>"+vCapID.customID+"; </p>";
             }
