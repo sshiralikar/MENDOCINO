@@ -195,6 +195,14 @@ function getRequiredDocumentsForCanCult() {
         if (AInfo["SWRCB Notice Type"] == "Notice of Applicability")
             requirementArray.push(SWRCBNoticeType1);
     }
+    else if (appMatch("Cannabis/Amendment/Modification/NA")) {
+        var doc5 = {
+            condition: "Site Plan",
+            document: "Site Plan",
+            workflow: wfStopPermanentOnly
+        };
+        requirementArray.push(doc5);
+    }
     else if (isAssignment) {
         // CAMEND-600
         if (AInfo["Changes Made Since Last Site Plan"] == "Yes") {
@@ -508,7 +516,8 @@ function getRequiredDocumentsForCanCult() {
             document: "SW 401",
             workflow: wfStopPermanentOnly
         };
-        if (AInfo["SW 401"] == "CHECKED") {
+        // if (AInfo["SW 401"] == "CHECKED") {
+        if (AInfo["SW Type"] == "SW 401") {
             requirementArray.push(swConstructionType401);
         }
         var swConstructionType404 = {
@@ -516,7 +525,12 @@ function getRequiredDocumentsForCanCult() {
             document: "SW 404",
             workflow: wfStopPermanentOnly
         };
-        if (AInfo["SW 404"] == "CHECKED") {
+        // if (AInfo["SW 404"] == "CHECKED") {
+        if (AInfo["SW Type"] == "SW 404") {
+            requirementArray.push(swConstructionType404);
+        }
+        if (AInfo["SW Type"] == "Both") {
+            requirementArray.push(swConstructionType401);
             requirementArray.push(swConstructionType404);
         }
         var artLight = {
