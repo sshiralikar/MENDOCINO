@@ -152,12 +152,12 @@ try {
         var vCap = aa.cap.getCap(vCapID).getOutput();
         if(vCap.isCompleteCap() && (vCapID+"" != capId+""))
         {
-            var balanceDue = getBalanceDue(vCapID,0);
+            /*var balanceDue = getBalanceDue(vCapID,0);
             if (balanceDue > 0) {
                 records = true;
                 balRecords += "<p>"+vCapID.customID+"; </p>";
-            }
-            if(vCap.getCapStatus() == "Terminated" && String(vCap.getCapType()).indexOf("Permit")!=-1){
+            }*/
+            if((vCap.getCapStatus() == "Terminated" || vCap.getCapStatus() == "Terminated - No Apply") && String(vCap.getCapType()).indexOf("Permit")!=-1){
                 records = true;
                 terRecords += "<p>"+vCapID.customID+"; </p>";
             }
@@ -167,9 +167,10 @@ try {
     {
         cancel = true;
         showMessage = true;
-        message+="You either have an existing balance due on a previous application or have record of being terminated from the Mendocino Cannabis Program. Please contact the department for any inquiries. Thank you.<p></p><hr>";
-        if(balRecords!="")
-            message+="Records with balance due: "+ balRecords;
+        //message+="You either have an existing balance due on a previous application or have record of being terminated from the Mendocino Cannabis Program. Please contact the department for any inquiries. Thank you.<p></p><hr>";
+        message+="You have a record of being terminated from the Mendocino Cannabis Program. Please contact the department for any inquiries. Thank you.<p></p><hr>";
+        //if(balRecords!="")
+        //    message+="Records with balance due: "+ balRecords;
         if(terRecords!="")
             message+="Terminated Records : "+ terRecords;
     }
