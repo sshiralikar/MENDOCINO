@@ -167,7 +167,8 @@ try {
     {
         cancel = true;
         showMessage = true;
-        message+="You either have an existing balance due on a previous application or have record of being terminated from the Mendocino Cannabis Program. Please contact the department for any inquiries. Thank you.<p></p><hr>";
+        //message+="You either have an existing balance due on a previous application or have record of being terminated from the Mendocino Cannabis Program. Please contact the department for any inquiries. Thank you.<p></p><hr>";
+        message+="You have a record of being terminated from the Mendocino Cannabis Program. Please contact the department for any inquiries. Thank you.<p></p><hr>";
         //if(balRecords!="")
         //    message+="Records with balance due: "+ balRecords;
         if(terRecords!="")
