@@ -631,11 +631,11 @@ function getRequiredDocumentsForCanCult() {
             document: "Site Plan",
             workflow: wfStopPermanentOnly
         };
-        var doc6 = {
-            condition: "Valid Seller's Permit",
-            document: "Valid Seller's Permit",
-            workflow: wfStopPermanentOnly
-        };
+        // var doc6 = {
+        //     condition: "Valid Seller's Permit",
+        //     document: "Valid Seller's Permit",
+        //     workflow: wfStopPermanentOnly
+        // };
         requirementArray.push(doc1);
         // CAMEND-766
         if (AInfo["LSAA"] == "Yes") {
@@ -644,7 +644,7 @@ function getRequiredDocumentsForCanCult() {
         requirementArray.push(doc3);
         requirementArray.push(doc4);
         requirementArray.push(doc5);
-        requirementArray.push(doc6);
+        // requirementArray.push(doc6); // CAMEND-863
 
 
         var AgentConsentForm = {
