@@ -224,6 +224,10 @@ function getRequiredDocumentsForCanCult() {
         }
         // CAMEND-757
 
+        // CAMEND-872
+        requirementArray.push(cannabisProgramTaxImposed);
+        requirementArray.push(commercialBusinessTaxForm);
+
         // CAMEND-804
         requirementArray.push(ccblAffidavit);
 
