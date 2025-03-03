@@ -34,6 +34,9 @@ try {
                 }
             }
         }
+        // CAMEND-868
+        var taxYear = getAppSpecific("Tax Year", capId);
+
         var pCapId = getParent();
         var params = aa.util.newHashtable();
         addParameter(params, "$$altID$$", pCapId.getCustomID() + "");
@@ -41,6 +44,7 @@ try {
         addParameter(params, "$$date$$", sysDateMMDDYYYY);
         addParameter(params, "$$parentAltId$$", pCapId.getCustomID() + "");
         addParameter(params, "$$contactname$$", conName);
+        addParameter(params, "$$taxYear$$", taxYear);
         addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptName"));
         addParameter(params, "$$phoneHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "phoneHours"));
         addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptPhone"));
