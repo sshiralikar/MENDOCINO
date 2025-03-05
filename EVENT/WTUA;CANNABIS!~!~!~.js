@@ -176,7 +176,26 @@ if(wfStatus == "Withdrawn" && (appMatch("Cannabis/*/*/*")))
     }
 }
 //CAMEND-873
-unassignTask(wfTask);
+var workflowResult = aa.workflow.getTasks(capId);
+if (workflowResult.getSuccess())
+    var wfObj = workflowResult.getOutput();
+else
+{
+    logMessage("**ERROR: Failed to get workflow object: " + s_capResult.getErrorMessage());
+}
+for (i in wfObj)
+{
+    var fTask = wfObj[i];
+    if (fTask.getTaskDescription().toUpperCase().equals(wfTask.toUpperCase()))
+    {
+        var stepnumber = fTask.getStepNumber();
+        var processID = fTask.getProcessID();
+        var completeFlag = fTask.getCompleteFlag();
+
+        if(completeFlag == "Y")
+            unassignTask(wfTask);
+    }
+}
 function unassignTask(wfstr) {
     // unassigns task and makes department and assigned to fields null
     if (arguments.length > 1)
