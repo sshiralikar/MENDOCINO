@@ -299,7 +299,8 @@ function getRequiredDocumentsForCanCult() {
 
     }
     else if (isNOF) {
-
+        // CAMEND-876
+        requirementArray.push(sitePlan);
     }
     else if (isNOFAffidavit) {
 
