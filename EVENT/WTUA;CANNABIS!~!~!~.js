@@ -175,3 +175,49 @@ if(wfStatus == "Withdrawn" && (appMatch("Cannabis/*/*/*")))
         }
     }
 }
+//CAMEND-873
+var workflowResult = aa.workflow.getTasks(capId);
+if (workflowResult.getSuccess())
+    var wfObj = workflowResult.getOutput();
+else
+{
+    logMessage("**ERROR: Failed to get workflow object: " + s_capResult.getErrorMessage());
+}
+for (i in wfObj)
+{
+    var fTask = wfObj[i];
+    if (fTask.getTaskDescription().toUpperCase().equals(wfTask.toUpperCase()))
+    {
+        var stepnumber = fTask.getStepNumber();
+        var processID = fTask.getProcessID();
+        var completeFlag = fTask.getCompleteFlag();
+
+        if(completeFlag == "Y")
+            unassignTask(wfTask);
+    }
+}
+function unassignTask(wfstr) {
+    // unassigns task and makes department and assigned to fields null
+    if (arguments.length > 1)
+        capId = arguments[1];
+    var workflowResult = aa.workflow.getTaskItems(capId, wfstr, "", null, null,
+        null);
+    if (workflowResult.getSuccess()) {
+        var wfObj = workflowResult.getOutput();
+    } else {
+        logMessage("**ERROR: Failed to get workflow object: "
+            + s_capResult.getErrorMessage());
+        return false;
+    }
+
+    for (i in wfObj) {
+        var fTask = wfObj[i];
+        if (fTask.getTaskDescription().toUpperCase()
+            .equals(wfstr.toUpperCase())) {
+            var nullUser = new com.accela.aa.aamain.people.SysUserModel;
+            fTask.setAssignedUser(nullUser);
+            aa.workflow.assignTask(fTask.getTaskItem());
+        }
+    }
+}
+//CAMEND-873
