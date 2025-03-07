@@ -195,9 +195,24 @@ for (i in wfObj)
         if(completeFlag == "Y")
         {
             unassignTask(wfTask);
-            unassignCap(capId);
         }
     }
+}
+if(allTasksComplete(capId))
+    unassignCap(capId);
+
+function allTasksComplete(capID) //, stask)
+{
+    // returns true if any of the subtasks are active
+    var taskResult = aa.workflow.getTasks(capID);
+    if (taskResult.getSuccess())
+    { taskArr = taskResult.getOutput(); }
+    else
+    { logDebug("**ERROR: getting tasks : " + taskResult.getErrorMessage()); return false; }
+    for (xx in taskArr)
+        if (taskArr[xx].getActiveFlag().equals("Y"))
+            return false;
+    return true;
 }
 function unassignCap() // option CapId
 {
