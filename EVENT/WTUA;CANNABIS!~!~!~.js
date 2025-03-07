@@ -193,8 +193,37 @@ for (i in wfObj)
         var completeFlag = fTask.getCompleteFlag();
 
         if(completeFlag == "Y")
+        {
             unassignTask(wfTask);
+            unassignCap(capId);
+        }
     }
+}
+function unassignCap() // option CapId
+{
+    var itemCap = capId
+    if (arguments.length > 1) itemCap = arguments[1]; // use cap ID specified in args
+
+    var cdScriptObjResult = aa.cap.getCapDetail(itemCap);
+    if (!cdScriptObjResult.getSuccess())
+    { aa.print("**ERROR: No cap detail script object : " + cdScriptObjResult.getErrorMessage()) ; return false; }
+
+    var cdScriptObj = cdScriptObjResult.getOutput();
+
+    if (!cdScriptObj)
+    { aa.print("**ERROR: No cap detail script object") ; return false; }
+
+    cd = cdScriptObj.getCapDetailModel();
+
+    cd.setAsgnDept(null);
+    cd.setAsgnStaff(null);
+
+    cdWrite = aa.cap.editCapDetail(cd)
+
+    if (cdWrite.getSuccess())
+    { aa.print("Unassigned CAP") }
+    else
+    { aa.print("**ERROR writing capdetail : " + cdWrite.getErrorMessage()) ; return false ; }
 }
 function unassignTask(wfstr) {
     // unassigns task and makes department and assigned to fields null
