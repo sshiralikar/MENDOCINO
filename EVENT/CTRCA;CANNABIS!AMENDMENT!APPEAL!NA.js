@@ -7,6 +7,6 @@ editAppSpecific("Appeal Submitted Date", sysDateMMDDYYYY, licCapId);
 
 // CAMEND-852
 if (!feeExists("CANAPPL1") && AInfo["Paying in Person"] == "Yes") {
-    addFee("CANAPPL1", "CAN_APPEAL", "FINAL", "1", "N");
+    addFee("CANAPPL1", "CAN_APPEAL", "FINAL", "1", "Y");
     addStdConditionX("General", "Pay in Person");
 }
