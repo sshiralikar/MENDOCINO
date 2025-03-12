@@ -13,3 +13,8 @@ if (!publicUser) {
     logDebug("Total SF In Use: " + totalSFinUse);
     editAppSpecific("Total SF In Use", totalSFinUse, licCapId);
 }
+
+// CAMEND-852
+if (!feeExists("CAN_FAL01", "INVOICED", "NEW") && AInfo["Paying in Person"] == "No") {
+    addFee("CAN_FAL01", "CAN_NOF", "FINAL", "1", "Y");
+}

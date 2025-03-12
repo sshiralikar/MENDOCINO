@@ -12,3 +12,9 @@ if (AInfo["Partial SF/Partial Nursery SF"] != null) {
 }
 logDebug("Total SF In Use: " + totalSFinUse);
 editAppSpecific("Total SF In Use", totalSFinUse, licCapId);
+
+// CAMEND-852
+if (!feeExists("CAN_FAL01") && AInfo["Paying in Person"] == "Yes") {
+    addFee("CAN_FAL01", "CAN_NOF", "FINAL", "1", "N");
+    addStdConditionX("General", "Pay in Person");
+}
