@@ -14,3 +14,18 @@ if(bal <= 0) {
         updateAppStatus("Notice of Application Stay","updated via script", parentCapId);
     }
 }
+
+function getBalanceDue(targetCapId,total)
+{
+    var balance = total;
+    var invArray = aa.finance.getInvoiceByCapID(targetCapId, null).getOutput();
+    if(invArray && invArray.length>0)
+        balance = 0;
+    for (var invCount in invArray)
+    {
+        var thisInvoice = invArray[invCount];
+        var balDue = thisInvoice.getInvoiceModel().getBalanceDue();
+        balance+=parseInt(balDue);
+    }
+    return balance;
+}
