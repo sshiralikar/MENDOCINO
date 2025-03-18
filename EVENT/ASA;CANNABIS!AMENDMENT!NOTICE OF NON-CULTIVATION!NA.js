@@ -1,25 +1,23 @@
 try {
-    if(!publicUser)
-    {
-        updateAppStatus("Amendment Review","Approved");
-        updateTask("Amendment Review","Approved","","");
+    if (!publicUser) {
+        updateAppStatus("Amendment Review", "Approved");
+        updateTask("Amendment Review", "Approved", "", "");
         aa.workflow.adjustTask(capId, "Amendment Review", "N", "Y", null, null);
 
-        if(parentCapId)
-        {
+        if (parentCapId) {
             editAppSpecific("NONC Submitted Date", sysDateMMDDYYYY, parentCapId);
             var today = new Date();
             today.setFullYear(today.getFullYear() + 1);
-            var newDate = today.getMonth()+1+"/"+today.getDate()+"/"+today.getFullYear();
+            var newDate = today.getMonth() + 1 + "/" + today.getDate() + "/" + today.getFullYear();
             editAppSpecific("NONC Expiration Date", newDate, parentCapId);
-            setLicExpirationDate(parentCapId,"",newDate);
+            setLicExpirationDate(parentCapId, "", newDate);
             editAppSpecific("New Expiration Date", newDate, parentCapId);
 
             var today = new Date();
             today.setFullYear(today.getFullYear() + 5);
-            var newDate = today.getMonth()+1+"/"+today.getDate()+"/"+today.getFullYear();
+            var newDate = today.getMonth() + 1 + "/" + today.getDate() + "/" + today.getFullYear();
             editAppSpecific("NONC Requested Expiration Date", newDate, parentCapId);
-            updateAppStatus("Notice of Non Cultivation","updated via script", parentCapId);
+            updateAppStatus("Notice of Non Cultivation", "updated via script", parentCapId);
 
             // CAMEND-722
             var conName = "";
@@ -62,6 +60,16 @@ try {
             // sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail() + "", String(lookup("CAN_TREASURER_TAX_COLLECTOR", "TTC_Email"))+"", "CAN_NONC_APPROVED", params, null, capId);
             sendEmail("no-reply@mendocinocounty.org", String(lookup("CAN_TREASURER_TAX_COLLECTOR", "TTC_Email")), "", "CAN_NONC_APPROVED", params, null, capId);
         }
+
+        // CAMEND-852
+        if (!feeExists("CANNONC01", "INVOICED", "NEW")) {
+            addFee("CANNONC01", "CAN_NONC", "FINAL", "1", "Y");
+        }
+    }
+
+    // CAMEND-852
+    if (!feeExists("CANNONC01", "INVOICED", "NEW") && AInfo["Paying in Person"] == "No") {
+        addFee("CANNONC01", "CAN_NONC", "FINAL", "1", "Y");
     }
 } catch (err) {
     logDebug("A Javascript error has occurred within the following file: ASA:Cannabis/Amendment/Notice of Non-Cultivation/NA" + err.message);
