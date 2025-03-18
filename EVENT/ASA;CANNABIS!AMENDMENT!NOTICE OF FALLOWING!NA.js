@@ -12,6 +12,11 @@ if (!publicUser) {
     }
     logDebug("Total SF In Use: " + totalSFinUse);
     editAppSpecific("Total SF In Use", totalSFinUse, licCapId);
+
+    // CAMEND-852
+    if (!feeExists("CAN_FAL01", "INVOICED", "NEW")){
+        addFee("CAN_FAL01", "CAN_NOF", "FINAL", "1", "Y");
+    } 
 }
 
 // CAMEND-852
