@@ -1,6 +1,6 @@
 var newAltId = "";
 if( getAppStatus()!="Approved")
-    assignCap("KMILLER");
+    assignCap("DSTROCK");
 try {
     newAltId = setRecordAltID(capId);
     if (parentCapId == "undefined" || parentCapId == null) {
