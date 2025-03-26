@@ -51,7 +51,7 @@ if (wfStatus == "Issued") {
     if (condResult.getSuccess()) {
         var capConds = condResult.getOutput();
         for (cc in capConds) {
-            if (capConds[cc].getConditionStatus() != "Met" && capConds[cc].getConditionStatus() != "Document Received") {
+            if (capConds[cc].getConditionStatus() != "Condition Met" && capConds[cc].getConditionStatus() != "Met" && capConds[cc].getConditionStatus() != "Document Received") {
                 var cDesc = capConds[cc].getConditionDescription();
                 var cType = capConds[cc].getConditionType();
                 unmetCondStr += cType + ": " + cDesc + "<br>";
