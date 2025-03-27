@@ -6,6 +6,7 @@ if(!publicUser)
     }
 }
 // CAMEND-852
+removeFee("CANMOD01", "FINAL");
 if (AInfo["Paying in Person"] == "No") {
     if(!feeExists("CANMOD01","INVOICED","NEW") && AInfo["Exempt"] != "Yes") {
         addFee("CANMOD01", "CAN_MOD", "FINAL", "1", "Y");

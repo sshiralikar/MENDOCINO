@@ -19,6 +19,7 @@ if (!publicUser) {
 }
 
 // CAMEND-852
+removeFee("CANNAS01", "FINAL");
 if (!feeExists("CANNAS01", "INVOICED", "NEW") && AInfo["Paying in Person"] == "No") {
     addFee("CANNAS01", "CAN_NAS", "FINAL", "1", "Y");
 }
