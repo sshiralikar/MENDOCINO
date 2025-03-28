@@ -1,4 +1,5 @@
 //CAMEND-620
+removeFee("CAN_FAL01", "FINAL");
 if (!publicUser) {
     var licCapId = getParent();
     if (parentCapId != null && parentCapId != "")
@@ -20,7 +21,7 @@ if (!publicUser) {
 }
 
 // CAMEND-852
-removeFee("CAN_FAL01", "FINAL");
+
 if (!feeExists("CAN_FAL01", "INVOICED", "NEW") && AInfo["Paying in Person"] == "No") {
     addFee("CAN_FAL01", "CAN_NOF", "FINAL", "1", "Y");
 }

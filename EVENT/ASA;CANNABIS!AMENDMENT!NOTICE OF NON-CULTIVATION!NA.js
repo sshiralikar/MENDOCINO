@@ -1,4 +1,5 @@
 try {
+    removeFee("CANNONC01", "FINAL");
     if (!publicUser) {
         updateAppStatus("Amendment Review", "Approved");
         updateTask("Amendment Review", "Approved", "", "");
@@ -68,7 +69,7 @@ try {
     }
 
     // CAMEND-852
-    removeFee("CANNONC01", "FINAL");
+    
     if (!feeExists("CANNONC01", "INVOICED", "NEW") && AInfo["Paying in Person"] == "No") {
         addFee("CANNONC01", "CAN_NONC", "FINAL", "1", "Y");
     }
