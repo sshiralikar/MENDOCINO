@@ -1,1 +1,1 @@
-updateAppStatus("Pending","Updated through script");
+updateAppStatus("Submitted","Updated through script");
