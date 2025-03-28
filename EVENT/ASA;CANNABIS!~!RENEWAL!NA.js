@@ -39,7 +39,7 @@ if (parentCapId != null && vGoodToRenew) {
 }
 //End Core Renewal Functionality*/
 if (!publicUser) {
-    updateAppStatus("Pending", "Updated through script");
+    updateAppStatus("Submitted", "Updated through script");
     if (parentCapId)
         updateAppStatus("Renewal Under Review", "Updated through script", parentCapId);
     if (AInfo["Structure Change"] == "Yes") {

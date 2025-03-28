@@ -42,7 +42,7 @@ if(!publicUser)
             {
                 updateTask("Amendment Review","Pending","","");
                 aa.workflow.adjustTask(capId, "Amendment Review", "Y", "N", null, null);
-                updateAppStatus("Pending","Updated via script",capId);
+                updateAppStatus("Submitted","Updated via script",capId);
             }
         }
         //CAMEND-603
