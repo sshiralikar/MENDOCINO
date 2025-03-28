@@ -149,7 +149,7 @@ if(wfTask == "Issuance" && wfStatus == "Issued")
     addParameter(params, "$$FullNameBusName$$", conName);
     addParameter(params, "$$capAlias$$", aa.cap.getCap(capId).getOutput().getCapType().getAlias() + "");
     addParameter(params, "$$Amendment$$", aa.cap.getCap(capId).getOutput().getCapType().getAlias() + "");
-    addParameter(params, "$$Location$$", getAddressInALine());
+    // addParameter(params, "$$Location$$", getAddressInALine());
     sendEmail("no-reply@mendocinocounty.org", String(lookup("CAN_TREASURER_TAX_COLLECTOR", "TTC_Email")), "", "CAN_TTC_APPLICATION_STATUS", params, null, capId);
 /*}
 //CAMEND-194, 223
