@@ -2,7 +2,7 @@ if(wfStatus == "Denial Pending")
 {
     editTaskDueDate("Appeal", dateAdd(newDate, 35));
 }
-if(wfTask == "Supervisor Review" && wfStatus == "Denied")
+if(wfStatus == "Denied")
 {
     editTaskDueDate("Appeal", dateAdd(newDate, 10));
 }

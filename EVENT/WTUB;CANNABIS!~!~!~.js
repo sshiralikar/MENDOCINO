@@ -1,4 +1,4 @@
-if (wfTask == "Supervisor Review" && wfStatus == "Denied") {
+if (wfStatus == "Denied") {
     var workfHistory = aa.workflow.getWorkflowHistory(capId, null);
     if (workfHistory.getSuccess()) {
         var wfhistoryresult = workfHistory.getOutput();

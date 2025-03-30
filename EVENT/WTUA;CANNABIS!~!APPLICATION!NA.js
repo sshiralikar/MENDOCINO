@@ -282,7 +282,7 @@ if(wfStatus == "Deficiency")
 
 }
 //CAMEND-303
-if(wfTask == "Supervisor Review" && wfStatus == "Denied")
+if(wfStatus == "Denied")
 {
     /*var date = getCapFileDate(capId);
     if(isDateInRangeToOct(date))
