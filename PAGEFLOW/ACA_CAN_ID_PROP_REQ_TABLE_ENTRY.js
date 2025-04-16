@@ -184,16 +184,45 @@ try {
     //         messageList += "Please add a row with 'Type of Structure': 'Septic/Leach' in the following table: " + "Structure/Site Plan ID" + br;
     //     }
     // }
-    if(AInfo["Structure Change"] == "Yes")
-    {
+    if (AInfo["Structure Change"] == "Yes") {
         var structureCounter;
-        if (typeof(STRUCTURESITEPLANIDLIST) == "object") {
+        if (typeof (STRUCTURESITEPLANIDLIST) == "object") {
             structureCounter = STRUCTURESITEPLANIDLIST.length;
         }
         if (structureCounter < 1) {
             messageList += "You must enter at least one row in the following table: " + "Structure/Site Plan ID" + br;
         }
     }
+
+    //CAMEND-895
+    var indoorMixedSF = 0;
+    var typeStructure = 0;
+    if (AInfo["Indoor SF"] > 0) {
+        indoorMixedSF++;
+    }
+    if (AInfo["Mixed Light SF"] > 0) {
+        indoorMixedSF++;
+    }
+    if (AInfo["Type of Structure"] == "Cargo Container") {
+        typeStructure++;
+    }
+    if (AInfo["Type of Structure"] == "Greenhouse") {
+        typeStructure++;
+    }
+    if (AInfo["Type of Structure"] == "Hoop House") {
+        typeStructure++;
+    }
+
+    if (indoorMixedSF > 0 && typeStructure == 0) {
+        var structureCounter;
+        if (typeof (STRUCTURESITEPLANIDLIST) == "object") {
+            structureCounter = STRUCTURESITEPLANIDLIST.length;
+        }
+        if (structureCounter < 1) {
+            messageList += "You must enter at least one row in the following table with Type of Structure of Cargo, Greenhouse or Hoop: " + "Structure/Site Plan ID" + br;
+        }
+    }
+    //CAMEND-895
 
     if (messageList != "") {
         cancel = true;
