@@ -87,16 +87,6 @@ try {
 
     loadASITables4ACA();
 
-    //
-    var useExistingASIT = getASITablesRowsFromSession4ACA("POWER SOURCE(S)");
-
-    if (AInfo["Power source" == "Yes"] && useExistingASIT.length == 0 || AInfo["Power source"] == "Yes" && !useExistingASIT) {
-        // cancel = true;
-        // showMessage = true;
-        // comment("Power Source must have at least one row to continue.");
-        messageList += "Power Source must have at least one row to continue." + br;
-    }
-
     // CAMEND-832
     var flag = false;
     if (AInfo["Generators"] == "CHECKED") {
@@ -117,6 +107,18 @@ try {
         }
     }
     // CAMEND-832
+
+    //
+    var useExistingASIT = getASITablesRowsFromSession4ACA("POWER SOURCE(S)");
+
+    if (AInfo["Power source" == "Yes"] && useExistingASIT.length == 0 || AInfo["Power source"] == "Yes" && !useExistingASIT) {
+        // cancel = true;
+        // showMessage = true;
+        // comment("Power Source must have at least one row to continue.");
+        messageList += "Power Source must have at least one row to continue." + br;
+    }
+
+    
 
     if (messageList != "") {
         cancel = true;
