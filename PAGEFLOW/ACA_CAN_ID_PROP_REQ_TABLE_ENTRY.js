@@ -197,17 +197,19 @@ try {
     //CAMEND-895
     var flag = false;
     var table = getASITablesRowsFromSession4ACA("STRUCTURE/SITE PLAN ID LIST");
-    if (table && table.length > 0) {
-        for (var i in table) {
-            if (table[i]["Type of Structure"] != "Greenhouse") {
-                flag = true
-            } else {
-                flag = false
+    if (AInfo["Indoor SF"] > 0 || AInfo["Mixed Light SF"] > 0) {
+        if (table && table.length > 0) {
+            for (var i in table) {
+                if (table[i]["Type of Structure"] != "Cargo Container" && table[i]["Type of Structure"] != "Greenhouse" && table[i]["Type of Structure"] != "Hoop House") {
+                    flag = true
+                } else {
+                    flag = false
+                }
             }
         }
     }
     if (flag) {
-        messageList += "You must enter at least one row WITH 'Greenhouse' in the following table: " + "Structure/Site Plan ID" + br;
+        messageList += "Indoor SF and/or Mixed Light SF are greater than 0. You must enter at least one row with 'Cargo Container', 'Greenhouse', or 'Hoop House' as a Structure Type in the following table: " + "Structure/Site Plan ID" + br;
     }
 
     if (messageList != "") {
