@@ -68,14 +68,60 @@ loadAppSpecific4ACA(AInfo); // Add AppSpecific Info
 
 cancel = false;
 try {
+
+    parentCapIdString = "" + cap.getParentCapID();
+    if (parentCapIdString) {
+        pca = parentCapIdString.split("-");
+        parentCapId = aa.cap.getCapID(pca[0], pca[1], pca[2]).getOutput();
+    }
+
+    //showDebug = false;
+    //showMessage = true;
+    //cancel = true;
+
+    var messageList = "";
+    var z = 0;
+    for (z in AInfo) {
+        logDebug(z + " : " + AInfo[z]);
+    }
+
+    loadASITables4ACA();
+
     //
     var useExistingASIT = getASITablesRowsFromSession4ACA("POWER SOURCE(S)");
 
-    if(AInfo["Power source" == "Yes"] && useExistingASIT.length == 0 || AInfo["Power source"] == "Yes" && !useExistingASIT) {
+    if (AInfo["Power source" == "Yes"] && useExistingASIT.length == 0 || AInfo["Power source"] == "Yes" && !useExistingASIT) {
         cancel = true;
         showMessage = true;
         comment("Power Source must have at least one row to continue.");
 
+    }
+
+    // CAMEND-832
+    var flag = false;
+    if (AInfo["Generators"] > "CHECKED") {
+        var structureCounter;
+        if (typeof (POWERSOURCES) == "object") {
+            structureCounter = POWERSOURCES.length;
+            for (var i in POWERSOURCES) {
+                if (POWERSOURCES[i]["Type of Power"] == "Generator") {
+                    flag = true;
+                    break;
+                }
+            }
+        }
+        logDebug("number of rows: " + structureCounter);
+
+        if ((structureCounter == 0) || (structureCounter > 0 && !flag)) {
+            messageList += "Generators was checked. Please add a row with Type of Power: 'Generators' in the following table: " + "POWER SOURCE(S)" + br;
+        }
+    }
+    // CAMEND-832
+
+    if (messageList != "") {
+        cancel = true;
+        showMessage = true;
+        comment(messageList);
     }
 
 } catch (error) {
