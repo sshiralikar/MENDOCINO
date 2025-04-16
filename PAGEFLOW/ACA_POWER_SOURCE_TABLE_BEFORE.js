@@ -90,9 +90,9 @@ try {
     // CAMEND-832
     var flag = false;
     if (AInfo["Generators"] == "CHECKED") {
-        var structureCounter;
+        var powerCounter;
         if (typeof (POWERSOURCES) == "object") {
-            structureCounter = POWERSOURCES.length;
+            powerCounter = POWERSOURCES.length;
             for (var i in POWERSOURCES) {
                 if (POWERSOURCES[i]["Type of Power"] == "Generator") {
                     flag = true;
@@ -100,9 +100,9 @@ try {
                 }
             }
         }
-        logDebug("number of rows: " + structureCounter);
+        logDebug("number of rows: " + powerCounter);
 
-        if ((structureCounter == 0) || (structureCounter > 0 && !flag)) {
+        if ((powerCounter == 0) || (powerCounter > 0 && !flag)) {
             messageList += "Generators was checked. Please add a row with Type of Power: 'Generators' in the following table: " + "POWER SOURCE(S)" + br;
         }
     }
@@ -127,9 +127,10 @@ try {
     }
 
 } catch (error) {
-    logDebug(error.message);
-    cancel = true;
-    showDebug = true;
+    logDebug(error);
+    // logDebug(error.message);
+    // cancel = true;
+    // showDebug = true;
 }
 
 
