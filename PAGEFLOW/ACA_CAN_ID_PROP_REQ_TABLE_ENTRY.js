@@ -184,15 +184,6 @@ try {
     //         messageList += "Please add a row with 'Type of Structure': 'Septic/Leach' in the following table: " + "Structure/Site Plan ID" + br;
     //     }
     // }
-    if (AInfo["Structure Change"] == "Yes") {
-        var structureCounter;
-        if (typeof (STRUCTURESITEPLANIDLIST) == "object") {
-            structureCounter = STRUCTURESITEPLANIDLIST.length;
-        }
-        if (structureCounter < 1) {
-            messageList += "You must enter at least one row in the following table: " + "Structure/Site Plan ID" + br;
-        }
-    }
 
     //CAMEND-895
     var flag = false;
@@ -211,6 +202,18 @@ try {
     if (flag) {
         messageList += "Indoor SF and/or Mixed Light SF are greater than 0. You must enter at least one row with 'Cargo Container', 'Greenhouse', or 'Hoop House' as a Structure Type in the following table: " + "Structure/Site Plan ID" + br;
     }
+    
+    if (AInfo["Structure Change"] == "Yes") {
+        var structureCounter;
+        if (typeof (STRUCTURESITEPLANIDLIST) == "object") {
+            structureCounter = STRUCTURESITEPLANIDLIST.length;
+        }
+        if (structureCounter < 1) {
+            messageList += "You must enter at least one row in the following table: " + "Structure/Site Plan ID" + br;
+        }
+    }
+
+    
 
     if (messageList != "") {
         cancel = true;
