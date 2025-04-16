@@ -207,7 +207,7 @@ try {
         logDebug("number of rows: " + structureCounter);
 
         if ((structureCounter == 0) || (structureCounter > 0 && !flag)) {
-            messageList += "Please add a row with 'Type of Structure': 'Cargo Container', 'Greenhouse', or 'Hoop House' in the following table: " + "Structure/Site Plan ID" + br;
+            messageList += "Indoor SF and/or Mixed Light SF are greater than 0. Please add a row with Type of Structure: 'Cargo Container', 'Greenhouse', or 'Hoop House' in the following table: " + "Structure/Site Plan ID" + br;
         }
     }
 
