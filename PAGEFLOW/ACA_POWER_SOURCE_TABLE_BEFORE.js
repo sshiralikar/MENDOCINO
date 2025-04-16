@@ -91,10 +91,10 @@ try {
     var useExistingASIT = getASITablesRowsFromSession4ACA("POWER SOURCE(S)");
 
     if (AInfo["Power source" == "Yes"] && useExistingASIT.length == 0 || AInfo["Power source"] == "Yes" && !useExistingASIT) {
-        cancel = true;
-        showMessage = true;
-        comment("Power Source must have at least one row to continue.");
-
+        // cancel = true;
+        // showMessage = true;
+        // comment("Power Source must have at least one row to continue.");
+        messageList += "Power Source must have at least one row to continue." + br;
     }
 
     // CAMEND-832
