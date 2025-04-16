@@ -194,6 +194,20 @@ try {
         }
     }
 
+    //CAMEND-895
+    var flag = false;
+    var table = getASITablesRowsFromSession4ACA("STRUCTURE/SITE PLAN ID LIST");
+    if (table && table.length > 0) {
+        for (var i in table) {
+            if (table[i]["Type of Structure"] != "Generator") {
+                flag = true
+            }
+        }
+    }
+    if (flag) {
+        messageList += "You must enter at least one row WITH 'Generator' in the following table: " + "Structure/Site Plan ID" + br;
+    }
+
     if (messageList != "") {
         cancel = true;
         showMessage = true;
