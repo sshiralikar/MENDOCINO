@@ -195,6 +195,12 @@ try {
                 if (STRUCTURESITEPLANIDLIST[i]["Type of Structure"] == "Cargo Container") {
                     flag = true;
                     break;
+                } else if (STRUCTURESITEPLANIDLIST[i]["Type of Structure"] == "Greenhouse") {
+                    flag = true;
+                    break;
+                } else if (STRUCTURESITEPLANIDLIST[i]["Type of Structure"] == "Hoop House") {
+                    flag = true;
+                    break;
                 }
             }
         }
