@@ -186,24 +186,24 @@ try {
     // }
 
     //CAMEND-895
-    // var flag = false;
-    // if (AInfo["Indoor SF"] > 0 || AInfo["Mixed Light SF"] > 0) {
-    //     var structureCounter;
-    //     if (typeof (STRUCTURESITEPLANIDLIST) == "object") {
-    //         structureCounter = STRUCTURESITEPLANIDLIST.length;
-    //         for (var i in STRUCTURESITEPLANIDLIST) {
-    //             if (STRUCTURESITEPLANIDLIST[i]["Type of Structure"] == "Cargo Container" || STRUCTURESITEPLANIDLIST[i]["Type of Structure"] == "Greenhouse" || STRUCTURESITEPLANIDLIST[i]["Type of Structure"] == "Hoop House") {
-    //                 flag = true;
-    //                 break;
-    //             }
-    //         }
-    //     }
-    //     logDebug("number of rows: " + structureCounter);
+    var flag = false;
+    if (AInfo["Indoor SF"] > 0 || AInfo["Mixed Light SF"] > 0) {
+        var structureCounter;
+        if (typeof (STRUCTURESITEPLANIDLIST) == "object") {
+            structureCounter = STRUCTURESITEPLANIDLIST.length;
+            for (var i in STRUCTURESITEPLANIDLIST) {
+                if (STRUCTURESITEPLANIDLIST[i]["Type of Structure"] == "Cargo Container") {
+                    flag = true;
+                    break;
+                }
+            }
+        }
+        logDebug("number of rows: " + structureCounter);
 
-    //     if ((structureCounter == 0) || (structureCounter > 0 && !flag)) {
-    //         messageList += "Please add a row with 'Type of Structure': 'Cargo Container', 'Greenhouse', or 'Hoop House' in the following table: " + "Structure/Site Plan ID" + br;
-    //     }
-    // }
+        if ((structureCounter == 0) || (structureCounter > 0 && !flag)) {
+            messageList += "Please add a row with 'Type of Structure': 'Cargo Container', 'Greenhouse', or 'Hoop House' in the following table: " + "Structure/Site Plan ID" + br;
+        }
+    }
 
     //CAMEND-895
     // var flag = false;
