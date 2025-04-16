@@ -199,7 +199,7 @@ try {
     var table = getASITablesRowsFromSession4ACA("STRUCTURE/SITE PLAN ID LIST");
     if (table && table.length > 0) {
         for (var i in table) {
-            if (table[i]["Type of Structure"] != "Generator") {
+            if (table[i]["Type of Structure"] != "Greenhouse") {
                 flag = true
             }
         }
