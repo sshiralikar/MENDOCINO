@@ -99,7 +99,7 @@ try {
 
     // CAMEND-832
     var flag = false;
-    if (AInfo["Generators"] > "CHECKED") {
+    if (AInfo["Generators"] == "CHECKED") {
         var structureCounter;
         if (typeof (POWERSOURCES) == "object") {
             structureCounter = POWERSOURCES.length;
