@@ -201,11 +201,13 @@ try {
         for (var i in table) {
             if (table[i]["Type of Structure"] != "Greenhouse") {
                 flag = true
+            } else {
+                flag = false
             }
         }
     }
     if (flag) {
-        messageList += "You must enter at least one row WITH 'Generator' in the following table: " + "Structure/Site Plan ID" + br;
+        messageList += "You must enter at least one row WITH 'Greenhouse' in the following table: " + "Structure/Site Plan ID" + br;
     }
 
     if (messageList != "") {
