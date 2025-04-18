@@ -9,6 +9,17 @@ if (AInfo["Structure Change"] == "Yes" ||
     updateAppStatus("Modification Required", "Updating via Script");
     updateAppStatus("Modification Required", "Updating via Script", parentCapId);
 }
+
+if (powerSourceParent == "Yes" && AInfo["Power source"] == "No") {
+    taskCloseAllExcept("Modification Required", "Closing via script");
+    updateAppStatus("Modification Required", "Updating via Script");
+    updateAppStatus("Modification Required", "Updating via Script", parentCapId);
+} else if (powerSourceParent == "No" && AInfo["Power source"] == "Yes") {
+    taskCloseAllExcept("Modification Required", "Closing via script");
+    updateAppStatus("Modification Required", "Updating via Script");
+    updateAppStatus("Modification Required", "Updating via Script", parentCapId);
+}
+
 // CAMEND-852
 if (AInfo["Paying in Person"] == "Yes") {
     if (!feeExists("CANREN01", "INVOICED", "NEW") && AInfo["Exempt"] != "Yes") {
