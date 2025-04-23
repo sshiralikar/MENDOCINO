@@ -1,3 +1,5 @@
+// Was getting an error on line 9 where it was saying newDate was not defined
+var newDate = today.getMonth() + 1 + "/" + today.getDate() + "/" + today.getFullYear();
 if(wfStatus == "Denial Pending")
 {
     editTaskDueDate("Appeal", dateAdd(newDate, 35));
