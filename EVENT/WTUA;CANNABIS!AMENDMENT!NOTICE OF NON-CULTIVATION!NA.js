@@ -1,6 +1,6 @@
 // CAMEND-563
 if (wfStatus == "Approved") {
-var conName = "";
+    var conName = "";
     var contactResult = aa.people.getCapContactByCapID(capId);
     if (contactResult.getSuccess()) {
         var capContacts = contactResult.getOutput();
@@ -37,7 +37,15 @@ var conName = "";
     addParameter(params, "$$parentCapId$$", pCapId.getCustomID());
     addParameter(params, "$$Amendment$$", aa.cap.getCap(capId).getOutput().getCapType().getAlias() + "");
     addParameter(params, "$$Location$$", getAddressInALine());
-    // sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail() + "", String(lookup("CAN_TREASURER_TAX_COLLECTOR", "TTC_Email"))+"", "CAN_NONC_APPROVED", params, null, capId);
-    sendEmail("no-reply@mendocinocounty.org", String(lookup("CAN_TREASURER_TAX_COLLECTOR", "TTC_Email")), "", "CAN_NONC_APPROVED", params, null, capId);
+    // CAMEND-893
+    var parent = getParent();
+    var parentCap = aa.cap.getCap(parent).getOutput();
+    parentAppTypeResult = parentCap.getCapType();
+    parentAppTypeString = parentAppTypeResult.toString();
+    parentAppTypeArray = parentAppTypeString.split("/");
+    if (parentAppTypeArray[1] != "Nursery") {
+        // sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail() + "", String(lookup("CAN_TREASURER_TAX_COLLECTOR", "TTC_Email"))+"", "CAN_NONC_APPROVED", params, null, capId);
+        sendEmail("no-reply@mendocinocounty.org", String(lookup("CAN_TREASURER_TAX_COLLECTOR", "TTC_Email")), "", "CAN_NONC_APPROVED", params, null, capId);
+    }
 }
 
