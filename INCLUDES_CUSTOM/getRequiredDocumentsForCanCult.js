@@ -319,9 +319,10 @@ function getRequiredDocumentsForCanCult() {
         if (AInfo["Change Property Owner"] == "Yes") {
             requirementArray.push(propertyOwnerConsent);
         }
-        if (AInfo["Change Authorized Agent"] == "Yes") {
-            requirementArray.push(agentConsentForm);
-        }
+        // CAMEND-897
+        // if (AInfo["Change Authorized Agent"] == "Yes") {
+        //     requirementArray.push(agentConsentForm);
+        // }
     }
     else {
         //CAMEND-153
