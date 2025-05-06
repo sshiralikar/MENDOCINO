@@ -14,6 +14,7 @@ if(wfTask == "Draft Decision" && wfStatus == "Approved")
     var expDate = getAppSpecific("New Expiration Date", licCapId);
     var today = new Date();
     var expDateObj = new Date(expDate);
+    var ttcNumber = getAppSpecific("TTC Account Number", licCapId);
     logDebug("expDate: "+ expDate);
     logDebug("expDateObj: "+ expDateObj);
     copyAppSpecificInfo(capId,licCapId);
@@ -187,7 +188,7 @@ if (wfTask == "Draft Decision" && wfStatus == "Approved" && AInfo["Permit Type C
     }
     var permitType = AInfo["Permit Type"];
     // CAMEND-880
-    var ttcAccountNumber = getAppSpecific("TTC Account Number", parent);
+    // var ttcAccountNumber = getAppSpecific("TTC Account Number", parent);
     var capStatus = aa.cap.getCap(capId).getOutput();
     var thisCapStatus = capStatus.getCapStatus();
     var params = aa.util.newHashtable();
@@ -197,7 +198,7 @@ if (wfTask == "Draft Decision" && wfStatus == "Approved" && AInfo["Permit Type C
     addParameter(params, "$$capStatus$$", thisCapStatus);
     addParameter(params, "$$totalSF$$", totalSF);
     addParameter(params, "$$licenseType$$", permitType);
-    addParameter(params, "$$TTCAccountNumber$$", ttcAccountNumber);
+    addParameter(params, "$$TTCAccountNumber$$", ttcNumber);
     addParameter(params, "$$contactName$$", conName);
     addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptName"));
     addParameter(params, "$$phoneHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "phoneHours"));
