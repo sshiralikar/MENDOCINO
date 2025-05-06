@@ -25,6 +25,7 @@ if(wfTask == "Draft Decision" && wfStatus == "Approved")
     //copyParcels(capId, licCapId);
     //copyAddresses(capId, licCapId);
     //copyOwner(capId, licCapId);
+    editAppSpecific("TTC Account Number", ttcNumber, licCapId);
     var newDate1 = today.getMonth()+1+"/"+today.getDate()+"/"+today.getFullYear();
     editAppSpecific("Submitted Modification Date", newDate1, licCapId);
     editAppSpecific("Submitted Modification Date", newDate1, capId);
