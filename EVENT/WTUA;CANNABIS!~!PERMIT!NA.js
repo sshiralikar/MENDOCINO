@@ -46,12 +46,15 @@ if (wfStatus == "Terminated" || wfStatus == "Withdrawn" || wfStatus == "Expired"
     var hm = new Array();
     var parent = getParent();
     // var parentCap = aa.cap.getCap(parentCapId).getOutput();
+    // CAMEND-879
+    var ttcNumber = AInfo["TTC Account Number"];
     var capStatus = aa.cap.getCap(capId).getOutput();
     var thisCapStatus = capStatus.getCapStatus();
     var params = aa.util.newHashtable();
     addParameter(params, "$$altID$$", capId.getCustomID() + "");
     addParameter(params, "$$year$$", String(aa.date.getCurrentDate().getYear()));
     addParameter(params, "$$date$$", sysDateMMDDYYYY);
+    addParameter(params, "$$TTCAccountNumber$$", ttcNumber);
     addParameter(params, "$$capStatus$$", thisCapStatus);
     addParameter(params, "$$contactName$$", conName);
     addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptName"));
