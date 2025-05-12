@@ -162,17 +162,57 @@ try {
     }
 
     loadASITables4ACA();
-    if(AInfo["Import soil"] == "Yes")
-    {
-        logDebug("type of INPUTS is: " + typeof(INPUTS));
-        var inputCounter;
-        if (typeof(INPUTS) == "object") {
-            inputCounter = INPUTS.length;
-        }
-        logDebug("number of rows: " + inputCounter);
+    // if(AInfo["Import soil"] == "Yes")
+    // {
+    //     logDebug("type of INPUTS is: " + typeof(INPUTS));
+    //     var inputCounter;
+    //     if (typeof(INPUTS) == "object") {
+    //         inputCounter = INPUTS.length;
+    //     }
+    //     logDebug("number of rows: " + inputCounter);
 
-        if (inputCounter < 1) {
-            messageList += "You must enter at least one row in the following table: " + "Input(s)" + br;
+    //     if (inputCounter < 1) {
+    //         messageList += "You must enter at least one row in the following table: " + "Input(s)" + br;
+    //     }
+    //     if (messageList != "") {
+    //         cancel = true;
+    //         showMessage = true;
+    //         comment(messageList);
+    //     }
+    // }
+
+    // CAMEND-835
+    var importSoil = AInfo["Import soil"];
+    var perliteMedium = AInfo["Perlite or medium used"];
+    var pesticides = AInfo["Pesticides used"];
+    var countInputs = 0;
+
+    if (importSoil == "Yes") {
+        countInputs++;
+    }
+    if (perliteMedium == "Yes") {
+        countInputs++;
+    }
+    if (pesticides == "Yes") {
+        countInputs++;
+    }
+
+    if (countInputs > 0) {
+
+        var currentInputs = 0;
+        logDebug("type of INPUT(S) is: " + typeof (INPUTS));
+        var employeeCounter;
+        if (typeof (INPUTS) == "object") {
+            employeeCounter = INPUTS.length;
+            if (employeeCounter > 0) {
+                for (var i in INPUTS) {
+                    currentInputs++;
+                }
+            }
+        }
+
+        if (currentInputs < countInputs) {
+            messageList += "You must enter at least " + countInputs + " row(s) in the following table: INPUT(S)" + br;
         }
         if (messageList != "") {
             cancel = true;
