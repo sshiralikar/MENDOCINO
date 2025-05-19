@@ -63,7 +63,7 @@ var emailText = "";
 var debug = "";
 var showDebug = true;// Set to true to see debug messages in email confirmation
 var showDebugBatch = true;
-var maxSeconds = 60 * 5;// number of seconds allowed for batch processing, usually < 5*60
+var maxSeconds = 60 * 60;// number of seconds allowed for batch processing, usually < 5*60
 var showMessage = false;
 var useAppSpecificGroupName = false;
 var br = "<BR>";
@@ -131,7 +131,7 @@ function mainProcess()
         else
         {
             var recArray = recordListResult.getOutput();
-            logDebugBatch("Looping through " + recArray.length + " Records with status Active" );
+            logDebugBatch("Looping through " + recArray.length + " Records." );
             for (var j in recArray)
             {
                 capId = aa.cap.getCapID(recArray[j].getID1(), recArray[j].getID2(), recArray[j].getID3()).getOutput();
@@ -160,7 +160,7 @@ function createRefLicProfFromLicProfX()
     else
     { logDebug("**ERROR: getting lic prof: " + capLicenseResult.getErrorMessage()); return false; }
 
-    if (!capLicenseArr.length)
+    if (!capLicenseArr)
     { logDebug("WARNING: no license professional available on the application:"); return false; }
 
     licProfScriptModel = capLicenseArr[0];
