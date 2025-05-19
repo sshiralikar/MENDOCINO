@@ -31,7 +31,7 @@ if(wfTask == "Draft Decision" && wfStatus == "Approved")
     editAppSpecific("Submitted Modification Date", newDate1, capId);
     if(today > expDateObj)
     {
-        today.setFullYear(today.getFullYear() + 1);
+        today.setFullYear(today.getFullYear() + 5);
         var newDate = today.getMonth()+1+"/"+today.getDate()+"/"+today.getFullYear();
         editAppSpecific("New Expiration Date", newDate);
         editAppSpecific("New Expiration Date", newDate, licCapId);
@@ -39,7 +39,7 @@ if(wfTask == "Draft Decision" && wfStatus == "Approved")
     }
     else
     {
-        expDateObj.setFullYear(today.getFullYear() + 1);
+        expDateObj.setFullYear(today.getFullYear() + 5);
         var newDate = expDateObj.getMonth()+1+"/"+expDateObj.getDate()+"/"+expDateObj.getFullYear();
         editAppSpecific("New Expiration Date", newDate);
         editAppSpecific("New Expiration Date", newDate, licCapId);
