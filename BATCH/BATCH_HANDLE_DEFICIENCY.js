@@ -317,7 +317,7 @@ function mainProcess()
                 cap = aa.cap.getCap(capId).getOutput();
                 if (cap)
                 {
-                    var wfObj = aa.workflow.getTasks(capId).getOutput();;
+                    var wfObj = aa.workflow.getTasks(capId).getOutput();
                     if(wfObj)
                     {
                         for (var i in wfObj)
