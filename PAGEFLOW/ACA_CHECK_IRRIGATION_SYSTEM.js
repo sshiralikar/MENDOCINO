@@ -181,7 +181,7 @@ try {
         // cancel = true;
         // showMessage = true;
         // comment("Power Source must have at least one row to continue.");
-        messageList += "Power Source must have at least one row to continue." + br;
+        messageList += "You must enter at least one row in the following table: " + "Water Source" + br;
     }
 
     if (messageList != "") {
