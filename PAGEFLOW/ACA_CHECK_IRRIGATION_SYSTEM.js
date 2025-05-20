@@ -161,18 +161,27 @@ try {
     //     }
     // }
 
-    var waterOnsite = AInfo["Water onsite"];
-    var waterSource = AInfo["Water source"];
-    // CAMEND-831
-    var irrigationSystem = AInfo["Irrigation system"];
-    if (waterOnsite == "Yes" || waterSource == "Yes" || irrigationSystem == "Yes") {
-        var waterCounter;
-        if (typeof (WATERSOURCE) == "object") {
-            waterCounter = WATERSOURCE.length;
-        }
-        if (waterCounter < 1) {
-            messageList += "You must enter at least one row in the following table: " + "Water Source" + br;
-        }
+    // var waterOnsite = AInfo["Water onsite"];
+    // var waterSource = AInfo["Water source"];
+    // // CAMEND-831
+    // var irrigationSystem = AInfo["Irrigation system"];
+    // if (waterOnsite == "Yes" || waterSource == "Yes" || irrigationSystem == "Yes") {
+    //     var waterCounter;
+    //     if (typeof (WATERSOURCE) == "object") {
+    //         waterCounter = WATERSOURCE.length;
+    //     }
+    //     if (waterCounter < 1) {
+    //         messageList += "You must enter at least one row in the following table: " + "Water Source" + br;
+    //     }
+    // }
+
+    var useExistingASIT = getASITablesRowsFromSession4ACA("WATER SOURCE");
+
+    if ((waterOnsite == "Yes" || waterSource == "Yes" || irrigationSystem == "Yes") && useExistingASIT.length == 0 || (waterOnsite == "Yes" || waterSource == "Yes" || irrigationSystem == "Yes") && !useExistingASIT) {
+        // cancel = true;
+        // showMessage = true;
+        // comment("Power Source must have at least one row to continue.");
+        messageList += "Power Source must have at least one row to continue." + br;
     }
 
     if (messageList != "") {
