@@ -126,9 +126,7 @@ try {
 
     var flag = false;
     // CAMEND-830
-    var siur = AInfo["SIUR"];
-    logDebug("SIUR value is: " + siur);
-    if (siur == "Yes") {
+    if (AInfo["SIUR"] == "Yes") {
 
         logDebug("type of WATERSOURCE is: " + typeof (WATERSOURCE));
         var waterCounter;
