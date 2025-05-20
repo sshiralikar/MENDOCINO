@@ -55,7 +55,7 @@ if(wfTask == "Issuance" && wfStatus == "Issued")
         logDebug("LP Update not necessary: "+ err);
     }
     var c = new Date();
-    c.setFullYear(c.getFullYear() + 1);
+    c.setFullYear(c.getFullYear() + 5);
     var newDate = c.getMonth()+1+"/"+c.getDate()+"/"+c.getFullYear();
 
     setLicExpirationDate(licCapId,"",newDate);
