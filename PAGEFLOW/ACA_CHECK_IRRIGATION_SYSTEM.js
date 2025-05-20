@@ -161,10 +161,10 @@ try {
     //     }
     // }
 
-    // var waterOnsite = AInfo["Water onsite"];
-    // var waterSource = AInfo["Water source"];
-    // // CAMEND-831
-    // var irrigationSystem = AInfo["Irrigation system"];
+    var waterOnsite = AInfo["Water onsite"];
+    var waterSource = AInfo["Water source"];
+    // CAMEND-831
+    var irrigationSystem = AInfo["Irrigation system"];
     // if (waterOnsite == "Yes" || waterSource == "Yes" || irrigationSystem == "Yes") {
     //     var waterCounter;
     //     if (typeof (WATERSOURCE) == "object") {
