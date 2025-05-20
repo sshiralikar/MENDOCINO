@@ -162,15 +162,6 @@ try {
         }
     }
 
-    // var useExistingASIT = getASITablesRowsFromSession4ACA("WATER SOURCE");
-
-    // if ((waterOnsite == "Yes" || waterSource == "Yes" || irrigationSystem == "Yes") && useExistingASIT.length == 0 || (waterOnsite == "Yes" || waterSource == "Yes" || irrigationSystem == "Yes") && !useExistingASIT) {
-    //     // cancel = true;
-    //     // showMessage = true;
-    //     // comment("Power Source must have at least one row to continue.");
-    //     messageList += "You must enter at least one row in the following table: " + "Water Source" + br;
-    // }
-
     if (messageList != "") {
         cancel = true;
         showMessage = true;

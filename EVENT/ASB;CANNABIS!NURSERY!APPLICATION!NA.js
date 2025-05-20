@@ -40,13 +40,24 @@ if (!publicUser) {
         //     }
         // }
 
+        // CAMEND-219
+        if (AInfo["Water onsite"] == "Yes" || AInfo["Water source"] == "Yes" || AInfo["SIUR"] == "Yes") {
+            var waterCounter = getASITRowCount("WATER SOURCE");
+            logDebug("waterCounter: " + waterCounter);
+            if (AInfo["SIUR"] == "Yes" && waterCounter < 1) {
+                messageList += "Please add a row with 'Water Source Type': 'Small Irrigation' in the following table: " + "Water Source" + br;
+            } else if (waterCounter < 1) {
+                messageList += "Missing Table: " + "Water Source" + br;
+            }
+        }
+
         // CAMEND - 830
         if (AInfo["SIUR"] == "Yes") {
-            var watersource = getASITRowCount("WATER SOURCE");
-            logDebug("structureCounter: " + watersource);
-            if (watersource < 1) {
-                messageList += "Please add a row with 'Water Source Type': 'Small Irrigation' in the following table: " + "Water Source" + br;
-            }
+            // var watersource = getASITRowCount("WATER SOURCE");
+            // logDebug("structureCounter: " + watersource);
+            // if (watersource < 1) {
+            //     messageList += "Please add a row with 'Water Source Type': 'Small Irrigation' in the following table: " + "Water Source" + br;
+            // }
             loadASITables();
             var flag = false;
             var watersource;
@@ -64,14 +75,14 @@ if (!publicUser) {
             }
         }
 
-        // CAMEND-219
-        if (AInfo["Water onsite"] == "Yes" || AInfo["Water source"] == "Yes") {
-            var waterCounter = getASITRowCount("WATER SOURCE");
-            logDebug("waterCounter: " + waterCounter);
-            if (waterCounter < 1) {
-                messageList += "Missing Table: " + "Water Source" + br;
-            }
-        }
+        // // CAMEND-219
+        // if (AInfo["Water onsite"] == "Yes" || AInfo["Water source"] == "Yes") {
+        //     var waterCounter = getASITRowCount("WATER SOURCE");
+        //     logDebug("waterCounter: " + waterCounter);
+        //     if (waterCounter < 1) {
+        //         messageList += "Missing Table: " + "Water Source" + br;
+        //     }
+        // }
 
         // CAMEND-164 & 253
         if (AInfo["Power source"] == "Yes") {
