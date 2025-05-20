@@ -128,19 +128,22 @@ try {
     var waterSource = AInfo["Water source"];
     // CAMEND-831
     var irrigationSystem = AInfo["Irrigation system"];
+    var siur = AInfo["SIUR"];
     logDebug("Water onsite value is: " + waterOnsite);
-    if (waterOnsite == "Yes" || waterSource == "Yes" || irrigationSystem == "Yes") {
+    if (waterOnsite == "Yes" || waterSource == "Yes" || irrigationSystem == "Yes" || siur == "Yes") {
         var table = loadASITable_ACA("WATER SOURCE");
         logDebug("WATERSOURCE: " + table);
-        if (!table) {
+        if (siur == "Yes" && !table) {
+            messageList += "Please add a row with 'Water Source Type': 'Small Irrigation' in the following table: " + "Water Source" + br;
+        } else if (!table) {
             messageList += "You must enter at least one row in the following table: " + "Water Source" + br;
         }
     }
-
+    
     var flag = false;
     // CAMEND-830
     if (AInfo["SIUR"] == "Yes") {
-
+    
         logDebug("type of WATERSOURCE is: " + typeof (WATERSOURCE));
         var waterCounter;
         if (typeof (WATERSOURCE) == "object") {
@@ -153,7 +156,7 @@ try {
             }
         }
         logDebug("number of rows: " + waterCounter);
-
+    
         if ((waterCounter == 0) || (waterCounter > 0 && !flag)) {
             messageList += "Please add a row with 'Water Source Type': 'Small Irrigation' in the following table: " + "Water Source" + br;
         }
