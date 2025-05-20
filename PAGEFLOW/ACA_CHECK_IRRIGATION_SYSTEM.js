@@ -148,15 +148,29 @@ try {
         }
     }
 
+    // var waterOnsite = AInfo["Water onsite"];
+    // var waterSource = AInfo["Water source"];
+    // // CAMEND-831
+    // var irrigationSystem = AInfo["Irrigation system"];
+    // logDebug("Water onsite value is: " + waterOnsite);
+    // if (waterOnsite == "Yes" || waterSource == "Yes" || irrigationSystem == "Yes") {
+    //     var table = loadASITable_ACA("WATER SOURCE");
+    //     logDebug("WATERSOURCE: " + table);
+    //     if (!table) {
+    //         messageList += "You must enter at least one row in the following table: " + "Water Source" + br;
+    //     }
+    // }
+
     var waterOnsite = AInfo["Water onsite"];
     var waterSource = AInfo["Water source"];
     // CAMEND-831
     var irrigationSystem = AInfo["Irrigation system"];
-    logDebug("Water onsite value is: " + waterOnsite);
     if (waterOnsite == "Yes" || waterSource == "Yes" || irrigationSystem == "Yes") {
-        var table = loadASITable_ACA("WATER SOURCE");
-        logDebug("WATERSOURCE: " + table);
-        if (!table) {
+        var waterCounter;
+        if (typeof (WATERSOURCE) == "object") {
+            waterCounter = WATERSOURCE.length;
+        }
+        if (waterCounter < 1) {
             messageList += "You must enter at least one row in the following table: " + "Water Source" + br;
         }
     }
