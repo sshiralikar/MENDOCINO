@@ -1,7 +1,5 @@
-if(!publicUser)
-{
-    try
-    {
+if (!publicUser) {
+    try {
         var messageList = "";
 
         // CAMEND-236 & CAMEND-526
@@ -17,8 +15,7 @@ if(!publicUser)
         // CAMEND-231 & CAMEND-254 & CAMEND-218
         var inputCounter = getASITRowCount("INPUT(S)");
         logDebug("inputCounter: " + inputCounter);
-        if (inputCounter < 1)
-        {
+        if (inputCounter < 1) {
             //messageList += "Missing Table: " + "Input(s)"  + br;
         }
 
@@ -43,13 +40,36 @@ if(!publicUser)
         //     }
         // }
 
+        // CAMEND - 830
+        if (AInfo["SIUR"] == "Yes") {
+            var watersource = getASITRowCount("WATER SOURCE");
+            logDebug("structureCounter: " + watersource);
+            if (watersource < 1) {
+                messageList += "Please add a row with 'Water Source Type': 'Small Irrigation' in the following table: " + "Water Source" + br;
+            }
+            loadASITables();
+            var flag = false;
+            var watersource;
+            if (typeof (WATERSOURCE) == "object") {
+                watersource = WATERSOURCE.length;
+                for (var i in WATERSOURCE) {
+                    if (WATERSOURCE[i]["Water Source Type"] == "Small Irrigation") {
+                        flag = true;
+                        break;
+                    }
+                }
+            }
+            if (watersource > 0 && !flag) {
+                messageList += "Please add a row with 'Water Source Type': 'Small Irrigation' in the following table: " + "Water Source" + br;
+            }
+        }
+
         // CAMEND-219
         if (AInfo["Water onsite"] == "Yes" || AInfo["Water source"] == "Yes") {
             var waterCounter = getASITRowCount("WATER SOURCE");
             logDebug("waterCounter: " + waterCounter);
-            if (waterCounter < 1)
-            {
-                messageList += "Missing Table: " + "Water Source"  + br;
+            if (waterCounter < 1) {
+                messageList += "Missing Table: " + "Water Source" + br;
             }
         }
 
@@ -57,21 +77,18 @@ if(!publicUser)
         if (AInfo["Power source"] == "Yes") {
             var powerSource = getASITRowCount("POWER SOURCE(S)");
             logDebug("powerSource: " + powerSource);
-            if (powerSource < 1)
-            {
-                messageList += "Missing Table: " + "Power Source(s)"  + br;
+            if (powerSource < 1) {
+                messageList += "Missing Table: " + "Power Source(s)" + br;
             }
         }
 
-        if (messageList != "")
-        {
+        if (messageList != "") {
             cancel = true;
             showMessage = true;
             comment(messageList);
         }
     }
-    catch (err)
-    {
+    catch (err) {
         logDebug(err);
     }
 }
