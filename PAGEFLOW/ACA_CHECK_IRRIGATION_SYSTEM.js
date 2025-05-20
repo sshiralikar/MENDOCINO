@@ -282,3 +282,47 @@ function loadASITable_ACA(e) {
     }
     return a
 }
+
+function getASITablesRowsFromSession4ACA(tableName) {
+    var gm = null;
+    if (String(cap.getClass()).indexOf("CapScriptModel") != -1) {
+        gm = cap.getCapModel().getAppSpecificTableGroupModel();
+    } else {
+        gm = cap.getAppSpecificTableGroupModel();
+    }
+    if (gm == null) {
+        return false;
+    }
+    var ta = gm.getTablesMap();
+    var tai = ta.values().iterator();
+    while (tai.hasNext()) {
+        var tsm = tai.next();
+        if (tsm.rowIndex.isEmpty())
+            continue;
+
+        var asitRow = new Array;
+        var asitTables = new Array;
+        var tn = tsm.getTableName();
+        if (tn != tableName) {
+            continue;
+        }
+
+        var tsmfldi = tsm.getTableField().iterator();
+        var tsmcoli = tsm.getColumns().iterator();
+        while (tsmfldi.hasNext()) {
+
+            var tcol = tsmcoli.next();
+            var tval = tsmfldi.next();
+
+            asitRow[tcol.getColumnName()] = tval;
+
+            if (!tsmcoli.hasNext()) {
+                tsmcoli = tsm.getColumns().iterator();
+                asitTables.push(asitRow);
+                asitRow = new Array;
+            }
+        }
+        return asitTables;
+    }
+    return false;
+}
