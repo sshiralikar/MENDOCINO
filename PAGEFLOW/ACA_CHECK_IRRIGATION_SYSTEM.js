@@ -137,8 +137,9 @@ try {
         }
     }
 
+    loadASITables4ACA();
     var flag = false;
-    // CAMEND - 830
+    // CAMEND-830
     var siur = AInfo["SIUR"];
     logDebug("SIUR value is: " + siur);
     if (siur == "Yes") {
