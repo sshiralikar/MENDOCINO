@@ -182,13 +182,15 @@ try {
         }
     }
 
-    if ((waterOnsite == "Yes" || waterSource == "Yes" || irrigationSystem == "Yes") && siur == "No") {
-        if (waterCounter == 0) {
-            messageList += "You must enter at least one row in the following table: " + "Water Source" + br;
-        }
-    } else if (siur == "Yes") {
+    if (siur == "Yes") {
         if ((waterCounter == 0) || (waterCounter > 0 && !flag)) {
             messageList += "Please add a row with 'Water Source Type': 'Small Irrigation' in the following table: " + "Water Source" + br;
+        }
+    } else {
+        if (waterOnsite == "Yes" || waterSource == "Yes" || irrigationSystem == "Yes") {
+            if (waterCounter == 0) {
+                messageList += "You must enter at least one row in the following table: " + "Water Source" + br;
+            }
         }
     }
 
