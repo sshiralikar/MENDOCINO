@@ -182,7 +182,7 @@ try {
         }
     }
 
-    if (waterOnsite == "Yes" || waterSource == "Yes" || irrigationSystem == "Yes" && siur == "No") {
+    if ((waterOnsite == "Yes" || waterSource == "Yes" || irrigationSystem == "Yes") && siur == "No") {
         if (waterCounter == 0) {
             messageList += "You must enter at least one row in the following table: " + "Water Source" + br;
         }
