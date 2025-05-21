@@ -36,6 +36,8 @@ try {
             }
             // CAMEND-868
             var taxYear = getAppSpecific("Tax Year", capId);
+            // CAMEND-882
+            var ttcNumber = getAppSpecific("TTC Account Number", capId);
 
             var pCapId = getParent();
             var params = aa.util.newHashtable();
@@ -45,6 +47,7 @@ try {
             addParameter(params, "$$parentAltId$$", pCapId.getCustomID() + "");
             addParameter(params, "$$contactname$$", conName);
             addParameter(params, "$$taxYear$$", taxYear);
+            addParameter(params, "$$TTCAccountNumber$$", ttcNumber);
             addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptName"));
             addParameter(params, "$$phoneHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "phoneHours"));
             addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptPhone"));
