@@ -37,7 +37,7 @@ try {
             // CAMEND-868
             var taxYear = getAppSpecific("Tax Year", capId);
             // CAMEND-882
-            var ttcNumber = getAppSpecific("TTC Account Number", capId);
+            var ttcNumber = getAppSpecific("TTC Account Number", getParent());
 
             var pCapId = getParent();
             var params = aa.util.newHashtable();
