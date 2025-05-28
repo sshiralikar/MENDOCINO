@@ -11,7 +11,7 @@ if (wfTask == "Appeal" && wfStatus == "Approved") {
                 conName = getContactName(capContacts[i]);
                 var params = aa.util.newHashtable();
                 addParameter(params, "$$altID$$", capId.getCustomID() + "");
-                addParameter(params, "$$year$$", String(lookup("CAN_TAXAPP_CONTROLS", "Tax Appeal Window Open Date")));
+                addParameter(params, "$$year$$", String(lookup("CAN_TAXAPP_CONTROLS", "Year")));
                 addParameter(params, "$$capName$$", capName);
                 addParameter(params, "$$parentAltId$$", parent.getCustomID() + "");
                 addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptName"));
@@ -49,7 +49,7 @@ if (wfTask == "Appeal" && wfStatus == "Denied") {
                 conName = getContactName(capContacts[i]);
                 var params = aa.util.newHashtable();
                 addParameter(params, "$$altID$$", capId.getCustomID() + "");
-                addParameter(params, "$$year$$", String(lookup("CAN_TAXAPP_CONTROLS", "Tax Appeal Window Open Date")));
+                addParameter(params, "$$year$$", String(lookup("CAN_TAXAPP_CONTROLS", "Year")));
                 addParameter(params, "$$capName$$", capName);
                 addParameter(params, "$$parentAltId$$", parent.getCustomID() + "");
                 addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptName"));
