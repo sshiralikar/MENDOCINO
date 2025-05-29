@@ -316,7 +316,7 @@ function mainProcess() {
                 var appStatus = getAppStatus(capId);
                 targetAppType = cap.getCapType();     //create CapTypeModel object
                 targetAppTypeString = targetAppType.toString();
-                if(targetAppTypeString.split("/")[2] == "Permit" && appStatus!="Terminated")
+                if(targetAppTypeString.split("/")[2] == "Permit" && appStatus!="Terminated" && !appMatch("Cannabis/Amendment/Tax Appeal/NA", capId))
                 {
                     logMessage(capIDString);
                     var thisCapModel = cap.getCapModel();

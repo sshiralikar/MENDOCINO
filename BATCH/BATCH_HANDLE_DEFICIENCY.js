@@ -315,7 +315,7 @@ function mainProcess()
                 capId = aa.cap.getCapID(recArray[j].getID1(), recArray[j].getID2(), recArray[j].getID3()).getOutput();
                 capIDString = capId.getCustomID();
                 cap = aa.cap.getCap(capId).getOutput();
-                if (cap)
+                if (cap && !appMatch("Cannabis/Amendment/Tax Appeal/NA", capId))
                 {
                     var wfObj = aa.workflow.getTasks(capId).getOutput();
                     if(wfObj)

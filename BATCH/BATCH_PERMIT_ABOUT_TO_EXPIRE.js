@@ -211,7 +211,8 @@ function mainProcess() {
                     && appStatus!="Denied"
                     && appStatus!="Denied - Appeal"
                     && appStatus!="Terminated"
-                    && appStatus!="Non Renewal")
+                    && appStatus!="Non Renewal"
+                    && !appMatch("Cannabis/Amendment/Tax Appeal/NA", capId))
                 {
                     logMessage(capIDString);
                     var thisCapModel = cap.getCapModel();
