@@ -30,6 +30,11 @@ try {
                     addParameter(params, "$$capName$$", cap.getSpecialText() + "");
                     addParameter(params, "$$date$$", sysDateMMDDYYYY);
                     addParameter(params, "$$contactName$$", conName);
+                    var parent = getParent();
+                    if (parent)
+                        addParameter(params, "$$parentAltId$$", parent.getCustomID() + "");
+                    else
+                        addParameter(params, "$$parentAltId$$", capId.getCustomID() + "");
                     addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptName"));
                     addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptPhone"));
                     addParameter(params, "$$deptHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptHours"));

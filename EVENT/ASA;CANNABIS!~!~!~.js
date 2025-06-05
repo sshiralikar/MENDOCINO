@@ -41,6 +41,11 @@ if (!publicUser) {
                         addParameter(params, "$$capName$$", capName);
                         addParameter(params, "$$date$$", sysDateMMDDYYYY);
                         addParameter(params, "$$contactName$$", conName);
+                        var parent = getParent();
+                        if (parent)
+                            addParameter(params, "$$parentAltId$$", parent.getCustomID() + "");
+                        else
+                            addParameter(params, "$$parentAltId$$", capId.getCustomID() + "");
                         addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptName"));
                         addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptPhone"));
                         addParameter(params, "$$deptHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptHours"));
@@ -60,17 +65,17 @@ if (!publicUser) {
         }
     }
     if (appTypeArray[2] == "Renewal") {
-            // Updated email for CAMEND-478 to use Async script so Renewal in back office (clone) pulls new Alt Id
-            var envParameters = aa.util.newHashMap();
-            logDebug("capIdStr: " + newAltId + "");
-            if (newAltId != "") {
-                envParameters.put("capIdStr", newAltId + "");
-                envParameters.put("permitChange",AInfo["Permit Type Change"]+"");
-            } else {
-                envParameters.put("capIdStr", capId.getCustomID() + "");
-                envParameters.put("permitChange",AInfo["Permit Type Change"]+"");
-            }
-            aa.runAsyncScript("ASYNC_SEND_SUBMISSION_EMAIL", envParameters);
+        // Updated email for CAMEND-478 to use Async script so Renewal in back office (clone) pulls new Alt Id
+        var envParameters = aa.util.newHashMap();
+        logDebug("capIdStr: " + newAltId + "");
+        if (newAltId != "") {
+            envParameters.put("capIdStr", newAltId + "");
+            envParameters.put("permitChange", AInfo["Permit Type Change"] + "");
+        } else {
+            envParameters.put("capIdStr", capId.getCustomID() + "");
+            envParameters.put("permitChange", AInfo["Permit Type Change"] + "");
+        }
+        aa.runAsyncScript("ASYNC_SEND_SUBMISSION_EMAIL", envParameters);
     }
     // CAMEND-566
     if (isNOF) {
