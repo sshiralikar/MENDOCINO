@@ -24,7 +24,7 @@ if (wfStatus == "Approved") {
     addParameter(params, "$$year$$", String(aa.date.getCurrentDate().getYear()));
     addParameter(params, "$$date$$", sysDateMMDDYYYY);
     addParameter(params, "$$parentAltId$$", pCapId.getCustomID() + "");
-    addParameter(params, "$$contactname$$", conName);
+    addParameter(params, "$$contactName$$", conName);
     addParameter(params, "$$taxYear$$", taxYear);
     addParameter(params, "$$TTCAccountNumber$$", ttcNumber);
     addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptName"));
