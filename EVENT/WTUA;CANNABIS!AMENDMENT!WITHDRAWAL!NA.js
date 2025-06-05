@@ -49,6 +49,8 @@ if(wfStatus == "Approved")
                         conName = getContactName(capContacts[i]);
                         var params = aa.util.newHashtable();
                         addParameter(params, "$$altID$$", capId.getCustomID()+"");
+                        addParameter(params, "$$date$$", sysDateMMDDYYYY);
+                        addParameter(params, "$$parentAltId$$", pCapId.getCustomID() + "");
                         addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptName"));
                         addParameter(params, "$$phoneHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","phoneHours"));
                         addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptPhone"));
@@ -57,6 +59,7 @@ if(wfStatus == "Approved")
                         addParameter(params, "$$deptEmail$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptEmail"));
                         addParameter(params, "$$deptFormalName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptFormalName"));
                         addParameter(params, "$$FullNameBusName$$", conName);
+                        addParameter(params, "$$contactName$$", conName);
                         addParameter(params, "$$capAlias$$", aa.cap.getCap(pCapId).getOutput().getCapType().getAlias()+"");
                         addParameter(params, "$$parentCapId$$", pCapId.getCustomID());
                         addParameter(params, "$$Amendment$$", aa.cap.getCap(capId).getOutput().getCapType().getAlias()+"");

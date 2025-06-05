@@ -32,6 +32,8 @@ try
                             conName = getContactName(capContacts[i]);
                             var params = aa.util.newHashtable();
                             addParameter(params, "$$altID$$", pCapId.getCustomID()+"");
+                            addParameter(params, "$$date$$", sysDateMMDDYYYY);
+                            addParameter(params, "$$parentAltId$$", pCapId.getCustomID() + "");
                             addParameter(params, "$$capAlias$$", aa.cap.getCap(pCapId).getOutput().getCapType().getAlias()+"");
                             addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptName"));
                             addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptPhone"));
@@ -40,7 +42,7 @@ try
                             addParameter(params, "$$deptFormalName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptFormalName"));
                             addParameter(params, "$$deptAddress$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptAddress"));
                             addParameter(params, "$$deptFormalName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptFormalName"));
-                            addParameter(params, "$$contactname$$", conName);
+                            addParameter(params, "$$contactName$$", conName);
                             if(hm[capContacts[i].getPeople().getEmail()+""] != 1) {
                                 sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail() + "", "", "CAN_WITHDRAWAL APPROVED", params, null, capId);
                                 hm[capContacts[i].getPeople().getEmail() + ""] = 1;
