@@ -57,6 +57,10 @@ if (wfStatus == "Terminated" || wfStatus == "Withdrawn" || wfStatus == "Expired"
     addParameter(params, "$$TTCAccountNumber$$", ttcNumber);
     addParameter(params, "$$capStatus$$", thisCapStatus);
     addParameter(params, "$$contactName$$", conName);
+    if (parent)
+        addParameter(params, "$$parentAltId$$", parent.getCustomID() + "");
+    else
+        addParameter(params, "$$parentAltId$$", capId.getCustomID() + "");
     addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptName"));
     addParameter(params, "$$phoneHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "phoneHours"));
     addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptPhone"));

@@ -166,6 +166,11 @@ function mainProcess()
                                 addParameter(params, "$$altId$$", capId.getCustomID() + "");
                                 addParameter(params, "$$date$$", todayDateX);
                                 addParameter(params, "$$contactName$$", conName);
+                                var parent = getParent();
+                                if (parent)
+                                    addParameter(params, "$$parentAltId$$", parent.getCustomID() + "");
+                                else
+                                    addParameter(params, "$$parentAltId$$", capId.getCustomID() + "");
                                 addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptName"));
                                 addParameter(params, "$$phoneHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "phoneHours"));
                                 addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptPhone"));
@@ -239,6 +244,11 @@ function mainProcess()
                                 addParameter(params, "$$altId$$", capId.getCustomID() + "");
                                 addParameter(params, "$$date$$", todayDateX);
                                 addParameter(params, "$$contactName$$", conName);
+                                var parent = getParent();
+                                if (parent)
+                                    addParameter(params, "$$parentAltId$$", parent.getCustomID() + "");
+                                else
+                                    addParameter(params, "$$parentAltId$$", capId.getCustomID() + "");
                                 addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptName"));
                                 addParameter(params, "$$phoneHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "phoneHours"));
                                 addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptPhone"));

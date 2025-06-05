@@ -250,6 +250,12 @@ function mainProcess() {
                                 var params = aa.util.newHashtable();
                                 addParameter(params, "$$altID$$", capId.getCustomID()+"");
                                 addParameter(params, "$$contactName$$", conName);
+                                addParameter(params, "$$date$$", sysDateMMDDYYYY);
+                                var parent = getParent();
+                                if (parent)
+                                    addParameter(params, "$$parentAltId$$", parent.getCustomID() + "");
+                                else
+                                    addParameter(params, "$$parentAltId$$", capId.getCustomID() + "");
                                 addParameter(params, "$$expirDate$$", getAppSpecific("New Expiration Date",capId));
                                 addParameter(params, "$$deptHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptHours"));
                                 addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptName"));
@@ -271,6 +277,12 @@ function mainProcess() {
                     var params = aa.util.newHashtable();
                     addParameter(params, "$$altID$$", capId.getCustomID()+"");
                     addParameter(params, "$$contactName$$", "Agency");
+                    addParameter(params, "$$date$$", sysDateMMDDYYYY);
+                    var parent = getParent();
+                    if (parent)
+                        addParameter(params, "$$parentAltId$$", parent.getCustomID() + "");
+                    else
+                        addParameter(params, "$$parentAltId$$", capId.getCustomID() + "");
                     addParameter(params, "$$expirDate$$", getAppSpecific("New Expiration Date",capId));
                     addParameter(params, "$$deptHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptHours"));
                     addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptName"));
@@ -355,6 +367,12 @@ function mainProcess() {
                                 var params = aa.util.newHashtable();
                                 addParameter(params, "$$altID$$", capId.getCustomID()+"");
                                 addParameter(params, "$$contactName$$", conName);
+                                addParameter(params, "$$date$$", sysDateMMDDYYYY);
+                                var parent = getParent();
+                                if (parent)
+                                    addParameter(params, "$$parentAltId$$", parent.getCustomID() + "");
+                                else
+                                    addParameter(params, "$$parentAltId$$", capId.getCustomID() + "");
                                 addParameter(params, "$$expirDate$$", getAppSpecific("New Expiration Date",capId));
                                 addParameter(params, "$$deptHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptHours"));
                                 addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptName"));
@@ -376,6 +394,12 @@ function mainProcess() {
                     var params = aa.util.newHashtable();
                     addParameter(params, "$$altID$$", capId.getCustomID()+"");
                     addParameter(params, "$$contactName$$", "Agency");
+                    addParameter(params, "$$date$$", sysDateMMDDYYYY);
+                    var parent = getParent();
+                    if (parent)
+                        addParameter(params, "$$parentAltId$$", parent.getCustomID() + "");
+                    else
+                        addParameter(params, "$$parentAltId$$", capId.getCustomID() + "");
                     addParameter(params, "$$expirDate$$", getAppSpecific("New Expiration Date",capId));
                     addParameter(params, "$$deptHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptHours"));
                     addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptName"));

@@ -202,6 +202,7 @@ if (wfTask == "Draft Decision" && wfStatus == "Approved" && AInfo["Permit Type C
     addParameter(params, "$$licenseType$$", permitType);
     addParameter(params, "$$TTCAccountNumber$$", ttcNumber);
     addParameter(params, "$$contactName$$", conName);
+    addParameter(params, "$$parentAltId$$", parent.getCustomID() + "");
     addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptName"));
     addParameter(params, "$$phoneHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "phoneHours"));
     addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptPhone"));
