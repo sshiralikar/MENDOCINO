@@ -22,7 +22,7 @@ if (wfTask == "Appeal" && wfStatus == "Approved") {
                 addParameter(params, "$$deptEmail2$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptEmail2"));
                 addParameter(params, "$$financeHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "financeHours"));
                 addParameter(params, "$$deptFormalName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptFormalName"));
-                addParameter(params, "$$contactname$$", conName);
+                addParameter(params, "$$contactName$$", conName);
                 addParameter(params, "$$date$$", sysDateMMDDYYYY);
                 addParameter(params, "$$contactEmail$$", capContacts[i].getPeople().getEmail() + "");
                 addParameter(params, "$$ACAUrl$$", String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0]);
@@ -60,7 +60,7 @@ if (wfTask == "Appeal" && wfStatus == "Denied") {
                 addParameter(params, "$$deptEmail2$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptEmail2"));
                 addParameter(params, "$$financeHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "financeHours"));
                 addParameter(params, "$$deptFormalName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptFormalName"));
-                addParameter(params, "$$contactname$$", conName);
+                addParameter(params, "$$contactName$$", conName);
                 addParameter(params, "$$date$$", sysDateMMDDYYYY);
                 addParameter(params, "$$contactEmail$$", capContacts[i].getPeople().getEmail() + "");
                 addParameter(params, "$$ACAUrl$$", String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0]);
