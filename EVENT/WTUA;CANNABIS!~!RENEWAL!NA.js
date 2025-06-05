@@ -51,8 +51,9 @@ if (wfStatus == "Issued") {
                 addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptPhone"));
                 addParameter(params, "$$deptHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptHours"));
                 addParameter(params, "$$deptEmail$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptEmail"));
+                addParameter(params, "$$deptAddress$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptAddress"));
                 addParameter(params, "$$deptFormalName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptFormalName"));
-                addParameter(params, "$$contactname$$", conName);
+                addParameter(params, "$$contactName$$", conName);
                 addParameter(params, "$$date$$", sysDateMMDDYYYY);
                 addParameter(params, "$$contactEmail$$", capContacts[i].getPeople().getEmail() + "");
                 addParameter(params, "$$ACAUrl$$", String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0]);
@@ -161,13 +162,16 @@ if (wfStatus == "Modification Required") {
                 var params = aa.util.newHashtable();
                 addParameter(params, "$$altID$$", capId.getCustomID() + "");
                 addParameter(params, "$$capTypeAlias$$", aa.cap.getCap(licCapId).getOutput().getCapType().getAlias() + "");
+                addParameter(params, "$$date$$", sysDateMMDDYYYY);
                 addParameter(params, "$$capName$$", capName);
+                addParameter(params, "$$parentAltId$$", licCapId.getCustomID() + "");
                 addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptName"));
                 addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptPhone"));
                 addParameter(params, "$$deptHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptHours"));
                 addParameter(params, "$$deptEmail$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptEmail"));
+                addParameter(params, "$$deptAddress$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptAddress"));
                 addParameter(params, "$$deptFormalName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptFormalName"));
-                addParameter(params, "$$contactname$$", conName);
+                addParameter(params, "$$contactName$$", conName);
                 addParameter(params, "$$ACAUrl$$", String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0]);
                 addParameter(params, "$$ACAURL$$", String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0]);
                 if (wfComment != "" && wfComment != null)
