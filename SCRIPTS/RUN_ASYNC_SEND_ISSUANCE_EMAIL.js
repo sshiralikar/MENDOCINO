@@ -59,6 +59,8 @@ try
                 addParameter(params, "$$financeHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","financeHours"));
                 addParameter(params, "$$deptFormalName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptFormalName"));
                 addParameter(params, "$$contactName$$", conName);
+                var sysDate = aa.date.getCurrentDate();
+                var sysDateMMDDYYYY = dateFormatted(sysDate.getMonth(),sysDate.getDayOfMonth(),sysDate.getYear(),"");
                 addParameter(params, "$$date$$", sysDateMMDDYYYY);
                 addParameter(params, "$$contactEmail$$", capContacts[i].getPeople().getEmail() + "");
                 addParameter(params, "$$ACAUrl$$", String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0]);
