@@ -207,12 +207,12 @@ function getParent() {
         if (parentArray.length)
             return parentArray[0].getCapID();
         else {
-            logDebug("**WARNING: GetParent found no project parent for this application");
+            aa.print("**WARNING: GetParent found no project parent for this application");
             return false;
         }
     }
     else {
-        logDebug("**WARNING: getting project parents:  " + getCapResult.getErrorMessage());
+        aa.print("**WARNING: getting project parents:  " + getCapResult.getErrorMessage());
         return false;
     }
 }
