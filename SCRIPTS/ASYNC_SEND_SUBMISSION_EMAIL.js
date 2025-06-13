@@ -4,7 +4,8 @@ cap = aa.cap.getCap(capId).getOutput();
 appTypeResult = cap.getCapType();
 appTypeString = appTypeResult.toString();
 appTypeArray = appTypeString.split("/");
-
+var sysDate = aa.date.getCurrentDate();
+var sysDateMMDDYYYY = dateFormatted(sysDate.getMonth(),sysDate.getDayOfMonth(),sysDate.getYear(),"");
 try {
     var isAppeal = appMatch("Cannabis/Amendment/Appeal/NA", capId);
     var isAssignment = appMatch("Cannabis/Amendment/Assignment/NA", capId);
@@ -382,4 +383,27 @@ function getAddressInALine() {
         }
     }
     return null;
+}
+
+function dateFormatted(pMonth, pDay, pYear, pFormat)
+{
+    var mth = "";
+    var day = "";
+    var ret = "";
+    if (pMonth > 9)
+        mth = pMonth.toString();
+    else
+        mth = "0" + pMonth.toString();
+
+    if (pDay > 9)
+        day = pDay.toString();
+    else
+        day = "0" + pDay.toString();
+
+    if (pFormat == "YYYY-MM-DD")
+        ret = pYear.toString() + "-" + mth + "-" + day;
+    else
+        ret = "" + mth + "/" + day + "/" + pYear.toString();
+
+    return ret;
 }
