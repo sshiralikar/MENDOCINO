@@ -70,7 +70,17 @@ if(wfStatus == "Approved")
             }
 
             var params = aa.util.newHashtable();
-            addParameter(params, "$$altID$$", capId.getCustomID()+"");
+            // CAMEND-654
+            var pCapId = getParent();
+            if (pCapId) {
+                addParameter(params, "$$parentAltId$$", pCapId.getCustomID() + "");
+            }
+            else {
+                addParameter(params, "$$parentAltId$$", capId.getCustomID() + "");
+            }
+            addParameter(params, "$$date$$", sysDateMMDDYYYY);
+            addParameter(params, "$$contactName$$", conName);
+            addParameter(params, "$$altID$$", capId.getCustomID() + "");
             addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptName"));
             addParameter(params, "$$phoneHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","phoneHours"));
             addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptPhone"));
