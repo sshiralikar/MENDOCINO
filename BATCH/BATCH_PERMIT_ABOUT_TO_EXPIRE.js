@@ -376,13 +376,24 @@ function mainProcess() {
                                 var conName = getContactName(capContacts[i]);
                                 var applicantEmail = capContacts[i].getPeople().getEmail()+"";
                                 var params = aa.util.newHashtable();
-                                addParameter(params, "$$altID$$", capId.getCustomID()+"");
+                                // CAMEND-654
+                                var parent = getParent();
+                                if (parent) {
+                                    addParameter(params, "$$parentAltId$$", parent.getCustomID() + "");
+                                }
+                                else {
+                                    addParameter(params, "$$parentAltId$$", capId.getCustomID() + "");
+                                }
+                                addParameter(params, "$$date$$", sysDateMMDDYYYY);
+                                addParameter(params, "$$contactName$$", conName);
+                                addParameter(params, "$$altID$$", capId.getCustomID() + "");
                                 addParameter(params, "$$FullNameBusName$$", conName);addParameter(params, "$$capAlias$$", aa.cap.getCap(capId).getOutput().getCapType().getAlias()+"");
                                 addParameter(params, "$$expirDate$$", getAppSpecific("New Expiration Date",capId));
                                 addParameter(params, "$$deptHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptHours"));
                                 addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptName"));
                                 addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptPhone"));
                                 addParameter(params, "$$deptEmail$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptEmail"));
+                                addParameter(params, "$$deptAddress$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptAddress"));
                                 addParameter(params, "$$deptFormalName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptFormalName"));
                                 addParameter(params, "$$capName$$", cap.getSpecialText()+"");
                                 var acaUrl = String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0];
@@ -436,6 +447,16 @@ function mainProcess() {
                                 var conName = getContactName(capContacts[i]);
                                 var applicantEmail = capContacts[i].getPeople().getEmail()+"";
                                 var params = aa.util.newHashtable();
+                                // CAMEND-654
+                                var parent = getParent();
+                                if (parent) {
+                                    addParameter(params, "$$parentAltId$$", parent.getCustomID() + "");
+                                }
+                                else {
+                                    addParameter(params, "$$parentAltId$$", capId.getCustomID() + "");
+                                }
+                                addParameter(params, "$$date$$", sysDateMMDDYYYY);
+                                addParameter(params, "$$contactName$$", conName);
                                 addParameter(params, "$$altID$$", capId.getCustomID()+"");
                                 addParameter(params, "$$FullNameBusName$$", conName);addParameter(params, "$$capAlias$$", aa.cap.getCap(capId).getOutput().getCapType().getAlias()+"");
                                 addParameter(params, "$$expirDate$$", getAppSpecific("New Expiration Date",capId));
@@ -443,6 +464,7 @@ function mainProcess() {
                                 addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptName"));
                                 addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptPhone"));
                                 addParameter(params, "$$deptEmail$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptEmail"));
+                                addParameter(params, "$$deptAddress$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptAddress"));
                                 addParameter(params, "$$deptFormalName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptFormalName"));
                                 addParameter(params, "$$capName$$", cap.getSpecialText()+"");
                                 var acaUrl = String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0];
@@ -495,6 +517,16 @@ function mainProcess() {
                                 var conName = getContactName(capContacts[i]);
                                 var applicantEmail = capContacts[i].getPeople().getEmail()+"";
                                 var params = aa.util.newHashtable();
+                                // CAMEND-654
+                                var parent = getParent();
+                                if (parent) {
+                                    addParameter(params, "$$parentAltId$$", parent.getCustomID() + "");
+                                }
+                                else {
+                                    addParameter(params, "$$parentAltId$$", capId.getCustomID() + "");
+                                }
+                                addParameter(params, "$$date$$", sysDateMMDDYYYY);
+                                addParameter(params, "$$contactName$$", conName);
                                 addParameter(params, "$$altID$$", capId.getCustomID()+"");
                                 addParameter(params, "$$FullNameBusName$$", conName);addParameter(params, "$$capAlias$$", aa.cap.getCap(capId).getOutput().getCapType().getAlias()+"");
                                 addParameter(params, "$$expirDate$$", getAppSpecific("New Expiration Date",capId));
@@ -502,6 +534,7 @@ function mainProcess() {
                                 addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptName"));
                                 addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptPhone"));
                                 addParameter(params, "$$deptEmail$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptEmail"));
+                                addParameter(params, "$$deptAddress$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptAddress"));
                                 addParameter(params, "$$deptFormalName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptFormalName"));
                                 addParameter(params, "$$capName$$", cap.getSpecialText()+"");
                                 var acaUrl = String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0];
@@ -556,6 +589,16 @@ function mainProcess() {
                                 var conName = getContactName(capContacts[i]);
                                 var applicantEmail = capContacts[i].getPeople().getEmail()+"";
                                 var params = aa.util.newHashtable();
+                                // CAMEND-654
+                                var parent = getParent();
+                                if (parent) {
+                                    addParameter(params, "$$parentAltId$$", parent.getCustomID() + "");
+                                }
+                                else {
+                                    addParameter(params, "$$parentAltId$$", capId.getCustomID() + "");
+                                }
+                                addParameter(params, "$$date$$", sysDateMMDDYYYY);
+                                addParameter(params, "$$contactName$$", conName);
                                 addParameter(params, "$$altID$$", capId.getCustomID()+"");
                                 addParameter(params, "$$FullNameBusName$$", conName);addParameter(params, "$$capAlias$$", aa.cap.getCap(capId).getOutput().getCapType().getAlias()+"");
                                 addParameter(params, "$$expirDate$$", getAppSpecific("New Expiration Date",capId));
@@ -563,6 +606,7 @@ function mainProcess() {
                                 addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptName"));
                                 addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptPhone"));
                                 addParameter(params, "$$deptEmail$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptEmail"));
+                                addParameter(params, "$$deptAddress$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptAddress"));
                                 addParameter(params, "$$deptFormalName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptFormalName"));
                                 addParameter(params, "$$capName$$", cap.getSpecialText()+"");
                                 var acaUrl = String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0];

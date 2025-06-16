@@ -31,6 +31,15 @@ if (wfStatus == "Approved") {
                         var conName = getContactName(capContacts[i]);
                         var applicantEmail = capContacts[i].getPeople().getEmail() + "";
                         var params = aa.util.newHashtable();
+                        // CAMEND-654
+                        if (pCapId) {
+                            addParameter(params, "$$parentAltId$$", pCapId.getCustomID() + "");
+                        }
+                        else {
+                            addParameter(params, "$$parentAltId$$", capId.getCustomID() + "");
+                        }
+                        addParameter(params, "$$date$$", sysDateMMDDYYYY);
+                        addParameter(params, "$$contactName$$", conName);
                         addParameter(params, "$$altID$$", pCapId.getCustomID() + "");
                         addParameter(params, "$$FullNameBusName$$", conName);
                         addParameter(params, "$$capAlias$$", aa.cap.getCap(pCapId).getOutput().getCapType().getAlias() + "");
@@ -39,6 +48,7 @@ if (wfStatus == "Approved") {
                         addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptName"));
                         addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptPhone"));
                         addParameter(params, "$$deptEmail$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptEmail"));
+                        addParameter(params, "$$deptAddress$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptAddress"));
                         addParameter(params, "$$deptFormalName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS", "deptFormalName"));
                         addParameter(params, "$$capName$$", pCap.getSpecialText() + "");
                         var acaUrl = String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0];
