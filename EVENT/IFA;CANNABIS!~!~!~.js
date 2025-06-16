@@ -1,5 +1,7 @@
 if(!publicUser)
 {
+    // CAMEND-654
+    var parent = getParent();
     var hm = new Array();
     var conName = "";
     var contactResult = aa.people.getCapContactByCapID(capId);
@@ -9,7 +11,14 @@ if(!publicUser)
             if(matches(capContacts[i].getPeople().getContactType(),"Applicant","Authorized Agent")) {
                 conName = getContactName(capContacts[i]);
                 var params = aa.util.newHashtable();
-                addParameter(params, "$$altID$$", capId.getCustomID()+"");
+                if (parent) {
+                    addParameter(params, "$$parentAltId$$", parent.getCustomID() + "");
+                }
+                else {
+                    addParameter(params, "$$parentAltId$$", capId.getCustomID() + "");
+                }
+                addParameter(params, "$$date$$", sysDateMMDDYYYY);
+                addParameter(params, "$$altID$$", capId.getCustomID() + "");
                 addParameter(params, "$$capTypeAlias$$", aa.cap.getCap(capId).getOutput().getCapType().getAlias()+"");
                 addParameter(params, "$$capName$$", capName);
                 addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptName"));
@@ -19,6 +28,7 @@ if(!publicUser)
                 addParameter(params, "$$deptFormalName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptFormalName"));
                 addParameter(params, "$$deptAddress$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptAddress"));
                 addParameter(params, "$$FullNameBusName$$", conName);
+                addParameter(params, "$$contactName$$", conName);
                 addParameter(params, "$$ACAUrl$$", String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0]);
                 addParameter(params, "$$ACAURL$$", String(lookup("ACA_CONFIGS", "ACA_SITE")).split("/Admin")[0]);
                 if(hm[capContacts[i].getPeople().getEmail() + ""] != 1) {
