@@ -34,6 +34,15 @@ if (contactResult.getSuccess()) {
         if(matches(capContacts[i].getPeople().getContactType(),"Applicant","Authorized Agent")) {
             conName = getContactName(capContacts[i]);
             var params = aa.util.newHashtable();
+            // CAMEND-654
+            var parent = getParent();
+            if (parent) {
+                addParameter(params, "$$parentAltId$$", parent.getCustomID() + "");
+            }
+            else {
+                addParameter(params, "$$parentAltId$$", capId.getCustomID() + "");
+            }
+            addParameter(params, "$$date$$", sysDateMMDDYYYY);
             addParameter(params, "$$altID$$", capId.getCustomID()+"");
             addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptName"));
             addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptPhone"));
@@ -44,7 +53,7 @@ if (contactResult.getSuccess()) {
             addParameter(params, "$$inspSchedTime$$", getInspectionTime(capId, Number(inspId)));
             addParameter(params, "$$inspSchedDate$$", vInspDate);
             addParameter(params, "$$Location$$", vAddress);
-            addParameter(params, "$$contactname$$", conName);
+            addParameter(params, "$$contactName$$", conName);
             if(hm[capContacts[i].getPeople().getEmail() + ""] != 1) {
                 sendEmail("no-reply@mendocinocounty.org", capContacts[i].getPeople().getEmail() + "", "", "GLOBAL_INSPECTION_SCHEDULED", params, null, capId);
                 hm[capContacts[i].getPeople().getEmail() + ""] = 1;
