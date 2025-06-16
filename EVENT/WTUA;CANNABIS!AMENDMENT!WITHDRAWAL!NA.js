@@ -71,7 +71,6 @@ if(wfStatus == "Approved")
 
             var params = aa.util.newHashtable();
             // CAMEND-654
-            var pCapId = getParent();
             if (pCapId) {
                 addParameter(params, "$$parentAltId$$", pCapId.getCustomID() + "");
             }
