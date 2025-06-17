@@ -278,10 +278,11 @@ if(wfTask == "Issuance" && wfStatus == "Issued")
         }
         var hm = new Array();
         var parent = getParent();
+        var parentCap = aa.cap.getCap(parentCapId).getOutput();
         var totalSF = 0;
-        if(parent)
+        if(parent && parentCap)
         {
-            var parentCap = aa.cap.getCap(parentCapId).getOutput();
+
             parentAppTypeResult = parentCap.getCapType();
             parentAppTypeString = parentAppTypeResult.toString();
             parentAppTypeArray = parentAppTypeString.split("/");
