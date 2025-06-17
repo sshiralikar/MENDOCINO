@@ -302,6 +302,25 @@ if(wfTask == "Issuance" && wfStatus == "Issued")
                 totalSF = getAppSpecific("Total Nursery SF", capId);
             }
         }
+        var conName = "";
+        var contactResult = aa.people.getCapContactByCapID(capId);
+        if (contactResult.getSuccess()) {
+            var capContacts = contactResult.getOutput();
+            for (c in capContacts) {
+                if (capContacts[c].getCapContactModel().getPrimaryFlag() == "Y") {
+                    logDebug("Primary Contact: " + getContactName(capContacts[c]));
+                    conName = getContactName(capContacts[c]);
+                }
+                if (matches(capContacts[i].getPeople().getContactType(), "Applicant")) {
+                    applicantName = getContactName(capContacts[i]);
+                    logDebug("Applicant: " + applicantName);
+                }
+                if (matches(capContacts[i].getPeople().getContactType(), "Previous Applicant")) {
+                    prevApplicantName = getContactName(capContacts[i]);
+                    logDebug("Previous Applicant: " + prevApplicantName);
+                }
+            }
+        }
         var permitType = AInfo["Permit Type"];
         var capStatus = aa.cap.getCap(capId).getOutput();
         var thisCapStatus = capStatus.getCapStatus();
