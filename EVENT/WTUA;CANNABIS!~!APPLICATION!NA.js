@@ -303,6 +303,8 @@ if(wfTask == "Issuance" && wfStatus == "Issued")
             }
         }
         var conName = "";
+        prevApplicantName = "";
+        applicantName = "";
         var contactResult = aa.people.getCapContactByCapID(capId);
         if (contactResult.getSuccess()) {
             var capContacts = contactResult.getOutput();
