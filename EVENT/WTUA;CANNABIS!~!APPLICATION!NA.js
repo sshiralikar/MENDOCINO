@@ -280,9 +280,10 @@ if(wfTask == "Issuance" && wfStatus == "Issued")
         var parent = getParent();
         var parentCap = aa.cap.getCap(parentCapId).getOutput();
         var totalSF = 0;
+        var ttcNumber = "";
         if(parent && parentCap)
         {
-
+            ttcNumber = getAppSpecific("TTC Account Number", parent);
             parentAppTypeResult = parentCap.getCapType();
             parentAppTypeString = parentAppTypeResult.toString();
             parentAppTypeArray = parentAppTypeString.split("/");
@@ -294,6 +295,7 @@ if(wfTask == "Issuance" && wfStatus == "Issued")
         }
         else
         {
+            ttcNumber = getAppSpecific("TTC Account Number", capId);
             if (appTypeArray[1] == "Cultivation") {
                 totalSF = getAppSpecific("Total SF", capId);
             } else if (appTypeArray[1] == "Nursery") {
