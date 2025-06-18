@@ -48,7 +48,7 @@ if(wfStatus == "Accepted" || wfStatus == "Approved")
         }
         var hm = new Array();
         var parent = getParent();
-        var parentCap = aa.cap.getCap(parentCapId).getOutput();
+        var parentCap = aa.cap.getCap(parent).getOutput();
         parentAppTypeResult = parentCap.getCapType();
         parentAppTypeString = parentAppTypeResult.toString();
         parentAppTypeArray = parentAppTypeString.split("/");
