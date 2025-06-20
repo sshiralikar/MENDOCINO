@@ -177,7 +177,13 @@ function copy() {
         logDebug("parentCapId: " + parentCapId);
         logDebug("targetCapId: " + targetCapId);
         //copyLicenseProfessionalX(parentCapId, targetCapId);
-        copyAppSpecificTable(parentCapId, targetCapId);
+        try
+        {
+            copyAppSpecificTable(parentCapId, targetCapId);
+        }
+        catch (e) {
+            logDebug("No ASIT Group");
+        }
         //copyAppSpecificInfo(parentCapId, targetCapId);
         //copyASIFields(parentCapId,targetCapId);
         //copyASIFromParent4ACA(cap, parentCapId, null);
