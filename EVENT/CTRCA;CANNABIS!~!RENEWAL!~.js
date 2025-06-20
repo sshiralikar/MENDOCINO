@@ -49,6 +49,16 @@ if(parentCapId)
         updateAppStatus("Modification Required", "Updating via Script");
         updateAppStatus("Modification Required", "Updating via Script", parentCapId);
     }
+    
+    var parentList = loadASITable("STRUCTURE/SITE PLAN ID LIST", parentCapId);
+    var parentListLength = parentList.length;
+    var childList = loadASITable("STRUCTURE/SITE PLAN ID LIST");
+    var childListLength = childList.length;
+    if (parentListLength != childListLength) {
+        taskCloseAllExcept("Modification Required", "Closing via script");
+        updateAppStatus("Modification Required", "Updating via Script");
+        updateAppStatus("Modification Required", "Updating via Script", parentCapId);
+    }
 }
 
 

@@ -89,6 +89,16 @@ if (!publicUser) {
         updateAppStatus("Modification Required", "Updating via Script", parentCapId);
     }
 
+    var parentList = loadASITable("STRUCTURE/SITE PLAN ID LIST", parentCapId);
+    var parentListLength = parentList.length;
+    var childList = loadASITable("STRUCTURE/SITE PLAN ID LIST");
+    var childListLength = childList.length;
+    if (parentListLength != childListLength) {
+        taskCloseAllExcept("Modification Required", "Closing via script");
+        updateAppStatus("Modification Required", "Updating via Script");
+        updateAppStatus("Modification Required", "Updating via Script", parentCapId);
+    }
+
     if (!feeExists("CANREN01", "INVOICED", "NEW") && AInfo["Exempt"] != "Yes") {
         addFee("CANREN01", "CAN_REN", "FINAL", "1", "Y");
     }
