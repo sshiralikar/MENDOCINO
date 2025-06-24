@@ -77,9 +77,13 @@ try {
         for(var i in table)
         {
             if(table[i]["Type of Power"] == "Generator")
-                flag = true
+                flag = true;
         }
     }
+
+    if(AInfo["Generators"] == "CHECKED")
+        flag = true;
+
     if(!flag)
         aa.env.setValue("ReturnData", "{'PageFlow':{'HidePage':'Y'}}");
 
