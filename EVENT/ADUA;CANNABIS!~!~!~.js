@@ -7,7 +7,6 @@ var capDetailObjResult = aa.cap.getCapDetail(capId);
 
 if (capDetailObjResult.getSuccess()) {
     capDetail = capDetailObjResult.getOutput();
-    capDetail.setAsgnStaff(userID);
     var assignedID = capDetail.getAsgnStaff();
 
     var vWFTasks = aa.workflow.getTasks(capId).getOutput();
