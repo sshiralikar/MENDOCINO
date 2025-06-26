@@ -210,6 +210,7 @@ function mainProcess() {
                                 addParameter(params, "$$parentAltId$$", parent.getCustomID() + "");
                             else
                                 addParameter(params, "$$parentAltId$$", capId.getCustomID() + "");
+                            addParameter(params, "$$capAlias$$", aa.cap.getCap(capId).getOutput().getCapType().getAlias()+"");
                             addParameter(params, "$$expirDate$$", getAppSpecific("New Expiration Date",capId));
                             addParameter(params, "$$deptHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptHours"));
                             addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptName"));
@@ -266,6 +267,7 @@ function mainProcess() {
                             else
                                 addParameter(params, "$$parentAltId$$", capId.getCustomID() + "");
                             addParameter(params, "$$expirDate$$", getAppSpecific("New Expiration Date",capId));
+                            addParameter(params, "$$capAlias$$", aa.cap.getCap(capId).getOutput().getCapType().getAlias()+"");
                             addParameter(params, "$$deptHours$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptHours"));
                             addParameter(params, "$$deptName$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptName"));
                             addParameter(params, "$$deptPhone$$", lookup("NOTIFICATION_TEMPLATE_INFO_CANNABIS","deptPhone"));
